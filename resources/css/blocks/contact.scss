@@ -1,0 +1,44 @@
+.b-contact {
+	.__data {
+		font-size: 16px;
+	}
+
+	.__data a {
+	}
+
+	.__data a:hover {
+		color: var(--text-s-lighter);
+	}
+
+	.__phone {
+		display: flex;
+	}
+
+	.__phone::before {
+		content: url("@images/phone.svg");
+		margin-right: 16px;
+		position: relative;
+		top: 4px;
+		max-width: 40px;
+	}
+
+	.__mail {
+		display: flex;
+	}
+
+	.__mail::before {
+		content: url('@images/mail.svg');
+		margin-right: 16px;
+		position: relative;
+		top: 4px;
+		max-width: 40px;
+	}
+
+	.__address::before {
+		content: url('/wp-content/uploads/2026/01/place.svg');
+		margin-right: 16px;
+		position: relative;
+		top: 4px;
+		max-width: 40px;
+	}
+}

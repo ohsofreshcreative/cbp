@@ -1,0 +1,193 @@
+@import 'tailwindcss' theme(static);
+
+/* bardzo ważne dla Sage/Blade: skanowanie klas */
+@source "../views/**/*.blade.php";
+@source "../../app/**/*.php";
+@source "../js/**/*.{js,ts,jsx,tsx}";
+
+/* Twoje “źródłowe” zmienne RGB */
+:root {
+  /* base */
+  --body: 42 63 80; /* #2A3F50 */
+
+/* PRIMARY (lewa kolumna – granat) */
+--primary: 23 28 132;   /* #171C84 */
+--p-hover: 5 6 26;      /* #05061A */
+
+--p-50: 200 202 240;    /* #C8CAF0 */
+--p-100: 168 170 221;   /* #A8AADD */
+--p-200: 133 136 204;   /* #8588CC */
+--p-300: 92 96 182;     /* #5C60B6 */
+--p-400: 57 61 162;     /* #393DA2 */
+--p-500: 23 28 132;     /* #171C84 */
+--p-600: 19 23 110;     /* #13176E */
+--p-700: 15 19 88;      /* #0F1358 */
+--p-800: 12 14 66;      /* #0C0E42 */
+--p-900: 8 9 44;        /* #08092C */
+--p-dark: 5 6 26;       /* #05061A */
+
+--action: rgb(23, 28, 132);
+
+/* SECONDARY (niebieski) */
+--secondary: 38 130 232;  /* #2682E8 */
+--s-hover: 32 108 193;    /* #206CC1 */
+
+--s-50: 212 230 250;    /* #D4E6FA */
+--s-100: 183 213 247;   /* #B7D5F7 */
+--s-200: 146 192 243;   /* #92C0F3 */
+--s-300: 110 172 240;   /* #6EACF0 */
+--s-400: 74 151 236;    /* #4A97EC */
+--s-500: 38 130 232;    /* #2682E8 */
+--s-600: 32 108 193;    /* #206CC1 */
+--s-700: 25 87 155;     /* #19579B */
+--s-800: 19 65 116;     /* #134174 */
+--s-900: 13 43 77;      /* #0D2B4D */
+--s-dark: 8 26 46;      /* #081A2E */
+
+
+/* THIRD (różowy/fioletowy) */
+--third: 248 129 240; /* #F881F0 */
+--t-hover: 207 108 200; /* #CF6CC8 */
+
+--t-50: 254 230 252;  /* #FEE6FC */
+--t-100: 253 213 250; /* #FDD5FA */
+--t-200: 252 192 248; /* #FCC0F8 */
+--t-300: 250 171 245; /* #FAABF5 */
+--t-400: 249 150 243; /* #F996F3 */
+--t-500: 248 129 240; /* #F881F0 */
+--t-600: 207 108 200; /* #CF6CC8 */
+--t-700: 165 86 160;  /* #A556A0 */
+--t-800: 124 65 120;  /* #7C4178 */
+--t-900: 83 43 80;    /* #532B50 */
+--t-dark: 50 26 48;   /* #321A30 */
+
+  /* neutrals / fixed backgrounds */
+  --text-body: rgb(var(--p-800));
+  --gray: #2a3f50;
+  --bg: #F4F9FF;
+  --bg-light: rgb(var(--s-100));
+  --bg-lighter: rgb(var(--s-50));
+  --bg-brand: #002704;
+  --bg-dark: #071622;
+}
+
+@theme {
+  /* base */
+  --color-body: rgb(var(--body));
+
+  /* primary */
+  --color-primary: rgb(var(--primary));
+  --color-primary-hover: rgb(var(--p-hover));
+  --color-primary-50: rgb(var(--p-50));
+  --color-primary-100: rgb(var(--p-100));
+  --color-primary-200: rgb(var(--p-200));
+  --color-primary-300: rgb(var(--p-300));
+  --color-primary-400: rgb(var(--p-400));
+  --color-primary-500: rgb(var(--p-500));
+  --color-primary-600: rgb(var(--p-600));
+  --color-primary-700: rgb(var(--p-700));
+  --color-primary-800: rgb(var(--p-800));
+  --color-primary-900: rgb(var(--p-900));
+  --color-primary-dark: rgb(var(--p-dark));
+
+  /* secondary */
+  --color-secondary: rgb(var(--secondary));
+  --color-secondary-hover: rgb(var(--s-hover));
+  --color-secondary-100: rgb(var(--s-100));
+  --color-secondary-200: rgb(var(--s-200));
+  --color-secondary-300: rgb(var(--s-300));
+  --color-secondary-400: rgb(var(--s-400));
+  --color-secondary-500: rgb(var(--s-500));
+  --color-secondary-600: rgb(var(--s-600));
+  --color-secondary-700: rgb(var(--s-700));
+  --color-secondary-800: rgb(var(--s-800));
+  --color-secondary-900: rgb(var(--s-900));
+  --color-secondary-dark: rgb(var(--s-dark));
+
+  /* third */
+  --color-third: rgb(var(--third));
+  --color-third-hover: rgb(var(--t-hover));
+  --color-third-100: rgb(var(--t-100));
+  --color-third-200: rgb(var(--t-200));
+  --color-third-300: rgb(var(--t-300));
+  --color-third-400: rgb(var(--t-400));
+  --color-third-500: rgb(var(--t-500));
+  --color-third-600: rgb(var(--t-600));
+  --color-third-700: rgb(var(--t-700));
+  --color-third-800: rgb(var(--t-800));
+  --color-third-900: rgb(var(--t-900));
+  --color-third-dark: rgb(var(--t-dark));
+
+  --color-gray: var(--gray);
+  --color-action: var(--action);
+
+  --color-page: var(--bg);
+  --color-background-light: var(--bg-light);
+  --color-background-brand: var(--bg-brand);
+  --color-background-dark: var(--bg-dark);
+
+  --color-primary-light: var(--color-primary-300);
+  --color-primary-lighter: var(--color-primary-100);
+
+  --color-secondary-light: var(--color-secondary-200);
+  --color-secondary-lighter: var(--color-secondary-100);
+
+  --color-muted: var(--color-secondary-500);
+  --gradient: linear-gradient(90deg, #2265CB 0%, #181D84 100%);
+  --gradient-light: linear-gradient(-90deg, #0E3A2D 0%, #0A533D 100%);
+  --gradient-s: linear-gradient(-90deg, #DE855D 0%, #D37A51 100%);
+
+}
+
+@utility m-header {
+  margin-bottom: var(--m-header);
+}
+@utility m-title {
+  padding-bottom: var(--m-title);
+}
+@utility m-btn {
+  margin-top: var(--m-btn);
+}
+@utility m-img {
+  margin-bottom: var(--m-img);
+}
+
+@import '../css/variables.scss';
+
+@import 'swiper/css';
+@import 'swiper/css/navigation';
+@import 'swiper/css/pagination';
+@import 'baguettebox.js/dist/baguetteBox.min.css';
+
+/*-- USED ---*/
+@import '../css/blocks/hero.scss';
+@import '../css/blocks/about.scss';
+@import '../css/blocks/values.scss';
+@import '../css/blocks/content.scss';
+@import '../css/blocks/cta.scss';
+@import '../css/blocks/whyus.scss';
+@import '../css/blocks/logos.scss';
+@import '../css/blocks/reviews.scss';
+@import '../css/blocks/banner.scss';
+@import '../css/blocks/product.scss';
+@import '../css/blocks/table.scss';
+@import '../css/blocks/products.scss';
+@import '../css/blocks/offers.scss';
+@import '../css/blocks/wysiwyg.scss';
+@import '../css/blocks/history.scss';
+@import '../css/blocks/checks.scss';
+@import '../css/blocks/slider.scss';
+@import '../css/blocks/map.scss';
+@import '../css/blocks/catalogues.scss';
+@import '../css/blocks/action.scss';
+/*-- NOT USED ---*/
+@import '../css/blocks/accordion.scss';
+@import '../css/blocks/cards.scss';
+@import '../css/blocks/category-posts.scss';
+@import '../css/blocks/contact.scss';
+@import '../css/blocks/faq.scss';
+@import '../css/blocks/image.scss';
+@import '../css/blocks/numbers.scss';
+@import '../css/blocks/overlap.scss';
+@import '../css/blocks/proces.scss';
+@import '../css/blocks/tabs.scss';
