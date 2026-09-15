@@ -14,8 +14,8 @@ Kolejność jest sztywna — dwóch faz nie odwracaj i nie mieszaj w jednym zada
 Faza 1 — bloki ACF (najpierw, dla wszystkich wskazanych podstron):
 - Weź ramki z Figmy (link z `node-id`) albo screen.
 - Zmapuj sekcje na istniejące bloki w `app/Blocks`. Reuse before creation.
-- Brakujące bloki stwórz według anatomii ACF w tym pliku. Trigger: zwykła prośba, np. „Nowy blok quote” + link Figma lub screen. Nie wymagaj skilla ani `/nowy-blok`.
-- Nazwy bloku nie wymyślaj. Użyj nazwy z promptu. Jeśli brakuje nazwy albo projektu, zapytaj.
+- Brakujące bloki stwórz według anatomii ACF w tym pliku. Trigger: zwykła prośba + link Figma lub screen. Nie wymagaj skilla ani `/nowy-blok`.
+- Nazwę nowego bloku bierz z nazwy warstwy/ramki sekcji w Figmie (patrz „Nazwa bloku z Figmy”). Jeśli użytkownik poda nazwę w prompcie, ta wygrywa.
 - Nie pisz JSON-a importu, nie wołaj WP-CLI, nie dodawaj stron/treści/zdjęć do WordPressa, dopóki bloki potrzebne na tych podstronach są w motywie.
 
 Faza 2 — treść przez WP-CLI (dopiero po fazie 1):
@@ -100,9 +100,20 @@ Nazwa bloku jest zawsze jednowyrazowa, lowercase, bez myślników i podkreśleń
 w klasie PHP (`About`, `Whyus`, `Paths`), `$slug` (`about`, `whyus`, `paths`), pliku blade
 (`about.blade.php`) i klasie CSS sekcji (`b-about`). Tak jest we wszystkich 35 istniejących blokach.
 
-Nazwy bloku nie wymyślaj samodzielnie — gdy zadanie dotyczy nowego bloku (zwłaszcza na podstawie
-screena/designu), użyj nazwy podanej przez użytkownika w prompcie. Jeśli nazwa nie została podana,
-zapytaj, zamiast zgadywać.
+Nazwa bloku z Figmy
+
+Źródło nazwy (w tej kolejności):
+1. Nazwa podana w prompcie użytkownika, jeśli jest.
+2. Nazwa ramki/warstwy sekcji w Figmie (bezpośrednie dziecko ramki podstrony, np. `Hero`, `Problem`, `Process`).
+3. Pytaj tylko gdy po pominięciu chrome i kontenerów nie zostaje żadna sensowna nazwa.
+
+Normalizacja warstwy → slug:
+- lowercase, wytnij spacje, myślniki i podkreślenia (`Why us` / `Why-Us` → `whyus`).
+- Jeśli po normalizacji slug albo oczywisty alias już istnieje w `app/Blocks` — **użyj istniejącego bloku**, nie twórz drugiego (`Process` → `proces`, `FAQ` → `faq`, `CTA` → `cta`).
+- Nie używaj jako nazwy bloku: `Frame 123`, `Group`, `Rectangle`, `__wrapper`, warstw wewnętrznych ani copy z H1/H2.
+- Pomiń chrome strony: `menu`, `header`, `footer` i puste kontenery-opakowania.
+
+Nie wymyślaj nazw spoza warstwy i spoza promptu. Nie tłumacz polskich nagłówków na angielski slug, jeśli ramka ma już angielską nazwę (`Dla kogo pracujemy?` to treść, ramka to `Problem` → `problem`).
 
 Blok = 2–3 pliki:
 
@@ -244,7 +255,7 @@ Working from screenshots or designs
 
 Screen, ramka Figma albo link `figma.com/design/…?node-id=` jest specyfikacją: zachowaj układ, hierarchię, proporcje, odstępy, wyrównanie i kadrowanie. Używaj istniejących tokenów oraz ograniczeń sekcji Styling. Nie wymyślaj dekoracji ani nie upraszczaj istotnych szczegółów tylko dla wygody.
 
-Link Figma bez `node-id` jest niewystarczający — poproś o ramkę sekcji albo podstrony, nie zgaduj węzła. Z Figmy najpierw rób bloki ACF (faza 1), nie od razu import WP-CLI.
+Link Figma bez `node-id` jest niewystarczający — poproś o ramkę sekcji albo podstrony, nie zgaduj węzła. Z Figmy najpierw rób bloki ACF (faza 1), nie od razu import WP-CLI. Slug bloku bierz z nazwy ramki sekcji (patrz „Nazwa bloku z Figmy”).
 
 ⸻
 
