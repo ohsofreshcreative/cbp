@@ -20,7 +20,17 @@ class PageImporter
 			throw new PageImportException('Importer wymaga WordPress (wp_insert_post).');
 		}
 
-		$content = AcfBlockSerializer::toPostContent($blocks);
+		try {
+			$content = AcfBlockSerializer::toPostContent($blocks);
+		} catch (PageImportException $e) {
+			throw $e;
+		} catch (\Throwable $e) {
+			throw new PageImportException(
+				sprintf('Nie udało się zserializować bloków: %s', $e->getMessage()),
+				0,
+				$e
+			);
+		}
 
 		$postarr = [
 			'post_type' => 'page',

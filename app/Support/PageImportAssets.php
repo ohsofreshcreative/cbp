@@ -242,10 +242,19 @@ class PageImportAssets
 
 		$this->created[] = $id;
 
-		if (function_exists('wp_generate_attachment_metadata') && function_exists('wp_update_attachment_metadata')) {
-			$metadata = wp_generate_attachment_metadata($id, $upload['file']);
-			if (is_array($metadata)) {
-				wp_update_attachment_metadata($id, $metadata);
+		$ext = strtolower((string) pathinfo($upload['file'], PATHINFO_EXTENSION));
+
+		if ($ext !== 'svg' && $ext !== 'svgz'
+			&& function_exists('wp_generate_attachment_metadata')
+			&& function_exists('wp_update_attachment_metadata')
+		) {
+			try {
+				$metadata = wp_generate_attachment_metadata($id, $upload['file']);
+				if (is_array($metadata)) {
+					wp_update_attachment_metadata($id, $metadata);
+				}
+			} catch (\Throwable $e) {
+				// Miniaturki nie blokują importu strony.
 			}
 		}
 
@@ -385,7 +394,11 @@ class PageImportAssets
 			return;
 		}
 
-		add_filter('upload_mimes', static function (array $mimes): array {
+		add_filter('upload_mimes', static function ($mimes) {
+			if (!is_array($mimes)) {
+				$mimes = [];
+			}
+
 			$mimes['svg'] = 'image/svg+xml';
 			$mimes['svgz'] = 'image/svg+xml';
 

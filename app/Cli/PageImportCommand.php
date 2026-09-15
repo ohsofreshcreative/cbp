@@ -38,6 +38,14 @@ class PageImportCommand
 		} catch (PageImportException $e) {
 			\WP_CLI::error($e->getMessage());
 			return;
+		} catch (\Throwable $e) {
+			\WP_CLI::error(sprintf(
+				'Błąd importu: %s (%s:%d)',
+				$e->getMessage(),
+				$e->getFile(),
+				$e->getLine()
+			));
+			return;
 		}
 
 		$porcelain = !empty($assoc_args['porcelain']);

@@ -3,48 +3,16 @@
 /**
  * Rejestracja komend WP-CLI motywu.
  *
- * Plik może być ładowany z wp-cli.yml jeszcze przed WordPressem,
- * więc autoload motywu trzeba podłączyć tutaj.
+ * Ten plik może być wczytany z wp-cli.yml jeszcze przed WordPressem.
+ * Nie ładujemy tu autoloadu Sage ani klas importera.
  */
-
-namespace App;
 
 if (!defined('WP_CLI') || !WP_CLI) {
 	return;
 }
 
-$theme_root = dirname(__DIR__);
-$autoload = $theme_root . '/vendor/autoload.php';
-
-if (is_readable($autoload)) {
-	require_once $autoload;
-}
-
-if (!class_exists(\App\Cli\PageImportCommand::class, true)) {
-	foreach ([
-		'Support/PageImportException.php',
-		'Support/PageImportPayload.php',
-		'Support/PageImportAssets.php',
-		'Support/AcfBlockSerializer.php',
-		'Support/PageImporter.php',
-		'Cli/PageImportCommand.php',
-	] as $relative) {
-		$file = __DIR__ . '/' . $relative;
-
-		if (is_readable($file)) {
-			require_once $file;
-		}
-	}
-}
-
-if (!class_exists(\App\Cli\PageImportCommand::class, false)) {
-	\WP_CLI::error(
-		'Nie można załadować App\\Cli\\PageImportCommand. W katalogu motywu uruchom: composer dump-autoload'
-	);
-}
-
-if (!function_exists(__NAMESPACE__ . '\\register_osf_cli_commands')) {
-	function register_osf_cli_commands(): void
+if (!function_exists('osf_register_page_import_command')) {
+	function osf_register_page_import_command(): void
 	{
 		static $registered = false;
 
@@ -54,9 +22,21 @@ if (!function_exists(__NAMESPACE__ . '\\register_osf_cli_commands')) {
 
 		$registered = true;
 
-		\WP_CLI::add_command('osf', \App\Cli\PageImportCommand::class);
-		\WP_CLI::add_command('osf page', \App\Cli\PageImportCommand::class);
+		$run = static function ($args, $assoc_args): void {
+			if (!class_exists(\App\Cli\PageImportCommand::class, true)) {
+				\WP_CLI::error('Nie można załadować importera. W katalogu motywu uruchom: composer dump-autoload');
+			}
+
+			try {
+				(new \App\Cli\PageImportCommand())->import(is_array($args) ? $args : [], is_array($assoc_args) ? $assoc_args : []);
+			} catch (\Throwable $e) {
+				\WP_CLI::error(sprintf('%s (%s:%d)', $e->getMessage(), $e->getFile(), $e->getLine()));
+			}
+		};
+
+		\WP_CLI::add_command('osf import', $run, ['when' => 'after_wp_load']);
+		\WP_CLI::add_command('osf page import', $run, ['when' => 'after_wp_load']);
 	}
 }
 
-register_osf_cli_commands();
+osf_register_page_import_command();
