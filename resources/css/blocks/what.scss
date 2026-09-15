@@ -8,7 +8,7 @@
 	}
 
 	.__card {
-		border-bottom: 1px dotted var(--color-primary);
+		border-bottom: 1px dashed var(--color-primary);
 		padding-bottom: 20px;
 		margin-bottom: 20px;
 
@@ -32,5 +32,12 @@
 		width: 58%;
 		bottom: 4%;
 		right: -18%;
+	}
+
+	@media (max-width: 768px) {
+		.__ekg {
+			width: 48%;
+			right: -6%;
+		}
 	}
 }
