@@ -6,11 +6,11 @@ import path from 'path'
 
 export default defineConfig(({ command, mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
-  const wpOrigin = env.WP_HOME || 'http://tsp.local'
+  const wpOrigin = env.WP_HOME || 'http://cbp.local'
 
   return {
     server: {
-      host: 'tsp.local',
+      host: 'cbp.local',
       port: 5981,
       strictPort: true,
       cors: true,
@@ -22,13 +22,13 @@ export default defineConfig(({ command, mode }) => {
       },
       hmr: {
         protocol: 'ws',
-        host: 'tsp.local',
+        host: 'cbp.local',
         port: 5981,
       },
     },
 
     base: command === 'build'
-      ? '/wp-content/themes/tsp/public/build/'
+      ? '/wp-content/themes/cbp/public/build/'
       : '/build/',
 
     plugins: [

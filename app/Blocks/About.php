@@ -8,7 +8,7 @@ use App\Support\SectionClasses;
 
 class About extends Block
 {
-	public $name = 'O firmie';
+	public $name = 'About';
 	public $description = 'about';
 	public $slug = 'about';
 	public $category = 'formatting';
@@ -33,11 +33,12 @@ public $supports = [
 			->addTab('Elementy', ['placement' => 'top'])
 			->addGroup('g_about', ['label' => ''])
 			->addImage('image', [
-				'label' => 'Obraz',
+				'label' => 'Portret',
 				'return_format' => 'array',
 				'preview_size' => 'thumbnail',
 			])
-			->addText('header', ['label' => 'Nagłówek'])
+			->addText('label', ['label' => 'Etykieta', 'default_value' => 'O mnie'])
+            ->addText('header', ['label' => 'Nagłówek'])
 			->addWysiwyg('text', [
 				'label' => 'Treść',
 				'tabs' => 'all',
@@ -55,15 +56,20 @@ public $supports = [
 			->endGroup()
 
 			/*--- TAB #2 ---*/
-			->addTab('Kafelki', ['placement' => 'top'])
+			->addTab('Logotypy', ['placement' => 'top'])
 			->addRepeater('r_about', [
-				'label' => 'Kafelki',
+				'label' => 'Logotypy organizacji',
 				'layout' => 'table', // 'row', 'block', albo 'table'
-				'min' => 1,
-				'button_label' => 'Dodaj kafelek'
+				'min' => 0,
+				'button_label' => 'Dodaj logotyp'
 			])
-			->addText('title', [
-				'label' => 'Nagłówek',
+            ->addImage('image', [
+                'label' => 'Logotyp',
+                'return_format' => 'array',
+                'preview_size' => 'thumbnail',
+            ])
+            ->addText('title', [
+                'label' => 'Nazwa organizacji (tekst alternatywny)',
 			])
 			->endRepeater()
 
@@ -128,8 +134,8 @@ public $supports = [
 	public function with(): array
 	{
 		$fields = [
-			'g_about' => get_field('g_about'),
-			'r_about' => get_field('r_about'),
+			'g_about' => get_field('g_about') ?: [],
+			'r_about' => get_field('r_about') ?: [],
 
 			'section_id' => get_field('section_id'),
 			'section_class' => get_field('section_class'),

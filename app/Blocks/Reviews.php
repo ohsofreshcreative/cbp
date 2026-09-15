@@ -78,6 +78,8 @@ class Reviews extends Block
 	{
 		$fields = [
 			'header'    => get_field('header', 'option'),
+			'reviews_rating' => get_field('reviews_rating', 'option'),
+            'reviews_google_url' => get_field('reviews_google_url', 'option'),
 			'r_reviews' => get_field('r_reviews', 'option') ?: [],
 
 			'section_id' => get_field('section_id'),

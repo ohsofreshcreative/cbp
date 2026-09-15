@@ -6,15 +6,16 @@ Jesteś ekspertem w budowaniu custom bloków ACF Composer dla motywu WordPress o
 
 ## Architektura bloku
 
-Każdy blok składa się z **dwóch plików**:
+Każdy blok składa się z **trzech plików**:
 
 | Plik | Ścieżka |
 |------|---------|
 | Klasa PHP | `app/Blocks/BlockName.php` |
 | Widok Blade | `resources/views/blocks/blockname.blade.php` |
+| Szkielet SCSS | `resources/css/blocks/blockname.scss` |
 
-Opcjonalnie tworzony jest też plik SCSS:
-- `resources/css/blocks/blockname.scss` (importowany w `resources/css/app.css`)
+Wygląd bloku zapisuj przede wszystkim klasami Tailwind bezpośrednio w Blade.
+Każdy blok musi mieć plik `resources/css/blocks/blockname.scss` i jego import, nawet jeśli zawiera tylko pusty selektor `.b-blockname {}`. Deklaracje SCSS dodawaj tylko dla uzasadnionych wyjątków opisanych w sekcji 3.
 
 ---
 
@@ -390,31 +391,61 @@ if ($itemCount >= 4) $gridClass = 'grid-cols-1 lg:grid-cols-4';
 
 ---
 
-## 3. Plik SCSS (`resources/css/blocks/blockname.scss`)
+## 3. Stylowanie — Tailwind jako domyślne rozwiązanie
 
-```scss
-.b-blockname {
+**Ta zasada obowiązuje przy tworzeniu nowych bloków i przebudowie istniejących. Nie pisz osobnego CSS pod każdy element.**
 
-    .__txt {
-        p {
-            margin-bottom: 16px;
-        }
-        p:last-child {
-            margin-bottom: 0 !important;
-        }
-    }
+- Układ, grid/flex, odstępy, rozmiary, kolory, typografię, obramowania, zaokrąglenia, pozycjonowanie, overflow, opacity i object-fit zapisuj klasami Tailwind w Blade.
+- Responsywność zapisuj wariantami `sm:`, `md:`, `lg:` itd., a stany wariantami `hover:`, `focus-visible:`, `group-hover:` czy `aria-selected:`. Nie odtwarzaj ich w SCSS.
+- Najpierw korzystaj z tokenów motywu i standardowej skali Tailwind, np. `text-h2`, `text-primary`, `bg-neutral-900`, `c-main`, `-smt`. Wybieraj najbliższą standardową wartość zamiast dokładnie odtwarzać piksele z projektu.
+- Minimalizuj wartości arbitralne w nawiasach kwadratowych. Stosuj np. `rounded-3xl` zamiast `rounded-[22px]` / `rounded-[26px]`, `opacity-10` zamiast `opacity-[0.12]`, `size-36` i `min-h-36` zamiast `[146px]`, oraz `leading-snug` zamiast `leading-[1.4]`.
+- Odstępy skaluj standardowymi klasami i breakpointami, np. `gap-6 md:gap-10 xl:gap-16`, zamiast arbitralnego `clamp()`. Gradienty zapisuj klasami `bg-linear-to-r from-black/85 to-black/90`, nie własnym `linear-gradient()`.
+- Wartości arbitralne dopuszczaj tylko wtedy, gdy standardowe klasy lub tokeny nie wystarczają do istotnego wymagania. Drobne różnice wizualne nie uzasadniają wyjątku. Warianty potomków do WYSIWYG, np. `[&_p]`, są dozwolone — nie są arbitralnymi wartościami rozmiaru czy koloru.
+- Proste style treści WYSIWYG zapisuj wariantami potomków, np. `[&_p]:mb-4 [&_p:last-child]:mb-0`.
+- Klasy BEM (`b-values`, `__card`, `__icon` itd.) zostają jako nazwy elementów i zaczepy JS. Ich obecność NIE oznacza, że trzeba tworzyć dla nich reguły SCSS.
+- Nie duplikuj klas Tailwind własnymi deklaracjami CSS ani nie przenoś całego stylowania do SCSS przez `@apply`.
+- SCSS jest wyjątkiem: stosuj go tylko do złożonych animacji, specyficznych nadpisań bibliotek lub reguł, których nie da się czytelnie wyrazić w Tailwind. Zapisz wyłącznie te reguły i krótko opisz powód wyjątku.
+- Jeżeli cały wygląd można zapisać klasami, pozostaw plik SCSS z pustym selektorem głównym, np. `.b-offer {}`, oraz jego import. Ten wymagany szkielet nie potrzebuje uzasadnienia wyjątku.
 
-    .__card {
-        // style kart
-    }
-}
+### Istniejący SCSS nie jest wzorcem do powielania
+
+- Przy tworzeniu lub przebudowie bloku przeczytaj jego Blade, SCSS oraz powiązany JS. Istnienie pliku SCSS nie jest uzasadnieniem, żeby go rozbudowywać lub zachowywać zwykłe style podczas przebudowy.
+- Przy przebudowie sprawdź cały SCSS tego bloku, nie tylko dopisane deklaracje. Przenieś zwykłe style do Tailwinda w Blade, usuń zastąpione reguły, a jeśli nie zostaną żadne deklaracje — zachowaj pusty selektor główny oraz plik i jego import. Przy drobnej poprawce nie rozszerzaj samowolnie zadania na przebudowę całego bloku, ale nie dodawaj kolejnych zwykłych reguł SCSS.
+- Przykład naruszenia: osobne reguły `.__tabs { display: flex; gap: 16px; }`, `.__panel { display: grid; ... }`, kolory i padding w `.__tab`, a także ich media queries, `:hover` i `[aria-selected="true"]`. To standardowe zastosowania Tailwinda, nie wyjątki wymagające SCSS.
+- Sam fakt używania zakładek, JS, pseudo-elementów lub atrybutu `hidden` nie uzasadnia osobnego SCSS. Zachowaj działanie stanów, np. ukrywanie paneli przy jednoczesnym użyciu `grid`, i używaj odpowiednich wariantów Tailwind.
+- Każdy pozostawiony wyjątek SCSS musi mieć krótki komentarz przy regule wyjaśniający konkretną przeszkodę. „Czytelniej”, „dokładniej jak w projekcie” lub „plik już istnieje” bez wskazania tej przeszkody nie są uzasadnieniem.
+
+### Minimalny potrzebny zestaw klas Tailwind
+
+- Nie odtwarzaj osobnymi klasami kosmetycznych szczegółów bez potrzeby. Korzystaj z domyślnego focusu przeglądarki, jeśli jest widoczny; nie powtarzaj pełnego zestawu własnych klas focus na każdym elemencie. Nigdy nie usuwaj widocznego focusu.
+- Dodawaj tylko klasy, które mają potrzebny efekt. Nie tłumacz mechanicznie każdej deklaracji SCSS na osobną klasę — najpierw sprawdź Preflight, style globalne, tokeny i dziedziczenie.
+- Nie dodawaj resetów takich jak `m-0`, `p-0`, `list-none` czy `no-underline`, jeśli obowiązujące style już zapewniają ten efekt. Dodaj je tylko wtedy, gdy rzeczywiście trzeba nadpisać inną regułę.
+- Nie powtarzaj odziedziczonego koloru ani typografii na każdym dziecku. Wspólne właściwości ustaw na najbliższym właściwym rodzicu, o ile dzieci mają je dziedziczyć.
+- Nie powtarzaj tej samej wartości na kolejnych breakpointach, np. `grid-cols-1 md:grid-cols-1`. Wariant dodawaj dopiero tam, gdzie wartość się zmienia.
+- Używaj skrótów, gdy dają ten sam efekt: `size-9` zamiast `w-9 h-9`, `px-4` zamiast `pl-4 pr-4`, `gap-4` zamiast `gap-x-4 gap-y-4`.
+- Usuń duplikaty i sprzeczne klasy dla tej samej właściwości oraz stanu. W `@class()` warianty warunkowe powinny być wzajemnie wykluczające, jeśli ustawiają tę samą właściwość.
+- Nie dokładaj klas „na wszelki wypadek”, dodatkowych wrapperów ani zaczepów BEM poza konwencją tego dokumentu bez konkretnej potrzeby. Zachowaj klasy używane przez JS i wspólne mechanizmy motywu.
+- Nie skracaj atrybutu `class` przez przenoszenie zwykłych stylów do SCSS lub `@apply`. Celem jest brak zbędnych reguł, nie arbitralny limit liczby klas.
+
+Przykład karty Values — układ i wygląd bez osobnych reguł CSS:
+
+```blade
+<article class="__card relative isolate overflow-hidden rounded-3xl bg-neutral-900 p-6 md:px-8 md:py-7 min-h-36">
+    <img class="__icon absolute right-0 top-1/2 -translate-y-1/2 size-36 object-contain opacity-10 pointer-events-none" src="{{ $value['icon']['url'] }}" alt="">
+    <div class="__content relative">
+        <h3 class="text-h6 text-white mb-3">{{ $value['header'] }}</h3>
+    </div>
+</article>
 ```
 
-Po stworzeniu zaimportuj w `resources/css/app.css`:
+### Obowiązkowa kontrola przed zakończeniem
 
-```css
-@import '../css/blocks/blockname.scss';
-```
+- [ ] Zwykłe style zmienianego bloku są w Blade; przy przebudowie sprawdzono także wcześniejsze reguły SCSS.
+- [ ] Każda pozostawiona deklaracja SCSS ma konkretne uzasadnienie wyjątku. Plik SCSS i import istnieją nawet wtedy, gdy plik zawiera tylko pusty selektor główny.
+- [ ] Klasy Tailwind nie dublują resetów, dziedziczenia, tokenów, innych klas ani niezmienionych wartości na breakpointach.
+- [ ] Zachowano zaczepy JS, stany aktywne, `hidden`, focus i responsywność. Przy zmianach kodu wykonano build i sprawdzono zmienione zachowanie oraz wygląd; ograniczenia weryfikacji podano w podsumowaniu.
+
+Nie uznawaj przebudowy bloku za ukończoną, jeśli zwykłe style nadal pozostają w jego SCSS bez uzasadnionego wyjątku.
 
 ---
 

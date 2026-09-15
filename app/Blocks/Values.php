@@ -8,7 +8,7 @@ use App\Support\SectionClasses;
 
 class Values extends Block
 {
-	public $name = 'Dlaczego warto';
+	public $name = 'Values';
 	public $description = 'values';
 	public $slug = 'values';
 	public $category = 'formatting';
@@ -31,7 +31,13 @@ class Values extends Block
 			->addTab('Treści', ['placement' => 'top'])
 			->addGroup('g_values', ['label' => ''])
 
-			->addText('header', ['label' => 'Nagłówek'])
+			->addImage('image', [
+                'label' => 'Zdjęcie w tle sekcji',
+                'return_format' => 'array',
+                'preview_size' => 'medium',
+            ])
+            ->addText('label', ['label' => 'Etykieta', 'default_value' => 'Nasze wartości'])
+            ->addText('header', ['label' => 'Nagłówek'])
 			->addWysiwyg('text', [
 				'label' => 'Treść',
 				'tabs' => 'all',
@@ -40,19 +46,15 @@ class Values extends Block
 			])
 
 			->addRepeater('r_values', [
-				'label' => 'values',
+				'label' => 'Wartości',
 				'layout' => 'table', // 'row', 'block', albo 'table'
 				'min' => 1,
 				'max' => 10,
-				'button_label' => 'Dodaj kafelek'
-			])
-			->addImage('image', [
-				'label' => 'Zdjęcie - tło',
-				'return_format' => 'array', // lub 'url', lub 'id'
-				'preview_size' => 'thumbnail',
+				'button_label' => 'Dodaj wartość'
 			])
 			->addImage('icon', [
-				'label' => 'Ikonka',
+				'label' => 'Ikona dekoracyjna',
+                'instructions' => 'Żółta ikona na przezroczystym tle. W widoku zostanie delikatnie przygaszona.',
 				'return_format' => 'array',
 				'preview_size' => 'thumbnail',
 			])
@@ -129,8 +131,8 @@ class Values extends Block
 	public function with(): array
 	{
 		$fields = [
-			'g_values' => get_field('g_values'),
-			'values' => get_field('g_values')['r_values'] ?? [],
+			'g_values' => get_field('g_values') ?: [],
+			'values' => (get_field('g_values')['r_values'] ?? []) ?: [],
 
 			'section_id' => get_field('section_id'),
 			'section_class' => get_field('section_class'),

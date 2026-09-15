@@ -39,13 +39,36 @@ class Hero extends Block
 				'label' => 'Wideo (w tle)',
 				'return_format' => 'url',
 			])
-			->addText('title', ['label' => 'Tytuł'])
+			->addWysiwyg('header', [
+				'label' => 'Nagłówek',
+				'tabs' => 'all', // 'visual', 'text', 'all'
+				'toolbar' => 'full', // 'basic', 'full'
+				'media_upload' => true,
+			])
 			->addWysiwyg('text', [
 				'label' => 'Treść',
 				'tabs' => 'all', // 'visual', 'text', 'all'
 				'toolbar' => 'full', // 'basic', 'full'
 				'media_upload' => true,
 			])
+			->addRepeater('badges', [
+				'label' => 'Wyróżnienia pod tekstem',
+				'layout' => 'table',
+				'min' => 0,
+				'max' => 2,
+				'button_label' => 'Dodaj wyróżnienie',
+			])
+			->addImage('icon', [
+				'label' => 'Ikona',
+				'instructions' => 'Wybierz ikonę w kolorze żółtym, na przezroczystym tle.',
+				'return_format' => 'array',
+				'preview_size' => 'thumbnail',
+			])
+			->addText('text', [
+				'label' => 'Tekst',
+				'required' => 1,
+			])
+			->endRepeater()
 			->addLink('button1', [
 				'label' => 'Przycisk #1',
 				'return_format' => 'array',
@@ -55,6 +78,28 @@ class Hero extends Block
 				'return_format' => 'array',
 			])
 			->endGroup()
+
+			/*--- TAB #2 ---*/
+			->addTab('Kafelki', ['placement' => 'top'])
+			->addRepeater('r_hero', [
+				'label' => 'Kafelki',
+				'layout' => 'table', // 'row', 'block', albo 'table'
+				'min' => 1,
+				'button_label' => 'Dodaj kafelek'
+			])
+			->addImage('image', [
+				'label' => 'Obraz',
+				'return_format' => 'array', // lub 'url', lub 'id'
+				'preview_size' => 'thumbnail',
+			])
+			->addText('title', [
+				'label' => 'Nagłówek',
+			])
+			->addLink('button', [
+				'label' => 'Link',
+				'return_format' => 'array',
+			])
+			->endRepeater()
 
 			/*--- USTAWIENIA BLOKU ---*/
 
@@ -118,6 +163,7 @@ class Hero extends Block
 	{
 		$fields = [
 			'g_hero' => get_field('g_hero'),
+			'r_hero' => get_field('r_hero'),
 
 			'section_id' => get_field('section_id'),
 			'section_class' => get_field('section_class'),

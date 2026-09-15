@@ -53,6 +53,72 @@
 
 */
 
+/*--- !FONTS ---*/
+
+@font-face {
+	font-family: 'Neue Montreal';
+	src: url('@fonts/NeueMontreal-Light.otf') format('opentype');
+	font-weight: 300;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Neue Montreal';
+	src: url('@fonts/NeueMontreal-LightItalic.otf') format('opentype');
+	font-weight: 300;
+	font-style: italic;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Neue Montreal';
+	src: url('@fonts/NeueMontreal-Regular.otf') format('opentype');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Neue Montreal';
+	src: url('@fonts/NeueMontreal-Italic.otf') format('opentype');
+	font-weight: 400;
+	font-style: italic;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Neue Montreal';
+	src: url('@fonts/NeueMontreal-Medium.otf') format('opentype');
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Neue Montreal';
+	src: url('@fonts/NeueMontreal-MediumItalic.otf') format('opentype');
+	font-weight: 500;
+	font-style: italic;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Neue Montreal';
+	src: url('@fonts/NeueMontreal-Bold.otf') format('opentype');
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Neue Montreal';
+	src: url('@fonts/NeueMontreal-BoldItalic.otf') format('opentype');
+	font-weight: 700;
+	font-style: italic;
+	font-display: swap;
+}
+
 /*--- !GLOBAL ---*/
 
 .grecaptcha-badge {
@@ -91,9 +157,10 @@ body {
 /*--- !ROOT ---*/
 
 :root {
-	--header: eurostile-extended, sans-serif;
-	--txt: inter-variable, sans-serif;
-	--btns-font: inter-variable, sans-serif;
+	--header: 'Neue Montreal', sans-serif;
+	--txt: "Montserrat", sans-serif;
+	--btns-font: "Montserrat", sans-serif;
+
 
 	--smt: 104px;
 	--spt: 104px;
@@ -145,11 +212,11 @@ body {
 
 .c-wide,
 .wide .c-main {
-	max-width: 100% !important;
-	margin: 0 24px;
+	max-width: 1640px !important;
+	margin: 0 auto;
 	padding-left: 24px !important;
 	padding-right: 24px !important;
-	width: calc(100% - 48px);
+	width: 100%;
 }
 
 @media only screen and (max-width: 768px) {
@@ -439,15 +506,6 @@ li {
 b,
 strong {
 	font-weight: 500;
-	color: var(--text-body);
-}
-
-.font-header {
-	font-family: var(--header) !important;
-}
-
-.font-body {
-	font-family: var(--text-body);
 }
 
 p:last-of-type {
@@ -476,7 +534,7 @@ h6,
 .text-h6,
 .h7,
 .text-h7 {
-	font-family: var(--header);
+	font-family: var(--header) !important;
 	font-weight: 500;
 }
 
@@ -590,6 +648,25 @@ h6,
 	transform: translateY(-3px);
 	box-shadow: 0px 8px 16px 0px rgba(20, 45, 74, 0.35);
 }
+
+.b-glow {
+	box-shadow: 0px 0px 16px 0px rgb(255, 210, 63);
+	transition: box-shadow 0.3s ease-in-out;
+}
+
+.b-glow:hover {
+	box-shadow: 0px 0px 32px 0px rgb(255, 210, 63);
+}
+
+.b-glow\/20 {
+	box-shadow: 0px 0px 16px 0px rgb(255, 210, 63, 0.1);
+	transition: box-shadow 0.3s ease-in-out;
+}
+
+.b-glow\/20:hover {
+	box-shadow: 0px 0px 32px 0px rgb(255, 210, 63, 0.2);
+}
+
 
 /*--- !BUTTONS ---*/
 
@@ -758,7 +835,7 @@ h6,
 	height: 100%;
 	display: flex;
 	align-items: center;
-	color: var(--text-body) !important;
+	color: #FFF !important;
 	font-size: 16px;
 	white-space: nowrap;
 }
@@ -769,7 +846,7 @@ h6,
 }
 
 .fixed-top.scrollDown {
-	background-color: #fff !important;
+	background-color: var(--color-secondary-800) !important;
 	box-shadow: 0 3px 5px rgba(27, 106, 23, 0.2) !important;
 }
 
@@ -1177,46 +1254,38 @@ article.post:hover {
 		margin-bottom: 40px;
 	}
 
-	.__widgets {
-		grid-template-columns: repeat(4, 1fr);
+	a {
+		color: var(--color-primary-700) !important;
+		transition: all 0.3s;
+	}
 
-		p {
-			color: var(--color-primary-700);
-		}
+	a:hover {
+		color: var(--color-primary-500) !important;
+		transition: all 0.3s;
+	}
 
-		a {
-			color: var(--color-primary-700);
-			transition: all 0.3s;
-		}
+	ul.sub-menu {
+		display: none;
+	}
 
-		a:hover {
-			color: var(--color-primary-200);
-			transition: all 0.3s;
-		}
+	@media (max-width: 1024px) {
+		grid-template-columns: 1fr 1fr;
 
-		ul.sub-menu {
-			display: none;
-		}
-
-		@media (max-width: 1024px) {
-			grid-template-columns: 1fr 1fr;
-
-			.footer_widget.nav_menu-5 {
-				ul {
-					display: grid;
-					grid-template-columns: 1fr;
-				}
+		.footer_widget.nav_menu-5 {
+			ul {
+				display: grid;
+				grid-template-columns: 1fr;
 			}
 		}
+	}
 
-		@media (max-width: 768px) {
-			grid-template-columns: 1fr;
-		}
+	@media (max-width: 768px) {
+		grid-template-columns: 1fr;
 	}
 
 	.footer_widget {
 		.menu {
-			line-height: 2.5rem;
+			line-height: 2rem;
 		}
 	}
 }

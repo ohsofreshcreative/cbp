@@ -3,7 +3,7 @@ use App\Walkers\DropdownWalker;
 use App\Walkers\MobileDropdownWalker;
 @endphp
 
-<header x-data="{ mobileOpen: false }" class="relative top-0 z-50 bg-white masthead fixed-top mx-0 lg:mx-6 rounded-b-2xl lg:rounded-b-[48px]">
+<header x-data="{ mobileOpen: false }" class="relative top-0 z-50 bg-transparent masthead fixed-top">
 
 	<!-- Desktop Header -->
 	<div class="items-center justify-between hidden h-full py-4 px-12 mx-auto lg:flex">
@@ -14,23 +14,23 @@ use App\Walkers\MobileDropdownWalker;
 			<span class="text-xl font-bold">{{ $siteName }}</span>
 			@endif
 		</a>
-		@if (has_nav_menu('primary_navigation'))
-		<nav class="ml-6 lg:ml-15 nav-primary w-full" aria-label="{{ wp_get_nav_menu_name('primary_navigation') }}">
-			{!! wp_nav_menu([
-			'theme_location' => 'primary_navigation',
-			'menu_class' => 'nav flex gap-x-3 lg:gap-x-6 text-lg font-medium justify-center items-center',
-			'container' => false,
-			'echo' => false,
-			'walker' => new DropdownWalker(),
-			]) !!}
-		</nav>
-		@endif
-
-
-		<div class="">
-			<a href="/kontakt/" class="block w-full btn btn-secondary">
-				Kontakt
-			</a>
+		<div class="flex items-center gap-8">
+			@if (has_nav_menu('primary_navigation'))
+			<nav class="nav-primary" aria-label="{{ wp_get_nav_menu_name('primary_navigation') }}">
+				{!! wp_nav_menu([
+				'theme_location' => 'primary_navigation',
+				'menu_class' => 'nav flex gap-x-3 lg:gap-x-6 text-lg font-medium justify-center items-center',
+				'container' => false,
+				'echo' => false,
+				'walker' => new DropdownWalker(),
+				]) !!}
+			</nav>
+			@endif
+			<div class="">
+				<a href="/kontakt/" class="block w-full btn btn-secondary">
+					Kontakt
+				</a>
+			</div>
 		</div>
 	</div>
 

@@ -28,7 +28,7 @@ class ThemeSettings extends Field
 			])
 
 			->addTab('Dane kontaktowe (Stopka)', ['placement' => 'top'])
-			->addGroup('footer_contact', ['label' => 'Dane w pierwszej kolumnie stopki'])
+			->addGroup('footer_contact', ['label' => 'Dane kontaktowe stopki'])
 
 			->addWysiwyg('address', [
 				'label' => 'Adres / Dane firmy',
@@ -42,7 +42,18 @@ class ThemeSettings extends Field
 			->addText('email', [
 				'label' => 'Adres E-mail',
 			])
-			->endGroup();
+            ->endGroup()
+            ->addTab('Wygląd stopki', ['placement' => 'top'])
+            ->addImage('footer_decoration', [
+                'label' => 'Ilustracja po prawej',
+                'instructions' => 'Grafika na przezroczystym tle. Zostanie wyświetlona jako przygaszona dekoracja.',
+                'return_format' => 'array', 'preview_size' => 'medium',
+            ])
+            ->addGroup('footer_social', ['label' => 'Social media'])
+            ->addUrl('facebook', ['label' => 'Facebook'])
+            ->addUrl('instagram', ['label' => 'Instagram'])
+            ->addUrl('youtube', ['label' => 'YouTube'])
+            ->endGroup();
 
 		return [$theme];
 	}

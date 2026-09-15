@@ -32,6 +32,7 @@ class Cta extends Block
 			->addMessage('Edycja', 'Tę zawartość edytujemy klikając w menu panelu administratora „Wezwanie do działania”.')
 			->addTrueFalse('form', [
 				'label' => 'Pokaż formularz',
+                'default_value' => 1,
 				'ui' => 1,
 				'ui_on_text' => 'Tak',
 				'ui_off_text' => 'Nie',
@@ -115,7 +116,7 @@ class Cta extends Block
 
 	public function with(): array
 	{
-		$g_octa = get_field('g_octa', 'option');
+		$g_octa = get_field('g_octa', 'option') ?: [];
 
 		if ((bool) get_field('content')) {
 			if ($header = get_field('header')) {

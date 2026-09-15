@@ -25,7 +25,11 @@ class Octa extends Options
 				'return_format' => 'array',
 				'preview_size'  => 'medium',
 			])
-			->addText('header', ['label' => 'Nagłówek'])
+			->addText('header', ['label' => 'Nagłówek', 'instructions' => 'Otocz wyróżniony fragment znacznikami <strong>…</strong>, aby nadać mu żółty kolor.'])
+            ->addRepeater('benefits', ['label' => 'Korzyści', 'layout' => 'table', 'button_label' => 'Dodaj korzyść'])
+            ->addText('text', ['label' => 'Tekst'])
+            ->endRepeater()
+            ->addText('phone', ['label' => 'Numer telefonu'])
 			->addWysiwyg('txt', [
 				'label'        => 'Treść',
 				'tabs'         => 'visual',

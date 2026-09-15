@@ -11,14 +11,15 @@ import.meta.glob(['../images/**', '../fonts/**']);
 // Twoje niestandardowe moduły JS
 import './menubar.js';
 import './footer-accordion.js';
+import './blocks/offer.js';
 
 /*--- USED ---*/
 
 document.addEventListener('DOMContentLoaded', () => {
   if (document.querySelector('.b-reviews')) import('./blocks/reviews');
   if (document.querySelector('.b-tabs')) import('./blocks/tabs');
+  if (document.querySelector('.b-proces')) import('./blocks/proces');
   if (document.querySelector('.b-slider')) import('./blocks/slider');
-  if (document.querySelector('.b-values')) import('./blocks/values');
   if (document.querySelector('.b-catalogues')) import('./blocks/catalogues');
 });
 

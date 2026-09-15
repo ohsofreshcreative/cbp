@@ -1,56 +1,54 @@
-<!--- values --->
-
 <section
 	data-gsap-anim="section"
 	@if(!empty($section_id)) id="{{ $section_id }}" @endif
-	@class([ 'b-values c-main relative -smt' ,
+	@class(['b-values relative -smt isolate overflow-clip bg-neutral-800 text-white py-14 md:py-24 xl:py-36',
 	$sectionClass=> filled($sectionClass),
 	$section_class => filled($section_class),
 	$background => filled($background) && $background !== 'none',
 	])>
-
-	@if(!empty($g_values['header']))
-	<div class="__wrapper grid grid-cols-1 md:grid-cols-2 items-center gap-6 relative z-20">
-		<p data-gsap-element="header" class="text-h4 text-primary">{{ $g_values['header']}}</p>
-		<div data-gsap-element="txt" class="__txt">
-			{!! $g_values['text'] !!}
-		</div>
-	</div>
+	@if (!empty($g_values['image']['url']))
+	<img class="__background absolute inset-0 -z-10 size-full pointer-events-none object-cover object-center" src="{{ $g_values['image']['url'] }}" alt="" loading="lazy" />
+	<div class="__overlay absolute inset-0 -z-10 size-full pointer-events-none bg-linear-to-r from-black/90 to-black/95" aria-hidden="true"></div>
 	@endif
 
-	<div class="swiper values-swiper !overflow-visible relative z-20 mt-12">
-		<div class="swiper-wrapper">
-			@foreach($values as $slide)
-			<div class="swiper-slide !w-[83%] sm:!w-[44%] md:!w-[30%] lg:!w-[23%] bg-white p-10">
-				<div class="info">
-					@if(!empty($slide['icon']))
-					<div class="icon">
-						{!! wp_get_attachment_image($slide['icon']['ID'], 'thumbnail') !!}
-					</div>
+	<div @class(['__wrapper c-main relative grid grid-cols-1 md:grid-cols-2 items-start gap-8', 'lg:gap-x-24 lg:gap-y-16' => $gap, 'lg:gap-16' => !$gap])>
+		<div class="__intro order1 min-w-0 sticky top-20 h-max">
+			@if (!empty($g_values['label']))
+			<p class="__label flex items-center gap-2.5 mt-0 mb-5 text-lg leading-snug">
+				<svg class="text-primary opacity-55 shrink-0" width="30" height="26" viewBox="0 0 30 26" fill="none" aria-hidden="true">
+					<path d="M1 14h4L8 4l4 19 4-17 4 14 3-12 3 6h3" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+				</svg>
+				<span>{{ $g_values['label'] }}</span>
+			</p>
+			@endif
+			@if (!empty($g_values['header']))
+			<h2 class="__heading text-h2 text-white leading-none mt-0 mb-5">{{ $g_values['header'] }}</h2>
+			@endif
+			@if (!empty($g_values['text']))
+			<div class="__txt text-neutral-300 text-base md:text-lg leading-snug [&_p]:mt-0 [&_p]:mb-4 [&_p:last-child]:mb-0">{!! $g_values['text'] !!}</div>
+			@endif
+		</div>
+
+		@if ($values)
+		<div class="__items order2 grid min-w-0 gap-4 xl:gap-8">
+			@foreach ($values as $value)
+			@if (!empty($value['header']) || !empty($value['opis']))
+			<article class="__card relative isolate overflow-hidden rounded-3xl bg-neutral-900 p-6 md:px-8 md:py-7 min-h-36 flex items-start border border-primary b-glow/20">
+				@if (!empty($value['icon']['url']))
+				<img class="__icon absolute right-0 top-1/2 -translate-y-1/2 size-32 md:size-36 object-contain opacity-10 pointer-events-none" src="{{ $value['icon']['url'] }}" alt="" loading="lazy" />
+				@endif
+				<div class="__content relative w-full">
+					@if (!empty($value['header']))
+					<h3 class="__title text-h6 text-white leading-tight mt-0 mb-3">{{ $value['header'] }}</h3>
 					@endif
-					@if(!empty($slide['header']))
-					<p class="__header font-header text-h7">{{ $slide['header'] }}</p>
-					@endif
-					@if(!empty($slide['opis']))
-					<div class="__txt mt-2">{{ $slide['opis'] }}</div>
+					@if (!empty($value['opis']))
+					<div class="__description text-neutral-300 text-base leading-normal wrap-anywhere">{!! wp_kses_post($value['opis']) !!}</div>
 					@endif
 				</div>
-			</div>
+			</article>
+			@endif
 			@endforeach
 		</div>
-
-		<div data-gsap-element="arrows" class="w-full z-10 flex items-center pointer-events-none gap-4 mt-8">
-			<div class="__prev rounded-full bg-secondary h-14 w-14 flex items-center justify-center pointer-events-auto cursor-pointer transition-all duration-400 shrink-0">
-				<svg xmlns="http://www.w3.org/2000/svg" width="13" height="12" viewBox="0 0 13 12" fill="none">
-					<path d="M0.270429 5.31498C0.270706 5.31469 0.270937 5.31435 0.27126 5.31406L5.08882 0.281803C5.44973 -0.0951806 6.03348 -0.0937777 6.39273 0.285093C6.75194 0.663916 6.75055 1.27664 6.38964 1.65367L3.15514 5.03226L12.078 5.03226C12.5872 5.03226 13 5.46552 13 6C13 6.53448 12.5872 6.96774 12.078 6.96774L3.15518 6.96774L6.3896 10.3463C6.75051 10.7234 6.75189 11.3361 6.39269 11.7149C6.03344 12.0938 5.44963 12.0951 5.08877 11.7182L0.271213 6.68594C0.270936 6.68565 0.270706 6.68531 0.270383 6.68502C-0.0907122 6.30673 -0.08956 5.69202 0.270429 5.31498Z" fill="#FFF" />
-				</svg>
-			</div>
-
-			<div class="__next rounded-full bg-secondary h-14 w-14 flex items-center justify-center pointer-events-auto cursor-pointer transition-all duration-300 shrink-0">
-				<svg xmlns="http://www.w3.org/2000/svg" width="13" height="12" viewBox="0 0 13 12" fill="none">
-					<path d="M12.7296 5.31498C12.7293 5.31469 12.7291 5.31435 12.7287 5.31406L7.91118 0.281803C7.55027 -0.0951806 6.96652 -0.0937777 6.60727 0.285093C6.24806 0.663916 6.24945 1.27664 6.61036 1.65367L9.84486 5.03226L0.921985 5.03226C0.412773 5.03226 0 5.46552 0 6C0 6.53448 0.412773 6.96774 0.921985 6.96774L9.84482 6.96774L6.6104 10.3463C6.24949 10.7234 6.24811 11.3361 6.60731 11.7149C6.96657 12.0938 7.55037 12.0951 7.91123 11.7182L12.7288 6.68594C12.7291 6.68565 12.7293 6.68531 12.7296 6.68502C13.0907 6.30673 13.0896 5.69202 12.7296 5.31498Z" fill="#FFF" />
-				</svg>
-			</div>
-		</div>
+		@endif
 	</div>
 </section>

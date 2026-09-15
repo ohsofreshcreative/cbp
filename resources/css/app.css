@@ -10,42 +10,45 @@
   /* base */
   --body: 42 63 80; /* #2A3F50 */
 
-/* PRIMARY (lewa kolumna – granat) */
---primary: 23 28 132;   /* #171C84 */
---p-hover: 5 6 26;      /* #05061A */
+/* PRIMARY (lewa kolumna – żółty) */
+.primary-sample {color:#FFD23F}
+--primary: 255 210 63;   /* #FFD23F */
+--p-hover: 51 42 13;     /* #332A0D */
 
---p-50: 200 202 240;    /* #C8CAF0 */
---p-100: 168 170 221;   /* #A8AADD */
---p-200: 133 136 204;   /* #8588CC */
---p-300: 92 96 182;     /* #5C60B6 */
---p-400: 57 61 162;     /* #393DA2 */
---p-500: 23 28 132;     /* #171C84 */
---p-600: 19 23 110;     /* #13176E */
---p-700: 15 19 88;      /* #0F1358 */
---p-800: 12 14 66;      /* #0C0E42 */
---p-900: 8 9 44;        /* #08092C */
---p-dark: 5 6 26;       /* #05061A */
+--p-50: 255 246 217;    /* #FFF6D9 */
+--p-100: 255 240 191;   /* #FFF0BF */
+--p-200: 255 233 159;   /* #FFE99F */
+--p-300: 255 225 127;   /* #FFE17F */
+--p-400: 255 218 95;    /* #FFDA5F */
+--p-500: 255 210 63;    /* #FFD23F */
+--p-600: 213 175 53;    /* #D5AF35 */
+--p-700: 170 140 42;    /* #AA8C2A */
+--p-800: 128 105 32;    /* #806920 */
+--p-900: 85 70 21;      /* #554615 */
+--p-dark: 51 42 13;     /* #332A0D */
 
---action: rgb(23, 28, 132);
+--action: rgb(255, 210, 63);
 
-/* SECONDARY (niebieski) */
---secondary: 38 130 232;  /* #2682E8 */
---s-hover: 32 108 193;    /* #206CC1 */
+/* SECONDARY (szary) */
+.primary-sample {color:#3D3D3D}
+--secondary: 61 61 61;    /* #3D3D3D */
+--s-hover: 51 51 51;      /* #333333 */
 
---s-50: 212 230 250;    /* #D4E6FA */
---s-100: 183 213 247;   /* #B7D5F7 */
---s-200: 146 192 243;   /* #92C0F3 */
---s-300: 110 172 240;   /* #6EACF0 */
---s-400: 74 151 236;    /* #4A97EC */
---s-500: 38 130 232;    /* #2682E8 */
---s-600: 32 108 193;    /* #206CC1 */
---s-700: 25 87 155;     /* #19579B */
---s-800: 19 65 116;     /* #134174 */
---s-900: 13 43 77;      /* #0D2B4D */
---s-dark: 8 26 46;      /* #081A2E */
+--s-50: 216 216 216;    /* #D8D8D8 */
+--s-100: 190 190 190;   /* #BEBEBE */
+--s-200: 158 158 158;   /* #9E9E9E */
+--s-300: 126 126 126;   /* #7E7E7E */
+--s-400: 93 93 93;      /* #5D5D5D */
+--s-500: 61 61 61;      /* #3D3D3D */
+--s-600: 51 51 51;      /* #333333 */
+--s-700: 41 41 41;      /* #292929 */
+--s-800: 31 31 31;      /* #1F1F1F */
+--s-900: 20 20 20;      /* #141414 */
+--s-dark: 12 12 12;     /* #0C0C0C */
 
 
 /* THIRD (różowy/fioletowy) */
+.primary-sample {color:#F881F0}
 --third: 248 129 240; /* #F881F0 */
 --t-hover: 207 108 200; /* #CF6CC8 */
 
@@ -64,7 +67,7 @@
   /* neutrals / fixed backgrounds */
   --text-body: rgb(var(--p-800));
   --gray: #2a3f50;
-  --bg: #F4F9FF;
+  --bg: #141210;
   --bg-light: rgb(var(--s-100));
   --bg-lighter: rgb(var(--s-50));
   --bg-brand: #002704;
@@ -151,6 +154,12 @@
 @utility m-img {
   margin-bottom: var(--m-img);
 }
+@utility font-header {
+  font-family: var(--header) !important;
+}
+@utility font-body {
+  font-family: var(--text-body);
+}
 
 @import '../css/variables.scss';
 
@@ -161,18 +170,13 @@
 
 /*-- USED ---*/
 @import '../css/blocks/hero.scss';
-@import '../css/blocks/about.scss';
-@import '../css/blocks/values.scss';
 @import '../css/blocks/content.scss';
-@import '../css/blocks/cta.scss';
 @import '../css/blocks/whyus.scss';
 @import '../css/blocks/logos.scss';
-@import '../css/blocks/reviews.scss';
 @import '../css/blocks/banner.scss';
 @import '../css/blocks/product.scss';
 @import '../css/blocks/table.scss';
 @import '../css/blocks/products.scss';
-@import '../css/blocks/offers.scss';
 @import '../css/blocks/wysiwyg.scss';
 @import '../css/blocks/history.scss';
 @import '../css/blocks/checks.scss';
@@ -189,5 +193,6 @@
 @import '../css/blocks/image.scss';
 @import '../css/blocks/numbers.scss';
 @import '../css/blocks/overlap.scss';
-@import '../css/blocks/proces.scss';
 @import '../css/blocks/tabs.scss';
+
+@import '../css/blocks/offer.scss';

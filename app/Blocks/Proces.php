@@ -30,7 +30,7 @@ class Proces extends Block
 			/*--- FIELDS ---*/
 			->addTab('Treść', ['placement' => 'top'])
 			->addGroup('g_proces', ['label' => ''])
-			->addText('header', ['label' => 'Nagłówek'])
+			->addText('header', ['label' => 'Nagłówek', 'default_value' => 'Jak wygląda proces współpracy?'])
 			->addWysiwyg('txt', [
 				'label' => 'Opis',
 				'tabs' => 'all', // 'visual', 'text', 'all'
@@ -39,21 +39,16 @@ class Proces extends Block
 			])
 			->endGroup()
 
-			->addTab('Kafelki', ['placement' => 'top'])
+			->addTab('Etapy', ['placement' => 'top'])
 			->addRepeater('r_proces', [
-				'label' => 'proces',
+				'label' => 'Etapy procesu',
 				'layout' => 'table', // 'row', 'block', albo 'table'
-				'min' => 3,
-				'max' => 4,
-				'button_label' => 'Dodaj element oferty'
+				'min' => 1,
+				'button_label' => 'Dodaj etap'
 			])
 			->addText('number', [
-				'label' => 'Krok',
-			])
-			->addImage('image', [
-				'label' => 'Obraz',
-				'return_format' => 'array', // lub 'url', lub 'id'
-				'preview_size' => 'medium',
+				'label' => 'Numer kroku (opcjonalny)',
+                'instructions' => 'Puste pole = automatyczna numeracja 01, 02, 03…',
 			])
 			->addText('title', [
 				'label' => 'Nagłówek',
@@ -121,8 +116,8 @@ class Proces extends Block
 	public function with(): array
 	{
 		$fields = [
-			'g_proces' => get_field('g_proces'),
-			'r_proces' => get_field('r_proces'),
+			'g_proces' => get_field('g_proces') ?: [],
+			'r_proces' => get_field('r_proces') ?: [],
 
 			'section_id' => get_field('section_id'),
 			'section_class' => get_field('section_class'),

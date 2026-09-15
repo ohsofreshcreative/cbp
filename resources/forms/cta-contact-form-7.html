@@ -1,0 +1,18 @@
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+  <label class="sm:col-span-2">Imię i nazwisko
+    [text* your-name autocomplete:name placeholder "np. Jan Kowalski"]
+  </label>
+  <label>Adres e-mail
+    [email* your-email autocomplete:email placeholder "adres@domena.pl"]
+  </label>
+  <label>Numer telefonu
+    [tel your-phone autocomplete:tel placeholder "+48 000 000 000"]
+  </label>
+  <label class="sm:col-span-2">Treść wiadomości
+    [textarea* your-message placeholder "Opisz krótko swój projekt lub wyzwanie, z którym się mierzysz..."]
+  </label>
+  <div class="sm:col-span-2 my-3">
+    [acceptance your-consent] Akceptuję politykę prywatności i zgadzam się na kontakt. [/acceptance]
+  </div>
+  <div class="sm:col-span-2">[submit "Wyślij zgłoszenie"]</div>
+</div>

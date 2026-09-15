@@ -1,80 +1,69 @@
-<footer class="footer bg-white overflow-hidden relative z-10">
-
-
-	<div class="__wrapper relative z-10">
-
-		<svg class="absolute top-0 right-0" xmlns="http://www.w3.org/2000/svg" width="478" height="60" viewBox="0 0 478 60" fill="none">
-			<path fill-rule="evenodd" clip-rule="evenodd" d="M0 0H478V60H267.844H57.6888C25.8201 60 0 33.9353 0 1.76471V0Z" fill="url(#paint0_linear_53446_2)" />
-			<defs>
-				<linearGradient id="paint0_linear_53446_2" x1="573.2" y1="30" x2="27.9058" y2="30" gradientUnits="userSpaceOnUse">
-					<stop stop-color="#2682E8" />
-					<stop offset="1" stop-color="#171C84" />
-				</linearGradient>
-			</defs>
-		</svg>
-
-		<svg class="absolute bottom-0 right-30 xl:left-0" xmlns="http://www.w3.org/2000/svg" width="1343" height="60" viewBox="0 0 1343 60" fill="none">
-			<path fill-rule="evenodd" clip-rule="evenodd" d="M1342.5 60H-1V0H1074.66H1284.81C1316.68 0 1342.5 26.0647 1342.5 58.2353V60Z" fill="url(#paint0_linear_53446_3)" />
-			<defs>
-				<linearGradient id="paint0_linear_53446_3" x1="769.299" y1="30" x2="1314.59" y2="30" gradientUnits="userSpaceOnUse">
-					<stop stop-color="#2682E8" />
-					<stop offset="1" stop-color="#171C84" />
-				</linearGradient>
-			</defs>
-		</svg>
-
-		<div class="c-main">
-			<div class="__widgets grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-1 md:gap-6 footer-py">
-
-				<div class="flex flex-col gap-4 mb-10 md:mb-0">
-
-					@if(!empty($footer_contact['address']))
-					@if(!empty($logo_footer))
-					<a href="{{ home_url('/') }}" class="block max-w-[180px]">
-						<img src="{{ $logo_footer['url'] }}" alt="{{ $logo_footer['alt'] ?? get_bloginfo('name') }}" class="w-full h-auto object-contain" />
-					</a>
-					@endif
-					<div class="__txt mt-2">
-						{!! $footer_contact['address'] !!}
-					</div>
-					@endif
-					<div class="flex flex-col gap-2">
-						@if(!empty($footer_contact['phone']))
-						<a href="tel:{{ str_replace(' ', '', $footer_contact['phone']) }}" class="font-medium inline-flex items-center gap-2 hover:!underline">
-							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-								<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.79 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-							</svg>
-							{{ $footer_contact['phone'] }}
-						</a>
-						@endif
-						@if(!empty($footer_contact['email']))
-						<a href="mailto:{{ $footer_contact['email'] }}" class="font-medium inline-flex items-center gap-2 hover:!underline">
-							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-								<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-								<polyline points="22,6 12,13 2,6"></polyline>
-							</svg>
-							{{ $footer_contact['email'] }}
-						</a>
-						@endif
-					</div>
-				</div>
-
-				@for ($i = 1; $i <= 4; $i++)
-					@if (is_active_sidebar('sidebar-footer-' . $i))
-					<div>@php(dynamic_sidebar('sidebar-footer-' . $i))
-			</div>
-			@endif
-			@endfor
-		</div>
-	</div>
-
-	</div>
-
-	<div class="c-main bg-white flex flex-col md:flex-row justify-between gap-6 py-10 footer-bottom">
-		<p class="">Copyright ©{{ date('Y') }} {{ get_bloginfo('name') }}. All Rights Reserved</p>
-		<p class="flex gap-2">Designed &amp; Developed by
-			<a target="_blank" rel="nofollow" href="https://www.ohsofresh.pl" title="OhSoFresh"><img class="oh" src="{{ get_template_directory_uri() }}/resources/images/ohsofresh.svg"></a>
-		</p>
-	</div>
-
+<footer class="footer relative z-10 isolate overflow-hidden bg-[#211A03] text-primary-200">
+    <div class="__main relative py-14 md:pt-24 md:pb-20">
+        @if (!empty($footer_decoration['url']))
+            <img class="__decoration absolute right-0 bottom-0 h-full max-w-1/3 object-contain object-right-bottom opacity-20 pointer-events-none" src="{{ $footer_decoration['url'] }}" alt="" loading="lazy" />
+        @endif
+        <div class="__wrapper c-main relative">
+            <div class="__top flex flex-col sm:flex-row sm:items-center justify-between gap-8 pb-7 border-b border-dotted border-primary/60">
+                <a href="{{ home_url('/') }}" class="__brand flex items-center gap-5 text-white hover:text-primary">
+                    @if (!empty($logo_footer['url']))
+                        <img class="size-20 shrink-0 object-contain" src="{{ $logo_footer['url'] }}" alt="" loading="lazy" />
+                    @endif
+                    <span class="text-lg font-header">{{ get_bloginfo('name') }}</span>
+                </a>
+                <div class="__social flex items-center gap-5 text-primary">
+                    @foreach (['facebook' => 'Facebook', 'instagram' => 'Instagram', 'youtube' => 'YouTube'] as $network => $label)
+                        @if (!empty($footer_social[$network]))
+                            <a href="{{ $footer_social[$network] }}" target="_blank" rel="noopener noreferrer" aria-label="{{ $label }}" class="hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary">
+                                <svg class="size-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                    @if ($network === 'facebook')
+                                        <path d="M14 22v-9h3l.5-4H14V7c0-1.2.3-2 2-2h2V1.4A25 25 0 0 0 15 1c-3 0-5 1.8-5 5v3H7v4h3v9z" />
+                                    @elseif ($network === 'instagram')
+                                        <rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2" /><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2" /><circle cx="17.5" cy="6.5" r="1.2" />
+                                    @else
+                                        <path d="M23 7a3 3 0 0 0-2-2C18 4 6 4 3 5a3 3 0 0 0-2 2c-.7 3-.7 7 0 10a3 3 0 0 0 2 2c3 1 15 1 18 0a3 3 0 0 0 2-2c.7-3 .7-7 0-10ZM9 16V8l7 4-7 4Z" />
+                                    @endif
+                                </svg>
+                            </a>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+            <div class="__columns grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-16 pt-12 md:pt-14">
+                @foreach ([[1, 3], [2, 4]] as $sidebars)
+                    <div class="__menu space-y-8 [&_.widget-title]:text-primary-100 [&_.widget-title]:text-h5 [&_.widget-title]:cursor-default [&_.widget-title]:after:hidden! [&_.menu]:max-h-none [&_.menu]:overflow-visible [&_ul]:list-none [&_ul]:p-0 [&_ul]:m-0 [&_li]:mb-2 [&_a]:text-primary-200 [&_a:hover]:text-primary [&_.menu]:leading-normal">
+                        @foreach ($sidebars as $sidebar)
+                            @if (is_active_sidebar('sidebar-footer-' . $sidebar))
+                                @php
+                                    dynamic_sidebar('sidebar-footer-' . $sidebar);
+                                @endphp
+                            @endif
+                        @endforeach
+                    </div>
+                @endforeach
+                <div class="__contact min-w-0">
+                    <h2 class="text-h5 text-primary-100 mt-0 mb-5">Kontakt</h2>
+                    <div class="flex flex-col items-start gap-4">
+                        @if (!empty($footer_contact['phone']))
+                            <a href="tel:{{ preg_replace('/[^0-9+]/', '', $footer_contact['phone']) }}" class="text-lg hover:text-primary">{{ $footer_contact['phone'] }}</a>
+                        @endif
+                        @if (!empty($footer_contact['email']))
+                            <a href="mailto:{{ $footer_contact['email'] }}" class="text-lg wrap-anywhere hover:text-primary">{{ $footer_contact['email'] }}</a>
+                        @endif
+                        @if (!empty($footer_contact['address']))
+                            <div class="__address text-sm [&_p]:m-0">{!! wp_kses_post($footer_contact['address']) !!}</div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="__bottom border-t border-primary/10 py-8 md:py-10">
+        <div class="c-main flex flex-col md:flex-row items-center justify-center gap-5 md:gap-8 text-xs text-primary-200/70 text-center">
+            <p class="m-0">Copyright ©{{ date('Y') }} {{ get_bloginfo('name') }}. All rights reserved.</p>
+            <p class="m-0 flex flex-wrap items-center justify-center gap-2 md:border-l md:border-primary/60 md:pl-8">Designed &amp; Developed by
+                <a target="_blank" rel="nofollow noopener noreferrer" href="https://www.ohsofresh.pl" title="OhSoFresh"><img class="w-28 h-auto" src="{{ get_template_directory_uri() }}/resources/images/ohsofresh.svg" alt="OhSoFresh" loading="lazy" /></a>
+            </p>
+        </div>
+    </div>
 </footer>

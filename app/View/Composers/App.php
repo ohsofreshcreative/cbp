@@ -25,6 +25,8 @@ class App extends Composer
 			'logo' => get_field('logo', 'option'),
 			'logo_footer' => get_field('logo_footer', 'option'),
 			'footer_contact' => get_field('footer_contact', 'option'),
+            'footer_social' => get_field('footer_social', 'option') ?: [],
+            'footer_decoration' => get_field('footer_decoration', 'option'),
 		];
 	}
 

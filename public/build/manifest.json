@@ -1,35 +1,42 @@
 {
-  "_pagination-Cdzpe9Bp.js": {
-    "file": "assets/pagination-Cdzpe9Bp.js",
-    "name": "pagination",
+  "_a11y-DA5I03qn.js": {
+    "file": "assets/a11y-DA5I03qn.js",
+    "name": "a11y",
     "imports": [
-      "_swiper-BYn8PY8Z.js"
-    ],
-    "css": [
-      "assets/pagination-D8gyGEei.css"
+      "_swiper-RgwxKcws.js"
     ]
   },
-  "_pagination-D8gyGEei.css": {
-    "file": "assets/pagination-D8gyGEei.css",
-    "src": "_pagination-D8gyGEei.css"
+  "_navigation-XfLRlpHD.css": {
+    "file": "assets/navigation-XfLRlpHD.css",
+    "src": "_navigation-XfLRlpHD.css"
   },
-  "_swiper-BYn8PY8Z.js": {
-    "file": "assets/swiper-BYn8PY8Z.js",
-    "name": "swiper",
+  "_navigation-ar7R9OA-.js": {
+    "file": "assets/navigation-ar7R9OA-.js",
+    "name": "navigation",
+    "imports": [
+      "_swiper-RgwxKcws.js"
+    ],
     "css": [
-      "assets/swiper-HzbfsHSZ.css"
+      "assets/navigation-XfLRlpHD.css"
     ]
   },
   "_swiper-HzbfsHSZ.css": {
     "file": "assets/swiper-HzbfsHSZ.css",
     "src": "_swiper-HzbfsHSZ.css"
   },
+  "_swiper-RgwxKcws.js": {
+    "file": "assets/swiper-RgwxKcws.js",
+    "name": "swiper",
+    "css": [
+      "assets/swiper-HzbfsHSZ.css"
+    ]
+  },
   "editor.deps.json": {
     "file": "assets/editor.deps-DxpY22xl.json",
     "src": "editor.deps.json"
   },
   "resources/css/app.css": {
-    "file": "assets/app-1epjkoNW.css",
+    "file": "assets/app-DaEI2NiT.css",
     "name": "app",
     "names": [
       "app.css"
@@ -37,6 +44,14 @@
     "src": "resources/css/app.css",
     "isEntry": true,
     "assets": [
+      "assets/NeueMontreal-Light-B8VR3EGD.otf",
+      "assets/NeueMontreal-LightItalic-DQNqNrO8.otf",
+      "assets/NeueMontreal-Regular-CxM6MvLr.otf",
+      "assets/NeueMontreal-Italic-DC5BIR_9.otf",
+      "assets/NeueMontreal-Medium-BnH0vvJJ.otf",
+      "assets/NeueMontreal-MediumItalic-DNRhpLuW.otf",
+      "assets/NeueMontreal-Bold-sjQCZh1u.otf",
+      "assets/NeueMontreal-BoldItalic-DOVUbZrl.otf",
       "assets/btn-arrow-BCoyKg90.svg",
       "assets/bottom-arrow-BE5KB43S.svg",
       "assets/pointer-5_58814e.svg",
@@ -45,7 +60,7 @@
     ]
   },
   "resources/css/editor.css": {
-    "file": "assets/editor-B1qt5wlS.css",
+    "file": "assets/editor-DcBJpjDd.css",
     "name": "editor",
     "names": [
       "editor.css"
@@ -53,12 +68,52 @@
     "src": "resources/css/editor.css",
     "isEntry": true,
     "assets": [
+      "assets/NeueMontreal-Light-B8VR3EGD.otf",
+      "assets/NeueMontreal-LightItalic-DQNqNrO8.otf",
+      "assets/NeueMontreal-Regular-CxM6MvLr.otf",
+      "assets/NeueMontreal-Italic-DC5BIR_9.otf",
+      "assets/NeueMontreal-Medium-BnH0vvJJ.otf",
+      "assets/NeueMontreal-MediumItalic-DNRhpLuW.otf",
+      "assets/NeueMontreal-Bold-sjQCZh1u.otf",
+      "assets/NeueMontreal-BoldItalic-DOVUbZrl.otf",
       "assets/btn-arrow-BCoyKg90.svg",
       "assets/bottom-arrow-BE5KB43S.svg",
       "assets/pointer-5_58814e.svg",
       "assets/phone-HYNTkel6.svg",
       "assets/mail-Cwopa4lM.svg"
     ]
+  },
+  "resources/fonts/NeueMontreal-Bold.otf": {
+    "file": "assets/NeueMontreal-Bold-sjQCZh1u.otf",
+    "src": "resources/fonts/NeueMontreal-Bold.otf"
+  },
+  "resources/fonts/NeueMontreal-BoldItalic.otf": {
+    "file": "assets/NeueMontreal-BoldItalic-DOVUbZrl.otf",
+    "src": "resources/fonts/NeueMontreal-BoldItalic.otf"
+  },
+  "resources/fonts/NeueMontreal-Italic.otf": {
+    "file": "assets/NeueMontreal-Italic-DC5BIR_9.otf",
+    "src": "resources/fonts/NeueMontreal-Italic.otf"
+  },
+  "resources/fonts/NeueMontreal-Light.otf": {
+    "file": "assets/NeueMontreal-Light-B8VR3EGD.otf",
+    "src": "resources/fonts/NeueMontreal-Light.otf"
+  },
+  "resources/fonts/NeueMontreal-LightItalic.otf": {
+    "file": "assets/NeueMontreal-LightItalic-DQNqNrO8.otf",
+    "src": "resources/fonts/NeueMontreal-LightItalic.otf"
+  },
+  "resources/fonts/NeueMontreal-Medium.otf": {
+    "file": "assets/NeueMontreal-Medium-BnH0vvJJ.otf",
+    "src": "resources/fonts/NeueMontreal-Medium.otf"
+  },
+  "resources/fonts/NeueMontreal-MediumItalic.otf": {
+    "file": "assets/NeueMontreal-MediumItalic-DNRhpLuW.otf",
+    "src": "resources/fonts/NeueMontreal-MediumItalic.otf"
+  },
+  "resources/fonts/NeueMontreal-Regular.otf": {
+    "file": "assets/NeueMontreal-Regular-CxM6MvLr.otf",
+    "src": "resources/fonts/NeueMontreal-Regular.otf"
   },
   "resources/images/bottom-arrow.svg": {
     "file": "assets/bottom-arrow-BE5KB43S.svg",
@@ -81,15 +136,15 @@
     "src": "resources/images/pointer.svg"
   },
   "resources/js/app.js": {
-    "file": "assets/app-CKrObxIW.js",
+    "file": "assets/app-D4Wy--VE.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "dynamicImports": [
       "resources/js/blocks/reviews.js",
       "resources/js/blocks/tabs.js",
+      "resources/js/blocks/proces.js",
       "resources/js/blocks/slider.js",
-      "resources/js/blocks/values.js",
       "resources/js/blocks/catalogues.js"
     ]
   },
@@ -99,24 +154,35 @@
     "src": "resources/js/blocks/catalogues.js",
     "isDynamicEntry": true
   },
+  "resources/js/blocks/proces.js": {
+    "file": "assets/proces-BDFz-S9v.js",
+    "name": "proces",
+    "src": "resources/js/blocks/proces.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_swiper-RgwxKcws.js",
+      "_navigation-ar7R9OA-.js",
+      "_a11y-DA5I03qn.js"
+    ]
+  },
   "resources/js/blocks/reviews.js": {
-    "file": "assets/reviews-DlkEinQ3.js",
+    "file": "assets/reviews-DE7iowm_.js",
     "name": "reviews",
     "src": "resources/js/blocks/reviews.js",
     "isDynamicEntry": true,
     "imports": [
-      "_swiper-BYn8PY8Z.js",
-      "_pagination-Cdzpe9Bp.js"
+      "_swiper-RgwxKcws.js",
+      "_a11y-DA5I03qn.js"
     ]
   },
   "resources/js/blocks/slider.js": {
-    "file": "assets/slider-CxPJ5qwy.js",
+    "file": "assets/slider-CcO9KCEq.js",
     "name": "slider",
     "src": "resources/js/blocks/slider.js",
     "isDynamicEntry": true,
     "imports": [
-      "_swiper-BYn8PY8Z.js",
-      "_pagination-Cdzpe9Bp.js"
+      "_swiper-RgwxKcws.js",
+      "_navigation-ar7R9OA-.js"
     ]
   },
   "resources/js/blocks/tabs.js": {
@@ -124,15 +190,6 @@
     "name": "tabs",
     "src": "resources/js/blocks/tabs.js",
     "isDynamicEntry": true
-  },
-  "resources/js/blocks/values.js": {
-    "file": "assets/values-DAJVV4Sy.js",
-    "name": "values",
-    "src": "resources/js/blocks/values.js",
-    "isDynamicEntry": true,
-    "imports": [
-      "_swiper-BYn8PY8Z.js"
-    ]
   },
   "resources/js/editor.js": {
     "file": "assets/editor-Dog8jmWw.js",

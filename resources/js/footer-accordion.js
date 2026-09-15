@@ -3,9 +3,11 @@ document.addEventListener("DOMContentLoaded", function() {
   var widgetTitles = document.querySelectorAll('.widget-title');
   widgetTitles.forEach(function(widgetTitle) {
     widgetTitle.addEventListener("click", function() {
+      if (widgetTitle.closest('.__menu')) return;
       var widgetContainer = widgetTitle.parentElement; // Pobierz rodzica nagłówka
       var widgetMenu = widgetContainer.querySelector('.menu'); // Zlokalizuj menu w obrębie rodzica
       
+      if (!widgetMenu) return;
       // Sprawdź, czy bieżące menu jest otwarte
       var isOpen = widgetContainer.classList.contains('open');
       
