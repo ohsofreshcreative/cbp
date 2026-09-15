@@ -49,6 +49,17 @@ class PageImportCommand
 
 		\WP_CLI::success(sprintf('Utworzono stronę o ID %d.', $id));
 		\WP_CLI::log(sprintf('ID: %d', $id));
+		\WP_CLI::log(sprintf('Tytuł: %s', $payload->title));
+		\WP_CLI::log(sprintf('Slug: %s', $payload->slug));
+		\WP_CLI::log(sprintf('Status: %s (szkic — w Kokpicie: Strony → Wszystkie strony, filtr Szkice)', $payload->status));
+
+		if (function_exists('get_edit_post_link')) {
+			$edit = get_edit_post_link($id, 'raw');
+
+			if (is_string($edit) && $edit !== '') {
+				\WP_CLI::log(sprintf('Edycja: %s', $edit));
+			}
+		}
 	}
 
 	private function resolvePath(string $file): string

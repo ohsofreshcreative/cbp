@@ -26,6 +26,14 @@ class ThemeServiceProvider extends SageServiceProvider
 	{
 		parent::boot();
 
+		if (defined('WP_CLI') && WP_CLI) {
+			$cli = dirname(__DIR__) . '/cli.php';
+
+			if (is_readable($cli)) {
+				require_once $cli;
+			}
+		}
+
 
 		// USATAWIENIA MOTYWU
 		add_action('acf/init', function () {

@@ -5,7 +5,7 @@ namespace App\Support;
 class PageImportAssets
 {
 	/** @var list<string> */
-	private const IMAGE_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'avif'];
+	private const IMAGE_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'avif', 'svg'];
 
 	private ?string $sourceDir;
 
@@ -50,6 +50,8 @@ class PageImportAssets
 		if (!$this->canImport()) {
 			throw new PageImportException('Import obrazów wymaga WordPress (wp_insert_attachment).');
 		}
+
+		$this->allowSvgUploads();
 
 		$this->imported = [];
 		$this->created = [];
@@ -200,9 +202,7 @@ class PageImportAssets
 			throw new PageImportException(sprintf('Nie udało się wgrać obrazu "%s": %s', $filename, $error));
 		}
 
-		$filetype = function_exists('wp_check_filetype')
-			? wp_check_filetype($upload['file'])
-			: ['type' => $upload['type'] ?? 'image/jpeg'];
+		$filetype = $this->filetypeFor($upload['file'], $filename, $upload['type'] ?? null);
 
 		$title = pathinfo($filename, PATHINFO_FILENAME);
 		if (function_exists('sanitize_text_field')) {
@@ -286,6 +286,11 @@ class PageImportAssets
 
 			$themeRoot = dirname(__DIR__, 2);
 			$candidates[] = $themeRoot . DIRECTORY_SEPARATOR . $src;
+
+			if ($this->sourceDir !== null) {
+				$candidates[] = $this->sourceDir . DIRECTORY_SEPARATOR . basename($src);
+				$candidates[] = $this->sourceDir . DIRECTORY_SEPARATOR . 'assets' . DIRECTORY_SEPARATOR . basename($src);
+			}
 		}
 
 		foreach ($candidates as $candidate) {
@@ -311,6 +316,16 @@ class PageImportAssets
 			return sprintf('plik musi być obrazem (%s)', implode(', ', self::IMAGE_EXTENSIONS));
 		}
 
+		if ($ext === 'svg') {
+			$contents = file_get_contents($file);
+
+			if ($contents === false || !preg_match('/<svg\b/i', $contents)) {
+				return 'plik nie jest poprawnym SVG';
+			}
+
+			return null;
+		}
+
 		$info = @getimagesize($file);
 
 		if ($info === false) {
@@ -333,6 +348,63 @@ class PageImportAssets
 	private function canImport(): bool
 	{
 		return function_exists('wp_insert_attachment') && function_exists('wp_upload_bits');
+	}
+
+	/**
+	 * @return array{ext?: string, type?: string}
+	 */
+	private function filetypeFor(string $file, string $filename, ?string $fallbackType): array
+	{
+		$ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+
+		if ($ext === 'svg') {
+			return [
+				'ext' => 'svg',
+				'type' => 'image/svg+xml',
+			];
+		}
+
+		$filetype = function_exists('wp_check_filetype')
+			? wp_check_filetype($file)
+			: ['type' => $fallbackType ?? 'image/jpeg'];
+
+		if (!is_array($filetype)) {
+			return ['type' => $fallbackType ?? 'image/jpeg'];
+		}
+
+		if (empty($filetype['type']) && $fallbackType) {
+			$filetype['type'] = $fallbackType;
+		}
+
+		return $filetype;
+	}
+
+	private function allowSvgUploads(): void
+	{
+		if (!function_exists('add_filter')) {
+			return;
+		}
+
+		add_filter('upload_mimes', static function (array $mimes): array {
+			$mimes['svg'] = 'image/svg+xml';
+			$mimes['svgz'] = 'image/svg+xml';
+
+			return $mimes;
+		});
+
+		add_filter('wp_check_filetype_and_ext', static function ($data, $file, $filename, $mimes) {
+			$ext = strtolower((string) pathinfo((string) $filename, PATHINFO_EXTENSION));
+
+			if ($ext !== 'svg' && $ext !== 'svgz') {
+				return $data;
+			}
+
+			return [
+				'ext' => $ext,
+				'type' => 'image/svg+xml',
+				'proper_filename' => $filename,
+			];
+		}, 10, 4);
 	}
 
 	private function ensureMediaApi(): void
