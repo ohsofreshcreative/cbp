@@ -109,7 +109,9 @@ Nazwa bloku z Figmy
 
 Normalizacja warstwy → slug:
 - lowercase, wytnij spacje, myślniki i podkreślenia (`Why us` / `Why-Us` → `whyus`).
-- Jeśli po normalizacji slug albo oczywisty alias już istnieje w `app/Blocks` — **użyj istniejącego bloku**, nie twórz drugiego (`Process` → `proces`, `FAQ` → `faq`, `CTA` → `cta`).
+- Jeśli po normalizacji slug albo oczywisty alias już istnieje w `app/Blocks` — **użyj istniejącego bloku**, nie twórz drugiego.
+- Aliasy warstw z pliku Figmy (Design): `Process` → `proces`, `FAQ` → `faq`, `CTA` / `cta-section` → `cta`, `Testimonials` → `reviews`, `Aboutv2` → `about`, `Blogs` → `posts`, `Solution` → `content`.
+- `Frame 460` i `fi_*` to nie nazwy bloków — rozpoznaj po zawartości (np. zdjęcie + fala + żółte CTA → `action`) albo pomiń, gdy puste.
 - Nie używaj jako nazwy bloku: `Frame 123`, `Group`, `Rectangle`, `__wrapper`, warstw wewnętrznych ani copy z H1/H2.
 - Pomiń chrome strony: `menu`, `header`, `footer` i puste kontenery-opakowania.
 
