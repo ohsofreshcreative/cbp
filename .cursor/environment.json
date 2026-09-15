@@ -1,0 +1,8 @@
+{
+  "name": "cbp — Sage WordPress theme",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "user": "ubuntu",
+  "install": "composer install --no-interaction --prefer-dist && pnpm install --frozen-lockfile"
+}
