@@ -12,13 +12,19 @@ class PageImporter
 
 		$content = AcfBlockSerializer::toPostContent($payload->blocks);
 
-		$result = wp_insert_post([
+		$postarr = [
 			'post_type' => 'page',
 			'post_title' => $payload->title,
 			'post_name' => $payload->slug,
 			'post_status' => $payload->status,
 			'post_content' => $content,
-		], true);
+		];
+
+		if (function_exists('wp_slash')) {
+			$postarr = wp_slash($postarr);
+		}
+
+		$result = wp_insert_post($postarr, true);
 
 		if (is_wp_error($result)) {
 			throw new PageImportException(sprintf(

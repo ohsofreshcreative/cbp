@@ -24,11 +24,14 @@ class AcfBlockSerializer
 	public static function serializeBlock(string $slug, array $data): string
 	{
 		$name = 'acf/' . $slug;
+		$prepared = self::prepareData($slug, $data);
 		$attrs = [
 			'name' => $name,
-			'data' => self::prepareData($slug, $data),
+			'data' => $prepared,
 			'mode' => 'edit',
 		];
+
+		$attrs['id'] = self::blockId($attrs);
 
 		if (function_exists('serialize_block')) {
 			return serialize_block([
@@ -56,22 +59,17 @@ class AcfBlockSerializer
 		$fields = self::fieldsForBlock($slug);
 
 		if ($fields === []) {
+			if (function_exists('acf_get_field_groups')) {
+				throw new PageImportException(sprintf(
+					'Nie znaleziono grupy pól ACF dla bloku acf/%s. Sprawdź, czy ACF Composer zarejestrował blok (wp acorn acf:cache).',
+					$slug
+				));
+			}
+
 			return self::stripInternalKeys($data);
 		}
 
-		$encoded = self::encodeWithKeys($data, $fields);
-
-		foreach ($data as $name => $value) {
-			if (!is_string($name) || str_starts_with($name, '_')) {
-				continue;
-			}
-
-			if (!array_key_exists($name, $encoded)) {
-				$encoded[$name] = $value;
-			}
-		}
-
-		return $encoded;
+		return self::encodeMeta($data, $fields);
 	}
 
 	/**
@@ -79,29 +77,163 @@ class AcfBlockSerializer
 	 */
 	private static function fieldsForBlock(string $slug): array
 	{
-		if (!function_exists('acf_get_field_groups') || !function_exists('acf_get_fields')) {
-			return [];
+		$groups = self::groupsForBlock($slug);
+		$fields = [];
+
+		foreach ($groups as $group) {
+			if (!function_exists('acf_get_fields')) {
+				break;
+			}
+
+			$found = acf_get_fields($group['key'] ?? $group);
+			if (is_array($found)) {
+				$fields = array_merge($fields, $found);
+			}
 		}
 
-		$groups = acf_get_field_groups([
-			'block' => 'acf/' . $slug,
-		]);
-
-		if (empty($groups[0])) {
-			return [];
+		if ($fields === []) {
+			$fields = self::fieldsFromComposer($slug);
 		}
 
-		$fields = acf_get_fields($groups[0]['key'] ?? $groups[0]);
-
-		return is_array($fields) ? $fields : [];
+		return $fields;
 	}
 
 	/**
+	 * @return list<array<string, mixed>>
+	 */
+	private static function groupsForBlock(string $slug): array
+	{
+		$name = 'acf/' . $slug;
+		$matched = [];
+
+		if (function_exists('acf_get_field_groups')) {
+			$filtered = acf_get_field_groups([
+				'block' => $name,
+			]);
+
+			if (is_array($filtered)) {
+				foreach ($filtered as $group) {
+					if (is_array($group)) {
+						$matched[] = $group;
+					}
+				}
+			}
+
+			if ($matched === []) {
+				$all = acf_get_field_groups();
+				if (is_array($all)) {
+					foreach ($all as $group) {
+						if (is_array($group) && self::groupTargetsBlock($group, $name)) {
+							$matched[] = $group;
+						}
+					}
+				}
+			}
+		}
+
+		if ($matched === [] && function_exists('acf_get_local_field_groups')) {
+			$local = acf_get_local_field_groups();
+			if (is_array($local)) {
+				foreach ($local as $group) {
+					if (is_array($group) && self::groupTargetsBlock($group, $name)) {
+						$matched[] = $group;
+					}
+				}
+			}
+		}
+
+		return $matched;
+	}
+
+	/**
+	 * @param array<string, mixed> $group
+	 */
+	private static function groupTargetsBlock(array $group, string $name): bool
+	{
+		foreach ($group['location'] ?? [] as $orGroup) {
+			if (!is_array($orGroup)) {
+				continue;
+			}
+
+			foreach ($orGroup as $rule) {
+				if (!is_array($rule)) {
+					continue;
+				}
+
+				if (($rule['param'] ?? '') === 'block' && ($rule['value'] ?? '') === $name) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * @return list<array<string, mixed>>
+	 */
+	private static function fieldsFromComposer(string $slug): array
+	{
+		$studly = str_replace(' ', '', ucwords($slug));
+		$class = 'App\\Blocks\\' . $studly;
+
+		if (!class_exists($class) || !function_exists('app')) {
+			return [];
+		}
+
+		try {
+			$block = self::makeComposerBlock($class);
+
+			if (!is_object($block) || !method_exists($block, 'fields')) {
+				return [];
+			}
+
+			$builder = $block->fields();
+
+			if (!is_object($builder) || !method_exists($builder, 'build')) {
+				return [];
+			}
+
+			$built = $builder->build();
+			$fields = is_array($built) ? ($built['fields'] ?? []) : [];
+
+			return is_array($fields) ? $fields : [];
+		} catch (\Throwable $e) {
+			return [];
+		}
+	}
+
+	private static function makeComposerBlock(string $class): ?object
+	{
+		try {
+			$resolved = app($class);
+			if (is_object($resolved)) {
+				return $resolved;
+			}
+		} catch (\Throwable $e) {
+			// Block nie jest zbindowany w kontenerze — składamy ręcznie.
+		}
+
+		try {
+			$composerClass = '\\Log1x\\AcfComposer\\AcfComposer';
+			if (class_exists($composerClass)) {
+				return new $class(app($composerClass));
+			}
+		} catch (\Throwable $e) {
+			return null;
+		}
+
+		return null;
+	}
+
+	/**
+	 * Zapisany format meta ACF: spłaszczone nazwy, wskaźniki _name oraz klucze field_* (v3).
+	 *
 	 * @param array<string, mixed> $data
 	 * @param list<array<string, mixed>> $fields
 	 * @return array<string, mixed>
 	 */
-	private static function encodeWithKeys(array $data, array $fields): array
+	private static function encodeMeta(array $data, array $fields, string $prefix = ''): array
 	{
 		$out = [];
 
@@ -117,6 +249,7 @@ class AcfBlockSerializer
 			}
 
 			$name = (string) $field['name'];
+			$fullName = $prefix === '' ? $name : $prefix . '_' . $name;
 
 			if (!array_key_exists($name, $data)) {
 				continue;
@@ -124,27 +257,50 @@ class AcfBlockSerializer
 
 			$value = $data[$name];
 			$subFields = is_array($field['sub_fields'] ?? null) ? $field['sub_fields'] : [];
+			$key = (string) ($field['key'] ?? '');
 
 			if ($type === 'group' && is_array($value) && $subFields !== []) {
-				$out[$name] = self::encodeWithKeys($value, $subFields);
+				$out[$fullName] = '';
+				if ($key !== '') {
+					$out['_' . $fullName] = $key;
+					$out[$key] = '';
+				}
+				$out += self::encodeMeta($value, $subFields, $fullName);
 			} elseif ($type === 'repeater' && is_array($value) && $subFields !== []) {
-				$rows = [];
-
-				foreach (array_values($value) as $i => $row) {
-					$rows[$i] = is_array($row) ? self::encodeWithKeys($row, $subFields) : $row;
+				$rows = array_values($value);
+				$out[$fullName] = count($rows);
+				if ($key !== '') {
+					$out['_' . $fullName] = $key;
+					$out[$key] = count($rows);
 				}
 
-				$out[$name] = $rows;
-			} else {
-				$out[$name] = $value;
-			}
+				foreach ($rows as $i => $row) {
+					if (!is_array($row)) {
+						continue;
+					}
 
-			if (!empty($field['key'])) {
-				$out['_' . $name] = $field['key'];
+					$out += self::encodeMeta($row, $subFields, $fullName . '_' . $i);
+				}
+			} else {
+				$normalized = self::normalizeValue($type, $value);
+				$out[$fullName] = $normalized;
+				if ($key !== '') {
+					$out['_' . $fullName] = $key;
+					$out[$key] = $normalized;
+				}
 			}
 		}
 
 		return $out;
+	}
+
+	private static function normalizeValue(string $type, mixed $value): mixed
+	{
+		if ($type === 'true_false') {
+			return $value ? 1 : 0;
+		}
+
+		return $value;
 	}
 
 	/**
@@ -164,6 +320,18 @@ class AcfBlockSerializer
 		}
 
 		return $out;
+	}
+
+	/**
+	 * @param array<string, mixed> $attrs
+	 */
+	private static function blockId(array $attrs): string
+	{
+		if (function_exists('acf_get_block_id') && function_exists('acf_ensure_block_id_prefix')) {
+			return acf_ensure_block_id_prefix(acf_get_block_id($attrs));
+		}
+
+		return 'block_' . substr(sha1((string) ($attrs['name'] ?? '') . serialize($attrs['data'] ?? [])), 0, 13);
 	}
 
 	/**

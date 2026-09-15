@@ -67,6 +67,7 @@ if (preg_match('/<!-- wp:acf\/hero\s+(\{.*\})\s+\/-->/s', $content, $m)) {
 }
 expect_true(($decodedAttrs['data']['g_hero']['button1']['url'] ?? '') === '/kontakt', 'data ACF w atrybutach bloku');
 expect_true(($decodedAttrs['data']['background'] ?? '') === 'none', 'proste pole background');
+expect_true(str_starts_with((string) ($decodedAttrs['id'] ?? ''), 'block_'), 'id bloku block_*');
 
 expect_exception(fn () => PageImportPayload::fromJson('{'), 'Niepoprawny JSON', 'zepsuty JSON');
 expect_exception(fn () => PageImportPayload::fromArray(['blocks' => []]), 'title', 'brak title');
@@ -87,7 +88,13 @@ expect_true(($encoded['g_hero']['header'] ?? '') === 'A', 'proste data bez ACF')
 if (!function_exists('acf_get_field_groups')) {
 	function acf_get_field_groups(array $filter = []): array
 	{
-		return [['key' => 'group_hero']];
+		$block = $filter['block'] ?? '';
+
+		if ($block === 'acf/hero' || $block === '') {
+			return [['key' => 'group_hero']];
+		}
+
+		return [];
 	}
 }
 
@@ -102,10 +109,20 @@ if (!function_exists('acf_get_fields')) {
 				'key' => 'field_hero_g_hero',
 				'sub_fields' => [
 					['name' => 'header', 'type' => 'wysiwyg', 'key' => 'field_hero_header'],
+					['name' => 'text', 'type' => 'wysiwyg', 'key' => 'field_hero_text'],
 					['name' => 'button1', 'type' => 'link', 'key' => 'field_hero_button1'],
 				],
 			],
+			[
+				'name' => 'r_hero',
+				'type' => 'repeater',
+				'key' => 'field_hero_r_hero',
+				'sub_fields' => [
+					['name' => 'title', 'type' => 'text', 'key' => 'field_hero_r_title'],
+				],
+			],
 			['name' => 'background', 'type' => 'select', 'key' => 'field_hero_background'],
+			['name' => 'nomt', 'type' => 'true_false', 'key' => 'field_hero_nomt'],
 		];
 	}
 }
@@ -115,13 +132,38 @@ $withKeys = AcfBlockSerializer::prepareData('hero', [
 		'header' => '<p>Hi</p>',
 		'button1' => ['url' => '/x', 'title' => 'X', 'target' => ''],
 	],
+	'r_hero' => [
+		['title' => 'Kafelek'],
+	],
 	'background' => 'none',
+	'nomt' => false,
 ]);
 expect_true(($withKeys['_g_hero'] ?? '') === 'field_hero_g_hero', 'klucz grupy g_hero');
-expect_true(($withKeys['g_hero']['_header'] ?? '') === 'field_hero_header', 'klucz podpola header');
-expect_true(($withKeys['g_hero']['_button1'] ?? '') === 'field_hero_button1', 'klucz linku button1');
+expect_true(($withKeys['g_hero_header'] ?? '') === '<p>Hi</p>', 'spłaszczone g_hero_header');
+expect_true(($withKeys['_g_hero_header'] ?? '') === 'field_hero_header', 'klucz podpola header');
+expect_true(($withKeys['field_hero_header'] ?? '') === '<p>Hi</p>', 'v3 field_hero_header');
+expect_true(($withKeys['g_hero_button1']['url'] ?? '') === '/x', 'spłaszczony link button1');
+expect_true(($withKeys['_g_hero_button1'] ?? '') === 'field_hero_button1', 'klucz linku button1');
 expect_true(($withKeys['_background'] ?? '') === 'field_hero_background', 'klucz select background');
+expect_true(($withKeys['nomt'] ?? null) === 0, 'true_false nomt jako 0');
+expect_true(($withKeys['r_hero'] ?? null) === 1, 'repeater zapisany jako liczba wierszy');
+expect_true(($withKeys['r_hero_0_title'] ?? '') === 'Kafelek', 'wiersz repeatera r_hero_0_title');
+expect_true(($withKeys['_r_hero_0_title'] ?? '') === 'field_hero_r_title', 'klucz subpola repeatera');
 expect_true(!isset($withKeys['Elementy']), 'pomija tab');
+expect_true(($withKeys['g_hero'] ?? null) === '', 'placeholder grupy g_hero');
+
+$exampleWithAcf = AcfBlockSerializer::prepareData('hero', $payload->blocks[0]['data']);
+expect_true(($exampleWithAcf['g_hero_header'] ?? '') === '<p>Centrum Badań Poligraficznych</p>', 'przykład JSON: header w g_hero_header');
+expect_true(($exampleWithAcf['g_hero_text'] ?? '') === '<p>Prosty import bloku Hero.</p>', 'przykład JSON: text');
+expect_true(($exampleWithAcf['g_hero_button1']['title'] ?? '') === 'Kontakt', 'przykład JSON: button1');
+expect_true(($exampleWithAcf['background'] ?? '') === 'none', 'przykład JSON: background');
+expect_true(($exampleWithAcf['nomt'] ?? null) === 0, 'przykład JSON: nomt');
+
+expect_exception(
+	fn () => AcfBlockSerializer::prepareData('missingblock', ['header' => 'X']),
+	'Nie znaleziono grupy pól ACF',
+	'brak grupy pól przy aktywnym ACF'
+);
 
 echo "\n{$passed} passed, {$failed} failed\n";
 exit($failed === 0 ? 0 : 1);
