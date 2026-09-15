@@ -35,7 +35,7 @@
 			</div>
 
 			@if (!empty($g_what['image']))
-			<figure data-gsap-element="img" class="__img order1 overflow-hidden rounded-full aspect-square">
+			<figure data-gsap-element="img" class="__img order1 overflow-hidden rounded-full aspect-square img-3xl justify-self-center lg:justify-self-end">
 				<img class="w-full h-full object-cover" src="{{ $g_what['image']['url'] }}" alt="{{ $g_what['image']['alt'] ?? '' }}">
 			</figure>
 			@endif

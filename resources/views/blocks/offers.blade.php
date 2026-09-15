@@ -17,7 +17,7 @@
 		@if (!empty($items))
 		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 			@foreach ($items as $item)
-			<a data-gsap-element="card" href="{{ $item['url'] }}" class="__card relative flex flex-col radius bg-white p-8">
+			<a data-gsap-element="card" href="{{ $item['url'] }}" class="__card relative flex flex-col radius bg-white border border-secondary-100 p-8">
 				@if (!empty($item['icon']['url']))
 				<img src="{{ $item['icon']['url'] }}" alt="{{ $item['icon']['alt'] ?? '' }}" class="m-img">
 				@else
