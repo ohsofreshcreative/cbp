@@ -27,7 +27,7 @@
 
 		<div class="__cards grid {{ $gridClass }} gap-8">
 			@foreach ($r_solutions as $item)
-			<article data-gsap-element="card" class="__card relative radius bg-secondary-800 p-8">
+			<article data-gsap-element="card" class="__card relative radius bg-neutral-900 p-8">
 				@if (!empty($item['header']))
 				<h3 data-gsap-element="header" class="text-primary">{{ $item['header'] }}</h3>
 				@endif
