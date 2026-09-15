@@ -1,0 +1,23 @@
+{
+  "title": "Hero import test",
+  "slug": "hero-import-test",
+  "status": "draft",
+  "blocks": [
+    {
+      "block": "hero",
+      "data": {
+        "g_hero": {
+          "header": "<p>Centrum Badań Poligraficznych</p>",
+          "text": "<p>Prosty import bloku Hero.</p>",
+          "button1": {
+            "title": "Kontakt",
+            "url": "/kontakt",
+            "target": ""
+          }
+        },
+        "background": "none",
+        "nomt": false
+      }
+    }
+  ]
+}

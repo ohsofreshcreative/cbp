@@ -86,7 +86,7 @@ function allow_only_selected_blocks($allowed_block_types, $editor_context)
 add_filter('allowed_block_types_all', 'allow_only_selected_blocks', 10, 2);
 
 
-collect(['setup', 'filters', 'post-types'])
+collect(['setup', 'filters', 'post-types', 'cli'])
 	->each(function ($file) {
 		if (! locate_template($file = "app/{$file}.php", true, true)) {
 			wp_die(
