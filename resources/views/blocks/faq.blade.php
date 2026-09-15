@@ -9,33 +9,30 @@
 	$background => filled($background) && $background !== 'none',
 	])>
 
-	<div class="__wrapper c-main grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-20">
+	<div class="__wrapper c-main">
+		@if (!empty($g_faq['header']))
+		<h2 data-gsap-element="header" class="m-header text-center"><span class="text-primary">{{ $g_faq['header'] }}</span></h2>
+		@endif
 
-		<div class="__content">
-			<h3 data-gsap-element="header" class="">{{ $g_faq['header'] }}</h3>
-			@if (!empty($g_faq['image']))
-			<div data-gsap-element="img" class="__img order1 mt-10">
-				<img class="__img object-cover" src="{{ $g_faq['image']['url'] }}" alt="{{ $g_faq['image']['alt'] ?? '' }}">
-			</div>
-			@endif
-		</div>
-		<div data-gsap-element="tabs" class="tabs-wrapper flex flex-col mt-4">
+		@if (!empty($r_faq))
+		<div data-gsap-element="tabs" class="tabs-wrapper flex flex-col">
 			@foreach ($r_faq as $item)
-			<div class="tabs rounded-2xl bg-white border border-secondary h-max">
-				<input class="tab-check" type="checkbox" name="radio-a" id="check{{ $loop->index }}">
-				<label class="tabs-label flex items-center justify-between" for="check{{ $loop->index }}">
-					<div class="flex items-center gap-4">
-						<p class="!text-lg font-header">{{ $item['title'] }}</p>
-					</div>
-					<x-icon.arrow-up class="__arrow text-secondary w-3 h-4" />
+			<div class="tabs border-b border-white/20">
+				<input class="tab-check" type="checkbox" name="faq-{{ $faq_id }}" id="faq-{{ $faq_id }}-{{ $loop->index }}">
+				<label class="tabs-label flex items-center justify-between" for="faq-{{ $faq_id }}-{{ $loop->index }}">
+					@if (!empty($item['title']))
+					<p>{{ $item['title'] }}</p>
+					@endif
+					<x-icon.arrow-up class="__arrow w-3 h-4" />
 				</label>
+				@if (!empty($item['txt']))
 				<div class="tabs-content">
 					{!! $item['txt'] !!}
 				</div>
+				@endif
 			</div>
 			@endforeach
 		</div>
-
+		@endif
 	</div>
-
 </section>
