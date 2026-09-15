@@ -9,9 +9,9 @@
 	$background => filled($background) && $background !== 'none',
 	])>
 
-	<x-icon.ekg class="absolute text-primary pointer-events-none right-0 top-1/2 w-1/2 -translate-y-1/2" />
+	<x-icon.ekg class="absolute z-0 text-primary pointer-events-none right-0 top-1/2 w-1/3 -translate-y-1/2" />
 
-	<div class="__wrapper c-main relative">
+	<div class="__wrapper c-main relative z-10">
 		@if (!empty($g_solutions['header']))
 		<h2 data-gsap-element="header" class="m-header text-center">{{ $g_solutions['header'] }}</h2>
 		@endif
@@ -29,7 +29,7 @@
 			@foreach ($r_solutions as $item)
 			<article data-gsap-element="card" class="__card relative radius bg-neutral-900 p-8">
 				@if (!empty($item['header']))
-				<h3 data-gsap-element="header" class="text-primary">{{ $item['header'] }}</h3>
+				<h3 data-gsap-element="header" class="!text-primary">{{ $item['header'] }}</h3>
 				@endif
 				@if (!empty($item['text']))
 				<div data-gsap-element="txt" class="__txt [&_ul]:list-disc [&_ul]:pl-5">
