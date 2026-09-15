@@ -28,7 +28,8 @@ Do not introduce a new architectural pattern when an established pattern already
 
 Repository map
 
-Theme root: `wp-content/themes/bergermann` (Sage 11 + Acorn 5, PHP >= 8.2, namespace `App\` → `app/`).
+To repozytorium jest motywem Sage 11 (Centrum Badań Poligraficznych / CBP).
+W WordPressie: `wp-content/themes/cbp`. Sage 11 + Acorn 5, PHP >= 8.2, namespace `App\` → `app/`.
 
 | Ścieżka | Zawartość |
 |---|---|
@@ -58,7 +59,7 @@ Menedżer pakietów: **yarn** (`.yarnrc.yml`, `nodeLinker: node-modules`). W rep
 `package-lock.json` i `pnpm-lock.yaml` — są nieaktualne, nie używaj npm ani pnpm i nie aktualizuj tych plików.
 
 ```bash
-yarn dev      # Vite dev server: https://bergermann.local:5981 (strictPort, HMR przez ws)
+yarn dev      # Vite dev server: http://cbp.local:5981 (strictPort, HMR przez ws)
 yarn build    # produkcyjny build do public/build
 ```
 
