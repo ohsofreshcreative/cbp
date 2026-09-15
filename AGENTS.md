@@ -8,10 +8,15 @@ Nie wymagaj osobnego skilla ani komendy /nowy-blok. Jeśli brakuje nazwy lub pro
 zapytaj o brakujące dane. Dalej stosuj anatomię bloku, analizę wzorców i walidację z tego pliku.
 W podsumowaniu wymień zmienione pliki, sprawdzenia i wymagane komendy użytkownika.
 
-Gdy użytkownik przesyła screenshoty lub projekt całej podstrony, nie twórz od razu bloków.
-Najpierw wykonaj wyłącznie analizę i podział na bloki ACF zgodnie z sekcją
-„Analiza podstrony — podział na bloki ACF”. Implementację konkretnego bloku rozpoczynaj
-dopiero po akceptacji podziału i osobnym zleceniu.
+Gdy użytkownik przesyła screenshoty lub projekt całej podstrony **bez** własnej listy
+bloków, nie twórz od razu bloków. Najpierw wykonaj wyłącznie analizę i podział na bloki ACF
+zgodnie z sekcją „Analiza podstrony — podział na bloki ACF”. Implementację konkretnego
+bloku rozpoczynaj dopiero po akceptacji podziału i osobnym zleceniu.
+
+Jeżeli wraz ze screenshotem całej podstrony użytkownik podaje własną listę bloków
+oraz informację, które są nowe, a które istniejące, ta lista jest wiążąca.
+Nie proponuj ponownego podziału. Zaimplementuj wszystkie wskazane bloki w jednym zadaniu,
+bez oczekiwania na akceptację każdego z nich osobno.
 
 
 Project overview
@@ -93,6 +98,8 @@ nazwy zaakceptowanej w podziale podstrony. Jeśli nazwa nie została podana, zap
 
 Na etapie analizy całej podstrony wolno zaproponować nazwy nowych bloków zgodne z powyższą
 konwencją; nie implementuj ich, dopóki użytkownik nie zaakceptuje podziału i nie zleci bloku.
+Wyjątek: gdy użytkownik od razu podaje wiążącą listę bloków (nowe vs istniejące), użyj
+nazw z tej listy i zaimplementuj wszystkie wskazane bloki w jednym zadaniu.
 
 Blok = 2–3 pliki:
 
@@ -208,9 +215,24 @@ Widok Blade — obowiązkowy szkielet
 
 Analiza podstrony — podział na bloki ACF
 
+Lista użytkownika jest wiążąca
+
+Jeżeli użytkownik dostarcza screenshot całej podstrony wraz z własną listą bloków
+i informacją, które bloki są nowe, a które istniejące, lista użytkownika jest wiążąca.
+
+* Nie proponuj ponownego podziału strony.
+* Nie czekaj na akceptację podziału ani na osobne zlecenie każdego bloku.
+* Zaimplementuj wszystkie wskazane bloki w ramach jednego zadania.
+* Nowe bloki twórz zgodnie z anatomią bloku z tego pliku.
+* Istniejące bloki z listy wykorzystaj ponownie; nie przepisuj ich i nie zmieniaj,
+  chyba że użytkownik wyraźnie o to poprosi.
+
+Poniższy etap analizy stosuj tylko wtedy, gdy użytkownik przesyła projekt całej
+podstrony **bez** własnej listy bloków.
+
 To jest główny workflow, gdy użytkownik przesyła screenshoty, makiety lub projekt całej
-podstrony (wielu sekcji). Na tym etapie zadanie to wyłącznie analiza i propozycja podziału
-na logiczne bloki ACF zgodne z architekturą repozytorium.
+podstrony (wielu sekcji) i nie podaje podziału. Na tym etapie zadanie to wyłącznie
+analiza i propozycja podziału na logiczne bloki ACF zgodne z architekturą repozytorium.
 
 Nie twórz plików, nie zmieniaj kodu projektu i nie implementuj bloków.
 Nie modyfikuj istniejących bloków na tym etapie.
@@ -263,7 +285,8 @@ Po akceptacji
 Gdy użytkownik zaakceptuje podział i zleci implementację konkretnego bloku, stosuj
 anatomię bloku, analizę wzorców i walidację z tego pliku. Użyj nazwy zaakceptowanej
 w podziale albo podanej w zleceniu. Nadal nie implementuj ani nie zmieniaj innych,
-niezleconych bloków.
+niezleconych bloków — chyba że w tym samym zadaniu podał pełną listę bloków do
+wykonania; wtedy zaimplementuj całą tę listę od razu.
 
 Gdy użytkownik od razu zleca jeden nazwany blok (np. „Nowy blok quote” ze screenshotem
 tej sekcji), nie stosuj tego etapu analitycznego — przejdź do tworzenia bloku zgodnie
@@ -287,8 +310,10 @@ Before writing code
 
 Przed implementacją sprawdź strukturę repozytorium, Blade, ACF/PHP, komponenty, SCSS i JS. Rozpoznaj nazewnictwo, kontenery, grid, odstępy, breakpointy, typografię, assety, obrazy i przyciski. Dla projektu graficznego znajdź podobny istniejący UI. Nie generuj plików przed analizą.
 
-Gdy dostarczony materiał to cała podstrona, analiza oznacza podział na bloki ACF
-z sekcji „Analiza podstrony — podział na bloki ACF”, a nie od razu pisanie kodu.
+Gdy dostarczony materiał to cała podstrona **bez** listy bloków od użytkownika, analiza
+oznacza podział na bloki ACF z sekcji „Analiza podstrony — podział na bloki ACF”,
+a nie od razu pisanie kodu. Gdy użytkownik dołącza własną listę (nowe vs istniejące),
+ta lista jest wiążąca — implementuj wszystkie wskazane bloki w jednym zadaniu.
 
 ⸻
 
@@ -300,9 +325,11 @@ Wyszukaj i wykorzystaj istniejące komponenty, helpery, tokeny i wzorce: przycis
 
 Working from screenshots or designs
 
-Gdy screen lub projekt obejmuje całą podstronę, najpierw wykonaj analizę z sekcji
-„Analiza podstrony — podział na bloki ACF” i poczekaj na akceptację. Poniższe zasady
-dotyczą implementacji już zleconego bloku lub pojedynczej sekcji.
+Gdy screen lub projekt obejmuje całą podstronę **bez** listy bloków od użytkownika,
+najpierw wykonaj analizę z sekcji „Analiza podstrony — podział na bloki ACF”
+i poczekaj na akceptację. Gdy użytkownik dołącza własną listę bloków (nowe vs
+istniejące), pomiń analizę podziału i implementuj całą listę. Poniższe zasady
+dotyczą implementacji zleconych bloków.
 
 Screen lub projekt jest specyfikacją: zachowaj układ, hierarchię, proporcje, odstępy, wyrównanie i kadrowanie. Używaj istniejących tokenów oraz ograniczeń sekcji Styling. Nie wymyślaj dekoracji ani nie upraszczaj istotnych szczegółów tylko dla wygody.
 
@@ -628,9 +655,11 @@ Rozstrzygaj niejasności na podstawie zadania, projektu, kodu i konwencji. Pytaj
 
 Implementation workflow
 
-Gdy zadaniem jest cała podstrona z projektu lub screenshotu, zatrzymaj się na analizie
-i akceptacji podziału z sekcji „Analiza podstrony — podział na bloki ACF”. Implementację
-rozpoczynaj dopiero po zleceniu konkretnego bloku.
+Gdy zadaniem jest cała podstrona z projektu lub screenshotu **bez** listy bloków
+od użytkownika, zatrzymaj się na analizie i akceptacji podziału z sekcji
+„Analiza podstrony — podział na bloki ACF”. Implementację rozpoczynaj dopiero
+po zleceniu konkretnego bloku. Gdy użytkownik podaje własną listę bloków
+(nowe vs istniejące), zaimplementuj wszystkie wskazane bloki w jednym zadaniu.
 
 Zrozum zadanie → zbadaj repozytorium i podobne implementacje → znajdź elementy do ponownego użycia → wybierz najmniejszą zmianę → zaimplementuj → przejrzyj całość, błędy, responsywność i wpływ na istniejące funkcje. Samo utworzenie plików nie kończy zadania.
 
