@@ -18,7 +18,7 @@
 		@php
 		$itemCount = count($items);
 		$gridClass = 'grid-cols-1 md:grid-cols-2';
-		if ($itemCount === 3) $gridClass = 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3';
+		if ($itemCount === 3 || $itemCount >= 5) $gridClass = 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3';
 		@endphp
 		<div class="__grid grid {{ $gridClass }} gap-6">
 			@foreach ($items as $item)

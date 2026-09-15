@@ -33,9 +33,9 @@
 		<div class="__items order2 grid min-w-0 gap-4 xl:gap-8">
 			@foreach ($values as $value)
 			@if (!empty($value['header']) || !empty($value['opis']))
-			<article class="__card relative isolate overflow-hidden rounded-3xl bg-neutral-900 p-6 md:px-8 md:py-7 min-h-36 flex items-start border border-primary b-glow/20">
+			<article class="__card relative isolate overflow-hidden rounded-3xl bg-secondary-800 p-6 md:px-8 md:py-7 min-h-36 flex items-start">
 				@if (!empty($value['icon']['url']))
-				<img class="__icon absolute right-0 top-1/2 -translate-y-1/2 size-32 md:size-36 object-contain opacity-10 pointer-events-none" src="{{ $value['icon']['url'] }}" alt="" loading="lazy" />
+				<img class="__icon absolute right-0 top-1/2 -translate-y-1/2 size-32 md:size-40 object-contain opacity-40 pointer-events-none" src="{{ $value['icon']['url'] }}" alt="" loading="lazy" />
 				@endif
 				<div class="__content relative w-full">
 					@if (!empty($value['header']))

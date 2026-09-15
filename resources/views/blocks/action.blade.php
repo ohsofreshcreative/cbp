@@ -14,7 +14,7 @@
 		<figure class="absolute inset-0 z-0 m-0 size-full">
 			<img src="{{ $g_action['image']['url'] }}" alt="{{ $g_action['image']['alt'] ?? '' }}" class="size-full object-cover">
 		</figure>
-		<div class="absolute inset-0 z-1 pointer-events-none bg-black/45"></div>
+		<div class="absolute inset-0 z-1 pointer-events-none bg-black/50"></div>
 		@endif
 
 		<div class="__wrapper c-main relative z-10 text-center">
@@ -27,8 +27,8 @@
 	</div>
 
 	<div class="__band relative bg-white">
-		<svg class="__wave absolute bottom-full left-0 w-full" viewBox="0 0 1440 96" preserveAspectRatio="none" aria-hidden="true">
-			<path d="M0 96C240 24 480 0 720 0s480 24 720 96V97H0V96Z" fill="currentColor" />
+		<svg class="__wave absolute bottom-full left-0 w-full" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+			<path d="M0 120C360 24 1080 24 1440 120V121H0V120Z" fill="currentColor" />
 		</svg>
 
 		<div class="__wrapper c-main relative">
@@ -40,10 +40,10 @@
 				@endif
 
 				@if (!empty($g_action['button1']['url']))
-				<div class="order2 justify-self-start lg:justify-self-end">
+				<div class="__offer-tile order2 justify-self-start lg:justify-self-end">
 					<x-button
 						:href="$g_action['button1']['url']"
-						variant="primary"
+						variant="white"
 						class="__cta"
 						data-gsap-element="btn">
 						{{ $g_action['button1']['title'] }}

@@ -2,4 +2,29 @@
 	b, strong {
 		color: var(--color-primary);
 	}
+
+	.__veil {
+		background: linear-gradient(-90deg, rgba(20, 18, 16, 0) 0%, rgb(20, 18, 16) 58%);
+	}
+
+	&:not(:has(.__tiles)) {
+		min-height: 705px;
+		background: #141210;
+
+		.__content {
+			max-width: 624px;
+		}
+
+		.__badge {
+			font-size: 12px;
+		}
+
+		.btn-primary {
+			color: var(--color-secondary-900);
+		}
+
+		.btn-primary:hover {
+			color: #fff;
+		}
+	}
 }

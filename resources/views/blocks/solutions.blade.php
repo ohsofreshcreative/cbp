@@ -13,7 +13,7 @@
 
 	<div class="__wrapper c-main relative z-10">
 		@if (!empty($g_solutions['header']))
-		<h2 data-gsap-element="header" class="m-header text-center">{{ $g_solutions['header'] }}</h2>
+		<h2 data-gsap-element="header" class="m-header">{{ $g_solutions['header'] }}</h2>
 		@endif
 
 		@if (!empty($r_solutions))
@@ -27,12 +27,12 @@
 
 		<div class="__cards grid {{ $gridClass }} gap-8">
 			@foreach ($r_solutions as $item)
-			<article data-gsap-element="card" class="__card relative radius bg-neutral-900 p-8">
+			<article data-gsap-element="card" class="__card relative radius bg-secondary-700 p-8">
 				@if (!empty($item['header']))
-				<h3 data-gsap-element="header" class="!text-primary">{{ $item['header'] }}</h3>
+				<h3 data-gsap-element="header" class="text-white">{{ $item['header'] }}</h3>
 				@endif
 				@if (!empty($item['text']))
-				<div data-gsap-element="txt" class="__txt [&_ul]:list-disc [&_ul]:pl-5">
+				<div data-gsap-element="txt" class="__txt">
 					{!! $item['text'] !!}
 				</div>
 				@endif

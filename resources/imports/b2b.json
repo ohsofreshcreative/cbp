@@ -104,7 +104,7 @@
             "alt": "Nie każda sprawa wymaga badania"
           },
           "header": "Nie każda sprawa wymaga badania.",
-          "text": "<p>Najpierw poznajemy sprawę. Dopiero potem proponujemy rozwiązanie.</p><p>Badanie poligraficzne nie jest uniwersalnym narzędziem odpowiednim dla każdej sytuacji. Dlatego każdą współpracę rozpoczynamy od analizy sprawy, określenia jej celu oraz oceny, czy badanie może dostarczyć wartościowych informacji.</p><p>Nie obiecujemy konkretnego wyniku. Pomagamy określić, czy badanie ma sens.</p>",
+          "text": "<h3>Najpierw poznajemy sprawę. Dopiero potem proponujemy rozwiązanie.</h3><p>Badanie poligraficzne nie jest uniwersalnym narzędziem odpowiednim dla każdej sytuacji. Dlatego każdą współpracę rozpoczynamy od analizy sprawy, określenia jej celu oraz oceny, czy badanie może dostarczyć wartościowych informacji.</p><p>Nie obiecujemy konkretnego wyniku. Pomagamy określić, czy badanie ma sens.</p>",
           "button1": {
             "title": "Skonsultuj sprawę",
             "url": "/kontakt",
@@ -158,7 +158,7 @@
             "src": "resources/imports/assets/b2b-values.png",
             "alt": "Dlaczego Centrum Badań Poligraficznych?"
           },
-          "label": "Nasze wartości",
+          "label": "Wartości",
           "header": "Dlaczego Centrum Badań Poligraficznych?",
           "text": "<p>Nasza działalność opiera się na kilku kluczowych filarach: profesjonalnych badaniach wariograficznych, wsparciu przedsiębiorstw i instytucji, obsłudze klientów indywidualnych, ekspertyzach i konsultacjach, bezpieczeństwie informacji oraz ciągłym rozwoju kompetencji i metod badawczych. Dzięki temu zapewniamy rzetelne, obiektywne i poufne usługi na najwyższym poziomie.</p>",
           "r_values": [

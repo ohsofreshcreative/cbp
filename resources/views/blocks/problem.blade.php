@@ -18,7 +18,15 @@
 		<div class="__list grid gap-8 lg:gap-20">
 			@foreach ($r_problem as $item)
 			<article data-gsap-element="card" class="__row grid grid-cols-1 md:grid-cols-2 items-center gap-8 lg:gap-20">
-				<div @class(['__content', 'md:order-2' => $loop->even])>
+				@if (!empty($item['image']['url']))
+				<figure data-gsap-element="img" @class(['__img m-0 overflow-hidden radius-img', 'md:order-2' => $loop->even])>
+					<picture>
+						<img class="w-full object-cover" src="{{ $item['image']['url'] }}" alt="{{ $item['image']['alt'] ?? '' }}">
+					</picture>
+				</figure>
+				@endif
+
+				<div @class(['__content', 'md:order-1' => $loop->even])>
 					@if (!empty($item['header']))
 					<h3 data-gsap-element="header">{{ $item['header'] }}</h3>
 					@endif
@@ -28,14 +36,6 @@
 					</div>
 					@endif
 				</div>
-
-				@if (!empty($item['image']['url']))
-				<figure data-gsap-element="img" @class(['__img m-0 overflow-hidden radius-img b-glow', 'md:order-1' => $loop->even])>
-					<picture>
-						<img class="w-full object-cover" src="{{ $item['image']['url'] }}" alt="{{ $item['image']['alt'] ?? '' }}">
-					</picture>
-				</figure>
-				@endif
 			</article>
 			@endforeach
 		</div>
