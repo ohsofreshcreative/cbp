@@ -3,9 +3,27 @@ nAGENTS.md
 Wspólne instrukcje dla Codex, GitHub Copilot i Claude Code.
 Edytuj wyłącznie ten plik. CLAUDE.md jest dowiązaniem do AGENTS.md.
 
-Tworzenie bloków uruchamiaj zwykłą prośbą, np. „Nowy blok quote” z projektem lub screenshotem.
-Nie wymagaj osobnego skilla ani komendy /nowy-blok. Jeśli brakuje nazwy lub projektu nowego bloku,
-zapytaj o brakujące dane. Dalej stosuj anatomię bloku, analizę wzorców i walidację z tego pliku.
+Jedna gałąź robocza: `cursor-work`.
+Nie twórz nowych branchy per podstrona, per blok, per import ani `cursor/<nazwa>-…`.
+Nie otwieraj osobnych PR-ów dla kolejnych podstron — commituj i pushuj na `cursor-work`.
+Jeśli sesja startuje na innej gałęzi, przełącz się na `cursor-work` (stwórz ją z aktualnego HEAD, gdy nie istnieje) i tam pracuj.
+Nazwy `cursor` Git nie przyjmie, dopóki istnieją gałęzie `cursor/…` (konflikt ścieżki refs).
+
+Kolejność jest sztywna — dwóch faz nie odwracaj i nie mieszaj w jednym zadaniu, jeśli da się tego uniknąć.
+
+Faza 1 — bloki ACF (najpierw, dla wszystkich wskazanych podstron):
+- Weź ramki z Figmy (link z `node-id`) albo screen.
+- Zmapuj sekcje na istniejące bloki w `app/Blocks`. Reuse before creation.
+- Brakujące bloki stwórz według anatomii ACF w tym pliku. Trigger: zwykła prośba, np. „Nowy blok quote” + link Figma lub screen. Nie wymagaj skilla ani `/nowy-blok`.
+- Nazwy bloku nie wymyślaj. Użyj nazwy z promptu. Jeśli brakuje nazwy albo projektu, zapytaj.
+- Nie pisz JSON-a importu, nie wołaj WP-CLI, nie dodawaj stron/treści/zdjęć do WordPressa, dopóki bloki potrzebne na tych podstronach są w motywie.
+
+Faza 2 — treść przez WP-CLI (dopiero po fazie 1):
+- JSON: `resources/imports/<slug>.json` (tytuł, slug, status `draft`, bloki ACF, dane, obrazy).
+- Assety: `resources/imports/assets/`.
+- Import (użytkownik lokalnie): `wp osf page import resources/imports/<slug>.json`
+- Nie uruchamiaj importu, `yarn build` ani `wp acorn acf:cache` automatycznie — przypomnij w podsumowaniu.
+
 W podsumowaniu wymień zmienione pliki, sprawdzenia i wymagane komendy użytkownika.
 
 
@@ -61,6 +79,7 @@ yarn build    # produkcyjny build do public/build
 composer install
 wp acorn acf:cache        # przebuduj cache pól ACF po zmianach w app/Blocks|Fields|Options
 wp acorn view:clear       # gdy Blade zwraca stary widok
+wp osf page import resources/imports/<slug>.json   # faza 2: strona-szkic z blokami i treścią
 ```
 
 Node >= 20.
@@ -223,7 +242,9 @@ Wyszukaj i wykorzystaj istniejące komponenty, helpery, tokeny i wzorce: przycis
 
 Working from screenshots or designs
 
-Screen lub projekt jest specyfikacją: zachowaj układ, hierarchię, proporcje, odstępy, wyrównanie i kadrowanie. Używaj istniejących tokenów oraz ograniczeń sekcji Styling. Nie wymyślaj dekoracji ani nie upraszczaj istotnych szczegółów tylko dla wygody.
+Screen, ramka Figma albo link `figma.com/design/…?node-id=` jest specyfikacją: zachowaj układ, hierarchię, proporcje, odstępy, wyrównanie i kadrowanie. Używaj istniejących tokenów oraz ograniczeń sekcji Styling. Nie wymyślaj dekoracji ani nie upraszczaj istotnych szczegółów tylko dla wygody.
+
+Link Figma bez `node-id` jest niewystarczający — poproś o ramkę sekcji albo podstrony, nie zgaduj węzła. Z Figmy najpierw rób bloki ACF (faza 1), nie od razu import WP-CLI.
 
 ⸻
 
@@ -723,6 +744,8 @@ Zgłoś je, jeśli wejdą w drogę; samodzielna naprawa tylko wtedy, gdy blokuje
 ⸻
 
 Git
+
+Jedna gałąź: `cursor-work`. Nie twórz kolejnych feature branchy.
 
 Do not rewrite Git history.
 
