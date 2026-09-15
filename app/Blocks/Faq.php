@@ -37,6 +37,10 @@ class Faq extends Block
 				'return_format' => 'array',
 				'preview_size' => 'thumbnail',
 			])
+			->addText('label', [
+				'label' => 'Etykieta',
+				'default_value' => 'FAQ',
+			])
 			->addText('header', ['label' => 'Nagłówek'])
 			->addWysiwyg('text', [
 				'label' => 'Treść',

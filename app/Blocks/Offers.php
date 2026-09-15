@@ -31,6 +31,10 @@ class Offers extends Block
 			->addTab('Elementy', ['placement' => 'top'])
 			->addGroup('g_offers', ['label' => ''])
 			->addText('header', ['label' => 'Nagłówek'])
+			->addText('link_label', [
+				'label' => 'Etykieta linku',
+				'default_value' => 'Sprawdź',
+			])
 			->addTaxonomy('offer_category', [
 				'label' => 'Kategoria oferty',
 				'instructions' => 'Wybierz kategorię CPT Oferta. Blok wyświetli opublikowane wpisy z tej kategorii.',
@@ -129,7 +133,6 @@ class Offers extends Block
 				'id' => $post->ID,
 				'title' => get_the_title($post),
 				'url' => get_permalink($post),
-				'excerpt' => has_excerpt($post) ? $post->post_excerpt : wp_trim_words(wp_strip_all_tags($post->post_content), 16, ''),
 				'icon' => get_field('offer_icon', $post->ID),
 			];
 		}
@@ -137,6 +140,7 @@ class Offers extends Block
 		$fields = [
 			'g_offers' => $g_offers,
 			'items' => $items,
+			'link_label' => !empty($g_offers['link_label']) ? $g_offers['link_label'] : 'Sprawdź',
 
 			'section_id' => get_field('section_id'),
 			'section_class' => get_field('section_class'),

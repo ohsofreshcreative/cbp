@@ -37,7 +37,10 @@ public $supports = [
 				'return_format' => 'array',
 				'preview_size' => 'thumbnail',
 			])
-			->addText('header', ['label' => 'Nagłówek'])
+			->addText('header', [
+				'label' => 'Nagłówek',
+				'instructions' => 'Słowo wyróżnione (np. Ciebie) owiń w &lt;strong&gt;.',
+			])
 			->addWysiwyg('text', [
 				'label' => 'Treść',
 				'tabs' => 'all',

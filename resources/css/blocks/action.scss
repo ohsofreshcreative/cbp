@@ -1,2 +1,57 @@
 .b-action {
+	.__wave {
+		color: #fff;
+		height: 72px;
+		display: block;
+	}
+
+	.__band {
+		padding: 24px 0 64px;
+	}
+
+	.__txt {
+		h1, h2, h3, h4, h5, h6 {
+			font-size: clamp(24px, 1.8vw, 30px) !important;
+			line-height: 1.3;
+			margin: 0 0 16px;
+			color: var(--color-secondary-900);
+		}
+
+		p {
+			color: var(--color-secondary-400);
+			margin-bottom: 16px;
+		}
+
+		p:last-child {
+			margin-bottom: 0 !important;
+		}
+
+		strong,
+		b {
+			color: var(--color-secondary-900);
+			font-weight: 600;
+		}
+	}
+
+	.__cta {
+		display: inline-flex !important;
+		align-items: center;
+		gap: 16px;
+		color: var(--color-secondary-900) !important;
+		padding: 12px 12px 12px 32px !important;
+	}
+
+	.__cta:hover {
+		color: #fff !important;
+	}
+
+	.__cta-icon {
+		display: grid;
+		place-items: center;
+		width: 44px;
+		height: 44px;
+		border-radius: 999px;
+		background: rgb(255 255 255 / 0.45);
+		flex-shrink: 0;
+	}
 }
