@@ -6,40 +6,48 @@ use Log1x\AcfComposer\Block;
 use StoutLogic\AcfBuilder\FieldsBuilder;
 use App\Support\SectionClasses;
 
-class Action extends Block
+class What extends Block
 {
-	public $name = 'CTA - Wpis';
-	public $description = 'action';
-	public $slug = 'action';
+	public $name = 'W jakich sprawach';
+	public $description = 'what';
+	public $slug = 'what';
 	public $category = 'formatting';
-	public $icon = 'align-pull-left';
-	public $keywords = ['tresc', 'zdjecie'];
+	public $icon = 'list-view';
+	public $keywords = ['what', 'sprawy', 'lista'];
 	public $mode = 'edit';
-public $supports = [
-    'align' => false,
-    'mode' => true,
-    'jsx' => true,
-    'anchor' => true,
-    'customClassName' => true,
-];
+	public $supports = [
+		'align' => false,
+		'mode' => true,
+		'jsx' => true,
+	];
 
 	public function fields()
 	{
-		$action = new FieldsBuilder('action');
+		$what = new FieldsBuilder('what');
 
-		$action
-			->setLocation('block', '==', 'acf/action') // ważne!
-			/*--- GROUP ---*/
+		$what
+			->setLocation('block', '==', 'acf/what') // ważne!
+			/*--- TAB #1 ---*/
 			->addTab('Elementy', ['placement' => 'top'])
-			->addGroup('g_action', ['label' => ''])
+			->addGroup('g_what', ['label' => ''])
 			->addImage('image', [
 				'label' => 'Obraz',
 				'return_format' => 'array',
 				'preview_size' => 'thumbnail',
 			])
+			->addText('header', ['label' => 'Nagłówek'])
+			->endGroup()
+
+			/*--- TAB #2 ---*/
+			->addTab('Kafelki', ['placement' => 'top'])
+			->addRepeater('r_what', [
+				'label' => 'Sprawy',
+				'layout' => 'table',
+				'min' => 1,
+				'button_label' => 'Dodaj sprawę',
+			])
 			->addText('header', [
 				'label' => 'Nagłówek',
-				'instructions' => 'Słowo wyróżnione (np. Ciebie) owiń w &lt;strong&gt;.',
 			])
 			->addWysiwyg('text', [
 				'label' => 'Treść',
@@ -47,32 +55,15 @@ public $supports = [
 				'toolbar' => 'full',
 				'media_upload' => true,
 			])
-			->addLink('button1', [
-				'label' => 'Przycisk #1',
-				'return_format' => 'array',
-			])
-			->endGroup()
+			->endRepeater()
 
 			/*--- USTAWIENIA BLOKU ---*/
-
 			->addTab('Ustawienia bloku', ['placement' => 'top'])
 			->addText('section_id', [
 				'label' => 'ID',
 			])
 			->addText('section_class', [
 				'label' => 'Dodatkowe klasy CSS',
-			])
-			->addTrueFalse('bgshape', [
-				'label' => 'Kształt w tle',
-				'ui' => 1,
-				'ui_on_text' => 'Tak',
-				'ui_off_text' => 'Nie',
-			])
-			->addTrueFalse('nolist', [
-				'label' => 'Brak punktatorów',
-				'ui' => 1,
-				'ui_on_text' => 'Tak',
-				'ui_off_text' => 'Nie',
 			])
 			->addTrueFalse('flip', [
 				'label' => 'Odwrotna kolejność',
@@ -104,32 +95,32 @@ public $supports = [
 					'none' => 'Brak (domyślne)',
 					'section-white' => 'Białe',
 					'section-light' => 'Jasne',
+					'section-gray' => 'Szare',
 					'section-brand' => 'Marki',
 					'section-gradient' => 'Gradient',
 					'section-dark' => 'Ciemne',
 				],
-				'default_value' => 'none',
-				'ui' => 0, // Ulepszony interfejs
+				'default_value' => 'section-dark',
+				'ui' => 0,
 				'allow_null' => 0,
 			]);
 
-		return $action;
+		return $what;
 	}
 
 	public function with(): array
 	{
 		$fields = [
-			'g_action' => get_field('g_action') ?: [],
+			'g_what' => get_field('g_what') ?: [],
+			'r_what' => get_field('r_what') ?: [],
 
 			'section_id' => get_field('section_id'),
 			'section_class' => get_field('section_class'),
 
-			'bgshape' => (bool) get_field('bgshape'),
 			'flip' => (bool) get_field('flip'),
 			'wide' => (bool) get_field('wide'),
 			'nomt' => (bool) get_field('nomt'),
 			'gap' => (bool) get_field('gap'),
-			'nolist' => (bool) get_field('nolist'),
 
 			'background' => get_field('background') ?: get_field('default_block_background', 'option') ?: 'none',
 		];
@@ -139,7 +130,6 @@ public $supports = [
 			'wide' => 'wide',
 			'nomt' => '!mt-0',
 			'gap' => 'wider-gap',
-			'nolist' => 'no-list',
 		]);
 
 		return $fields;

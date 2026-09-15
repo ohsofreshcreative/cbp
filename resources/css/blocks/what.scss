@@ -1,0 +1,43 @@
+.b-what {
+	&.section-dark {
+		background: var(--bg);
+	}
+
+	.__list {
+		margin-top: 40px;
+	}
+
+	.__card {
+		border-bottom: 1px dashed var(--color-primary);
+		padding-bottom: 20px;
+		margin-bottom: 20px;
+
+		&:last-child {
+			border-bottom: 0;
+			margin-bottom: 0;
+			padding-bottom: 0;
+		}
+	}
+
+	.__card > .font-header {
+		color: var(--color-primary) !important;
+	}
+
+	.__txt,
+	.__txt p {
+		color: rgb(255 255 255 / 0.55);
+	}
+
+	.__ekg {
+		width: 58%;
+		bottom: 4%;
+		right: -18%;
+	}
+
+	@media (max-width: 768px) {
+		.__ekg {
+			width: 48%;
+			right: -6%;
+		}
+	}
+}

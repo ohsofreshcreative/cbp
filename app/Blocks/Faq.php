@@ -37,6 +37,10 @@ class Faq extends Block
 				'return_format' => 'array',
 				'preview_size' => 'thumbnail',
 			])
+			->addText('label', [
+				'label' => 'Etykieta',
+				'default_value' => 'FAQ',
+			])
 			->addText('header', ['label' => 'Nagłówek'])
 			->addWysiwyg('text', [
 				'label' => 'Treść',
@@ -113,7 +117,7 @@ class Faq extends Block
 					'section-gradient' => 'Gradient',
 					'section-dark' => 'Ciemne',
 				],
-				'default_value' => 'none',
+				'default_value' => 'section-dark',
 				'ui' => 0,
 				'allow_null' => 0,
 			]);
@@ -124,8 +128,8 @@ class Faq extends Block
 	public function with(): array
 	{
 		$fields = [
-			'g_faq' => get_field('g_faq'),
-			'r_faq' => get_field('r_faq'),
+			'g_faq' => get_field('g_faq') ?: [],
+			'r_faq' => get_field('r_faq') ?: [],
 
 			'section_id' => get_field('section_id'),
 			'section_class' => get_field('section_class'),
@@ -135,7 +139,8 @@ class Faq extends Block
 			'nomt' => (bool) get_field('nomt'),
 			'gap' => (bool) get_field('gap'),
 
-			'background' => get_field('background') ?: 'none',
+			'background' => get_field('background') ?: get_field('default_block_background', 'option') ?: 'none',
+			'faq_id' => wp_unique_id('faq'),
 		];
 
 		$fields['sectionClass'] = SectionClasses::fromMap($fields, [
