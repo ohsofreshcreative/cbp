@@ -15,7 +15,12 @@
 		@endif
 
 		@if (!empty($items))
-		<div class="__grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+		@php
+		$itemCount = count($items);
+		$gridClass = 'grid-cols-1 md:grid-cols-2';
+		if ($itemCount === 3) $gridClass = 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3';
+		@endphp
+		<div class="__grid grid {{ $gridClass }} gap-6">
 			@foreach ($items as $item)
 			<a data-gsap-element="card" href="{{ $item['url'] }}" class="__card relative flex items-start justify-between gap-4 radius bg-white p-6 md:p-8">
 				<div class="min-w-0">

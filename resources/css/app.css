@@ -187,6 +187,8 @@
 @import '../css/blocks/what.scss';
 @import '../css/blocks/offers.scss';
 @import '../css/blocks/faq.scss';
+@import '../css/blocks/problem.scss';
+@import '../css/blocks/solutions.scss';
 /*-- NOT USED ---*/
 @import '../css/blocks/accordion.scss';
 @import '../css/blocks/cards.scss';
