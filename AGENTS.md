@@ -8,6 +8,9 @@ Nie wymagaj osobnego skilla ani komendy /nowy-blok. Jeśli brakuje nazwy lub pro
 zapytaj o brakujące dane. Dalej stosuj anatomię bloku, analizę wzorców i walidację z tego pliku.
 W podsumowaniu wymień zmienione pliki, sprawdzenia i wymagane komendy użytkownika.
 
+Przy implementacji ze screenshotu lub projektu graficznego odwzoruj wygląd 1:1
+tokenami i wzorcami motywu. Nie zostawiaj celowo „szkieletu do dopracowania”.
+
 Gdy użytkownik przesyła screenshoty lub projekt całej podstrony **bez** własnej listy
 bloków, nie twórz od razu bloków. Najpierw wykonaj wyłącznie analizę i podział na bloki ACF
 zgodnie z sekcją „Analiza podstrony — podział na bloki ACF”. Implementację konkretnego
@@ -331,7 +334,21 @@ i poczekaj na akceptację. Gdy użytkownik dołącza własną listę bloków (no
 istniejące), pomiń analizę podziału i implementuj całą listę. Poniższe zasady
 dotyczą implementacji zleconych bloków.
 
-Screen lub projekt jest specyfikacją: zachowaj układ, hierarchię, proporcje, odstępy, wyrównanie i kadrowanie. Używaj istniejących tokenów oraz ograniczeń sekcji Styling. Nie wymyślaj dekoracji ani nie upraszczaj istotnych szczegółów tylko dla wygody.
+Screenshot lub projekt graficzny jest specyfikacją wizualną 1:1, nie szkicem.
+Odwzoruj układ, hierarchię typografii, proporcje, odstępy, wyrównanie, kadrowanie
+obrazów, kolory tła, przyciski, dekoracje widoczne na screenie i zachowanie sekcji.
+
+* Używaj istniejących tokenów, klas motywu i komponentów (`text-h*`, `font-header`,
+  `text-primary`, `c-main`, `radius` / `radius-img`, `m-header`, `m-btn`, `m-img`,
+  `img-*`, `x-button`, tła `section-*`).
+* Nie upraszczaj istotnych szczegółów „na później” i nie zostawiaj czystego szkieletu
+  grid/flex, gdy screen pokazuje gotowy wygląd.
+* Nie wymyślaj dekoracji, których nie ma na screenie.
+* Nie wprowadzaj nowych kolorów, fontów ani breakpointów. Hexów nie wpisuj w Blade —
+  dobierz najbliższy token z `resources/css/app.css` i `variables.scss`.
+* Jeśli token nie istnieje, a szczegół jest na screenie, zrób go istniejącymi utility
+  classes albo minimalnym SCSS bloku. Nie odpuszczaj detalu tylko dlatego, że nie ma
+  gotowej klasy o tej nazwie.
 
 ⸻
 
@@ -391,51 +408,54 @@ w szczególności:
 * `display`, grid i flex,
 * szerokości, wysokości oraz `min-height` / `max-width`,
 * pozycjonowania i `inset`,
-* paddingów, marginesów i gapów,
+* paddingów, marginesów i gapów wynikających ze screenshotu albo z analogicznego bloku,
 * kolorów i podstawowych struktur przestrzennych,
 * kolejności elementów,
 * breakpointów i całego zachowania responsywnego.
 
-Ważne: nie dodawaj niestandardowych klas CSS/SCSS do nowych bloków tylko po to, żeby odwzorować
-screen. Dla mockupów lepiej zrobić prosty układ i zostawić resztę użytkownikowi do dopracowania.
-Nie twórz dekoracyjnych klas typu `__shape`, `__glow`, `__icon`, `__grid` z osobnym SCSS, jeśli nie jest
-to konieczne dla poprawnego działania. Jeśli element dekoracyjny ma być w markupu, dodaj tylko prosty
-semanticzny znacznik bez osobnej stylizacji, a nie cały zestaw customowych klas i reguł.
+Gdy dostarczony jest screenshot lub projekt graficzny, odwzoruj go wiernie tokenami motywu.
+Nie stosuj wtedy zasady „prosty szkielet, resztę dopracuje użytkownik”.
 
-Nie dodawaj automatycznie `gap-6` do wrapperów treści ani jako jednakowego odstępu między wszystkimi elementami bloku. Odstępy między nagłówkiem, treścią, podpisem i innymi elementami są dobierane indywidualnie przez użytkownika. Nie zastępuj `gap-6` inną arbitralnie wybraną klasą `gap-*`; dodawaj takie odstępy tylko na wyraźną prośbę użytkownika lub zgodnie z ustalonym wzorcem konkretnego układu.
+Nie twórz dekoracyjnych klas typu `__shape`, `__glow` z osobnym SCSS, jeśli ten sam efekt
+da się zapisać utility classes albo istniejącym tokenem. Element dekoracyjny ze screena
+ma być w markupu i ostylowany tokenami (np. `text-primary`, SVG jak w `values.blade.php`).
 
-**Zasada absolutnego braku mikro-typografii i klas ozdobnych:**
-Nie dodawaj w szablonie żadnych klas związanych z dokładnym rozmiarem pisma (`text-sm`, `text-xs`, `text-lg`), wagą czcionki (`font-medium`, `font-semibold`, `font-bold`), wysokością linii (`leading-relaxed`, `leading-normal`) czy zaokrągleniami oraz mikromarginesami tekstowymi, jeśli nie zostaniesz o to wyraźnie poproszony. Tworzymy wyłącznie czysty szkielet strukturalny (grid, flex, gap, paddingi sekcji, bordery i kolory tła). Cała typografia i niestandardowy wygląd tekstu są dopracowywane bezpośrednio przez użytkownika we własnym zakresie.
+Nie wstawiaj automatycznie `gap-6` jako domyślnego odstępu „na wszelki wypadek”.
+Odstępy bierz ze screenshotu i z analogicznych bloków (`m-header`, `m-btn`, `m-img`,
+`gap-8` / `lg:gap-20` jak w `content`). Puste, zbity layout bez odstępów ze screena
+jest błędem, nie zaletą.
 
-Nie używaj ad-hoc klas typu `min-h-*`, `max-h-*`, `rounded-*`, `rounded-[...]`, `min-h-[...]`,
-`radius-*` (jeśli nie istnieje to w projekcie jako token), chyba że dana klasa jest już zdefiniowana
-w design systemie motywu. W tym repo preferowane są istniejące klasy typu `radius`, `radius-img`,
-`c-main`, `m-header`, `m-btn`, `m-img`, a nie arbitralne wartości na siłę.
+**Typografia ze screena — tokenami, nie zgadywaniem:**
+Dobierz istniejące klasy `text-h1` … `text-h7`, `text-big`, `font-header`, `text-primary`
+tak, aby hierarchia ze screena była czytelna. Nie pomijaj ich po to, by użytkownik
+dopisał je później. Nie dodawaj arbitralnych `text-[42px]`, `leading-[1.1]`,
+`font-medium` / `font-semibold`, `text-sm` / `text-xs`, jeśli na screenie wystarczy
+token motywu.
 
-Tak samo nie używaj arbitralnych klas typograficznych typu `text-[42px]`, `leading-[1.1]`,
-`font-header`, `text-primary-dark` tam, gdzie projekt nie ma już gotowego tokenu lub wzorca.
-Nie tworzymy nowych klas „na szybko” dla jednego mockupu; jeśli czegoś nie ma w design systemie,
-lepiej zostawić prosty układ i pozwolić użytkownikowi dopracować styl ręcznie.
+Preferuj tokeny zaokrągleń `radius` i `radius-img`. `rounded-full` wolno użyć, gdy
+screen wyraźnie pokazuje koło (kadr zdjęcia, avatar). Nie używaj `rounded-[13px]`
+ani innych wartości ad-hoc, gdy istnieje token.
 
-Plik `resources/css/blocks/<slug>.scss` nadal utwórz i zaimportuj, ale domyślnie zostaw w nim tylko:
+Nie wymyślaj nowych klas CSS „na szybko” dla jednego mockupu, jeśli ten sam efekt
+jest już w design systemie. Jeśli efekt ze screena nie da się zapisać tokenem
+ani Tailwindem, dodaj minimum w `resources/css/blocks/<slug>.scss`.
 
-```scss
-.b-<slug> {
-}
-```
+Plik `resources/css/blocks/<slug>.scss` zawsze utwórz i zaimportuj. Zostaw pusty selektor
+`.b-<slug> { }` tylko wtedy, gdy cały wygląd ze screena da się zapisać w Blade tokenami.
+Jeśli nie — dopisz w tym pliku minimum potrzebne do wiernego odwzorowania (np. akordeon,
+pseudoelement, overlay).
 
 Nie przenoś klas możliwych do zapisania w Tailwindzie do selektorów `.__wrapper`, `.__content`,
-`.__media`, `.__img`, `.__txt` ani do lokalnych `@media`. Nie twórz w SCSS kompletnego layoutu bloku
-ani jego osobnej implementacji responsywnej.
+`.__media`, `.__img`, `.__txt` ani do lokalnych `@media`. Nie buduj w SCSS drugiej, pełnej
+implementacji layoutu, jeśli utility classes wystarczą.
 
 Custom CSS dodawaj wyłącznie wtedy, gdy jest rzeczywiście niezbędny i nie da się go rozsądnie zapisać
 istniejącymi utility classes. Typowe wyjątki to pseudoelementy, stylowanie HTML generowanego przez
 WYSIWYG lub zewnętrzną wtyczkę oraz złożony selektor niemożliwy do wyrażenia w Blade. Nawet wtedy
 dodaj absolutne minimum deklaracji potrzebnych dla tego wyjątku.
 
-Nie dodawaj zapasowych wariantów, dodatkowych breakpointów, stanów, klas typu `order-flip` ani
-rozbudowanych styli „na przyszłość”, jeśli użytkownik nie poprosił o nie w danym zadaniu. Użytkownik
-samodzielnie rozbuduje później styling, jeśli będzie potrzebny.
+Nie dodawaj zapasowych wariantów, dodatkowych breakpointów, stanów ani rozbudowanych styli
+„na przyszłość”, jeśli nie wynikają ze screenshotu ani z zadania.
 
 Używaj istniejących tokenów i standardowych klas projektu. Wartości arbitralne Tailwinda stosuj tylko
 wtedy, gdy konkretna wartość wynika bezpośrednio z projektu i nie ma odpowiadającego jej tokenu.
@@ -661,7 +681,7 @@ od użytkownika, zatrzymaj się na analizie i akceptacji podziału z sekcji
 po zleceniu konkretnego bloku. Gdy użytkownik podaje własną listę bloków
 (nowe vs istniejące), zaimplementuj wszystkie wskazane bloki w jednym zadaniu.
 
-Zrozum zadanie → zbadaj repozytorium i podobne implementacje → znajdź elementy do ponownego użycia → wybierz najmniejszą zmianę → zaimplementuj → przejrzyj całość, błędy, responsywność i wpływ na istniejące funkcje. Samo utworzenie plików nie kończy zadania.
+Zrozum zadanie → zbadaj repozytorium i podobne implementacje → znajdź elementy do ponownego użycia → wybierz najmniejszą zmianę → zaimplementuj wiernie ze screenshotem → przejrzyj całość, błędy, responsywność, zgodność ze screenem i wpływ na istniejące funkcje. Samo utworzenie plików nie kończy zadania.
 
 ⸻
 
@@ -693,13 +713,12 @@ Wszystko jest w `resources/css/variables.scss` i w bloku `@theme` w `resources/c
 (Tailwind v4, konfiguracja CSS-first — `tailwind.config.js` zawiera tylko plugin `forms`,
 nie dopisuj tam kolorów ani spacingu).
 
-**Kontenery** (nie rób własnych `max-w-*`):
+**Kontenery** (nie rób własnych `max-w-*` zamiast `c-main` / `c-narrow` / `c-wide`):
 
-W nowych blokach nie dodawaj klas `max-w-*`, `min-h-*`, `leading-normal` ani żadnych klas rozmiaru
-fontu (`text-base`, `text-lg`, `text-xl`, `text-h*` itd.), chyba że użytkownik wyraźnie poprosi
-o konkretną klasę. Nie ograniczaj nimi nagłówków, treści ani wrapperów na podstawie własnych założeń.
-Nie dodawaj też elementom tekstowym klas marginesu (`mt-*`, `mb-*`, `mx-*`, `my-*`, `m-*`) bez
-wyraźnej prośby użytkownika.
+Gdy implementujesz ze screenshotu, dobierz hierarchię istniejącymi klasami `text-h1` … `text-h7`,
+`text-big`, `font-header` oraz odstępami `m-header`, `m-title`, `m-btn`, `m-img`. Nie pomijaj ich
+w obawie przed „mikro-typografią”. Nie zgaduj rozmiarów poza tokenami i nie dodawaj `text-[42px]`.
+Nie ograniczaj treści własnym `max-w-*`, jeśli na screenie sekcja korzysta z `c-main`.
 
 | Klasa | Max-width |
 |---|---|
@@ -711,11 +730,11 @@ wyraźnej prośby użytkownika.
 oraz `-menu-mt` / `-menu-pt`. Marginesy wewnętrzne: `m-header`, `m-title`, `m-btn`, `m-img`
 (utility zdefiniowane w `app.css`).
 
-**Typografia**: `text-h1` … `text-h7`, `text-big`, `text-gradient`, `font-header` (Poppins) /
-`font-body` (GeneralSans, lokalne `.otf` w `resources/fonts`).
+**Typografia**: `text-h1` … `text-h7`, `text-big`, `text-gradient`, `font-header` / `font-body`.
+Rodzinę czcionek i kolory bierz z aktualnego `resources/css/app.css` (`:root`) oraz
+`resources/css/variables.scss` — nie z pamięci ani z innego motywu.
 
-**Kolory**: `--color-primary*` (#00A6DF), `--color-secondary*` (#EB007F), `--color-page`, `--color-bright`,
-skale 50–900 + `-hover` i `-dark`. Nie wpisuj hexów w Blade.
+**Kolory**: skale `--color-primary*` i `--color-secondary*` z `app.css`. Nie wpisuj hexów w Blade.
 
 **Obrazy**: klasy rozmiarów `img-xs` (176px) … `img-3xl` (664px), zaokrąglenia `radius` (24px) /
 `radius-img` (32px).
@@ -879,7 +898,7 @@ użytkownikowi zamiast korzystać z klucza.
 
 Definition of done
 
-Zadanie kończy kompletna, przejrzana implementacja zgodna z projektem, repozytorium, responsywnością i dostępnością. Nie wprowadzaj zbędnych duplikatów ani regresji. Sprawdź składnię i importy w dostępnym zakresie. Nowy blok ma pełne ustawienia i SectionClasses::fromMap(), komponenty x-button/x-picture, sekcyjne odstępy, import SCSS i warunkowy import potrzebnego JS. Przypomnij użytkownikowi o wymaganym acf:cache, yarn build i commicie public/build; nie wykonuj tych komend.
+Zadanie kończy kompletna, przejrzana implementacja zgodna ze screenshotem/projektem, repozytorium, responsywnością i dostępnością. Wygląd ma odpowiadać screenowi przy użyciu tokenów motywu — sam szkielet grid/flex bez hierarchii, odstępów i kadrów ze specyfikacji nie zamyka zadania. Nie wprowadzaj zbędnych duplikatów ani regresji. Sprawdź składnię i importy w dostępnym zakresie. Nowy blok ma pełne ustawienia i SectionClasses::fromMap(), komponenty x-button/x-picture tam gdzie istnieją w motywie, sekcyjne odstępy, import SCSS i warunkowy import potrzebnego JS. Przypomnij użytkownikowi o wymaganym acf:cache, yarn build i commicie public/build; nie wykonuj tych komend.
 
 ⸻
 
