@@ -9,6 +9,10 @@
         "g_hero": {
           "header": "<p>Centrum Badań Poligraficznych</p>",
           "text": "<p>Prosty import bloku Hero.</p>",
+          "image": {
+            "src": "resources/imports/assets/hero-test.jpg",
+            "alt": "Przykładowy tekst alternatywny"
+          },
           "button1": {
             "title": "Kontakt",
             "url": "/kontakt",

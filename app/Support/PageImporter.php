@@ -6,11 +6,21 @@ class PageImporter
 {
 	public function import(PageImportPayload $payload): int
 	{
+		$assets = new PageImportAssets($payload->sourceDir);
+		$blocks = [];
+
+		foreach ($payload->blocks as $index => $item) {
+			$blocks[] = [
+				'block' => $item['block'],
+				'data' => $assets->hydrate($item['data'], sprintf('blocks[%d].data', $index)),
+			];
+		}
+
 		if (!function_exists('wp_insert_post')) {
 			throw new PageImportException('Importer wymaga WordPress (wp_insert_post).');
 		}
 
-		$content = AcfBlockSerializer::toPostContent($payload->blocks);
+		$content = AcfBlockSerializer::toPostContent($blocks);
 
 		$postarr = [
 			'post_type' => 'page',

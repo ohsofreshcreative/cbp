@@ -12,15 +12,18 @@ class PageImportPayload
 
 	public string $status;
 
+	public ?string $sourceDir;
+
 	/** @var list<array{block: string, data: array<string, mixed>}> */
 	public array $blocks;
 
-	private function __construct(string $title, string $slug, string $status, array $blocks)
+	private function __construct(string $title, string $slug, string $status, array $blocks, ?string $sourceDir = null)
 	{
 		$this->title = $title;
 		$this->slug = $slug;
 		$this->status = $status;
 		$this->blocks = $blocks;
+		$this->sourceDir = $sourceDir;
 	}
 
 	public static function fromFile(string $path): self
@@ -39,10 +42,10 @@ class PageImportPayload
 			throw new PageImportException(sprintf('Nie można odczytać pliku JSON: %s', $path));
 		}
 
-		return self::fromJson($raw, $path);
+		return self::fromJson($raw, $path, dirname($path));
 	}
 
-	public static function fromJson(string $json, string $source = 'JSON'): self
+	public static function fromJson(string $json, string $source = 'JSON', ?string $sourceDir = null): self
 	{
 		try {
 			$decoded = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
@@ -54,13 +57,13 @@ class PageImportPayload
 			throw new PageImportException('JSON musi być obiektem z polami title i blocks.');
 		}
 
-		return self::fromArray($decoded);
+		return self::fromArray($decoded, $sourceDir);
 	}
 
 	/**
 	 * @param array<string, mixed> $data
 	 */
-	public static function fromArray(array $data): self
+	public static function fromArray(array $data, ?string $sourceDir = null): self
 	{
 		if (!array_key_exists('title', $data) || !is_string($data['title']) || trim($data['title']) === '') {
 			throw new PageImportException('Pole "title" jest wymagane i musi być niepustym stringiem.');
@@ -114,7 +117,7 @@ class PageImportPayload
 			$blocks[] = self::normalizeBlock($item, (int) $index);
 		}
 
-		return new self($title, $slug, $status, $blocks);
+		return new self($title, $slug, $status, $blocks, $sourceDir);
 	}
 
 	/**

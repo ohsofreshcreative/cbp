@@ -2,11 +2,13 @@
 
 require __DIR__ . '/../../app/Support/PageImportException.php';
 require __DIR__ . '/../../app/Support/PageImportPayload.php';
+require __DIR__ . '/../../app/Support/PageImportAssets.php';
 require __DIR__ . '/../../app/Support/AcfBlockSerializer.php';
 require __DIR__ . '/../../app/Support/PageImporter.php';
 
 use App\Support\AcfBlockSerializer;
 use App\Support\PageImporter;
+use App\Support\PageImportAssets;
 use App\Support\PageImportException;
 use App\Support\PageImportPayload;
 
@@ -44,6 +46,8 @@ expect_true($payload->status === 'draft', 'domyślny/przyjęty status draft');
 expect_true(count($payload->blocks) === 1, 'jeden blok');
 expect_true($payload->blocks[0]['block'] === 'hero', 'slug hero');
 expect_true(($payload->blocks[0]['data']['g_hero']['button1']['title'] ?? '') === 'Kontakt', 'zagnieżdżone data.g_hero.button1');
+expect_true(($payload->blocks[0]['data']['g_hero']['image']['src'] ?? '') === 'resources/imports/assets/hero-test.jpg', 'asset src w JSON');
+expect_true(is_string($payload->sourceDir) && str_ends_with($payload->sourceDir, 'cli'), 'sourceDir z pliku JSON');
 
 $withoutStatus = PageImportPayload::fromJson(json_encode([
 	'title' => 'Bez statusu',
@@ -76,7 +80,67 @@ expect_exception(fn () => PageImportPayload::fromArray(['title' => 'X', 'blocks'
 expect_exception(fn () => PageImportPayload::fromArray(['title' => 'X', 'blocks' => [['block' => 'hero-banner', 'data' => []]]]), 'niepoprawny', 'slug z myślnikiem');
 expect_exception(fn () => PageImportPayload::fromArray(['title' => 'X', 'blocks' => [['block' => 'hero', 'data' => ['a', 'b']]]]), 'obiektem', 'data jako lista');
 expect_exception(fn () => PageImportPayload::fromFile('/tmp/missing-osf-page.json'), 'Nie można odczytać', 'brak pliku');
-expect_exception(fn () => (new PageImporter())->import($payload), 'wp_insert_post', 'importer bez WordPressa');
+expect_exception(fn () => (new PageImporter())->import($withoutStatus), 'wp_insert_post', 'importer bez WordPressa');
+
+expect_true(PageImportAssets::isAsset(['src' => 'a.jpg', 'alt' => 'x']), 'rozpoznaje {src, alt}');
+expect_true(!PageImportAssets::isAsset(['title' => 'Kontakt', 'url' => '/x', 'target' => '']), 'link to nie asset');
+expect_true(!PageImportAssets::isAsset(['a', 'b']), 'lista to nie asset');
+expect_true(!PageImportAssets::isAsset(12), 'skalar to nie asset');
+
+expect_exception(
+	fn () => (new PageImportAssets())->hydrate(['image' => ['src' => 'no-such-file.jpg', 'alt' => 'x']], 'data'),
+	'nie znaleziono pliku',
+	'brak pliku obrazu'
+);
+
+expect_exception(
+	fn () => (new PageImporter())->import($payload),
+	'Import obrazów wymaga WordPress',
+	'istniejący obraz bez WP — bez tworzenia strony'
+);
+
+expect_exception(
+	fn () => (new PageImportAssets())->hydrate(['image' => ['src' => '', 'alt' => 'x']], 'data'),
+	'src',
+	'puste src'
+);
+
+expect_exception(
+	fn () => (new PageImportAssets())->hydrate(['image' => ['src' => 'https://example.com/a.jpg', 'alt' => 'x']], 'data'),
+	'URL',
+	'src jako URL'
+);
+
+$notImage = sys_get_temp_dir() . '/osf-not-image.txt';
+file_put_contents($notImage, 'not-an-image');
+expect_exception(
+	fn () => (new PageImportAssets())->hydrate(['image' => ['src' => $notImage, 'alt' => 'x']], 'data'),
+	'obrazem',
+	'plik nie jest obrazem'
+);
+@unlink($notImage);
+
+try {
+	(new PageImportAssets())->hydrate([
+		'g_hero' => [
+			'image' => ['src' => 'missing-hero.jpg', 'alt' => 'a'],
+			'badges' => [
+				['icon' => ['src' => 'missing-icon.png', 'alt' => 'b']],
+			],
+		],
+		'r_hero' => [
+			['image' => ['src' => 'missing-tile.jpg', 'alt' => 'c']],
+		],
+	], 'data');
+	expect_true(false, 'zagnieżdżone braki (brak wyjątku)');
+} catch (PageImportException $e) {
+	$msg = $e->getMessage();
+	expect_true(str_contains($msg, 'g_hero.image'), 'błąd wskazuje g_hero.image');
+	expect_true(str_contains($msg, 'g_hero.badges[0].icon'), 'błąd wskazuje g_hero.badges[0].icon');
+	expect_true(str_contains($msg, 'r_hero[0].image'), 'błąd wskazuje r_hero[0].image');
+}
+
+expect_true((new PageImportAssets())->resolveFile('resources/imports/assets/hero-test.jpg') !== null, 'resolve przykładowego JPG');
 
 $encoded = AcfBlockSerializer::prepareData('hero', [
 	'g_hero' => ['header' => 'A'],
@@ -110,7 +174,17 @@ if (!function_exists('acf_get_fields')) {
 				'sub_fields' => [
 					['name' => 'header', 'type' => 'wysiwyg', 'key' => 'field_hero_header'],
 					['name' => 'text', 'type' => 'wysiwyg', 'key' => 'field_hero_text'],
+					['name' => 'image', 'type' => 'image', 'key' => 'field_hero_image'],
 					['name' => 'button1', 'type' => 'link', 'key' => 'field_hero_button1'],
+					[
+						'name' => 'badges',
+						'type' => 'repeater',
+						'key' => 'field_hero_badges',
+						'sub_fields' => [
+							['name' => 'icon', 'type' => 'image', 'key' => 'field_hero_badge_icon'],
+							['name' => 'text', 'type' => 'text', 'key' => 'field_hero_badge_text'],
+						],
+					],
 				],
 			],
 			[
@@ -118,6 +192,7 @@ if (!function_exists('acf_get_fields')) {
 				'type' => 'repeater',
 				'key' => 'field_hero_r_hero',
 				'sub_fields' => [
+					['name' => 'image', 'type' => 'image', 'key' => 'field_hero_r_image'],
 					['name' => 'title', 'type' => 'text', 'key' => 'field_hero_r_title'],
 				],
 			],
@@ -164,6 +239,146 @@ expect_exception(
 	'Nie znaleziono grupy pól ACF',
 	'brak grupy pól przy aktywnym ACF'
 );
+
+$GLOBALS['osf_upload_count'] = 0;
+$GLOBALS['osf_alts'] = [];
+$GLOBALS['osf_next_attachment_id'] = 101;
+$GLOBALS['osf_inserted_content'] = '';
+
+if (!function_exists('wp_upload_bits')) {
+	function wp_upload_bits($name, $deprecated, $bits)
+	{
+		$GLOBALS['osf_upload_count']++;
+		$dest = sys_get_temp_dir() . '/osf-upload-' . $name;
+		file_put_contents($dest, $bits);
+		return ['file' => $dest, 'url' => 'http://example.test/' . $name, 'type' => 'image/jpeg', 'error' => false];
+	}
+}
+
+if (!function_exists('wp_insert_attachment')) {
+	function wp_insert_attachment($args, $file = false, $parent = 0, $wp_error = false)
+	{
+		$id = (int) $GLOBALS['osf_next_attachment_id'];
+		$GLOBALS['osf_next_attachment_id']++;
+		return $id;
+	}
+}
+
+if (!function_exists('wp_generate_attachment_metadata')) {
+	function wp_generate_attachment_metadata($id, $file)
+	{
+		return ['file' => $file, 'width' => 640, 'height' => 360];
+	}
+}
+
+if (!function_exists('wp_update_attachment_metadata')) {
+	function wp_update_attachment_metadata($id, $data)
+	{
+		return true;
+	}
+}
+
+if (!function_exists('update_post_meta')) {
+	function update_post_meta($id, $key, $value)
+	{
+		if ($key === '_wp_attachment_image_alt') {
+			$GLOBALS['osf_alts'][(int) $id] = $value;
+		}
+		return true;
+	}
+}
+
+if (!function_exists('wp_check_filetype')) {
+	function wp_check_filetype($filename, $mimes = null)
+	{
+		return ['ext' => 'jpg', 'type' => 'image/jpeg'];
+	}
+}
+
+if (!function_exists('sanitize_file_name')) {
+	function sanitize_file_name($filename)
+	{
+		return $filename;
+	}
+}
+
+if (!function_exists('sanitize_text_field')) {
+	function sanitize_text_field($str)
+	{
+		return is_string($str) ? trim($str) : $str;
+	}
+}
+
+if (!function_exists('wp_delete_attachment')) {
+	function wp_delete_attachment($id, $force = false)
+	{
+		return true;
+	}
+}
+
+if (!function_exists('is_wp_error')) {
+	function is_wp_error($thing)
+	{
+		return false;
+	}
+}
+
+if (!function_exists('wp_insert_post')) {
+	function wp_insert_post($postarr, $wp_error = false)
+	{
+		$GLOBALS['osf_inserted_content'] = $postarr['post_content'] ?? '';
+		return 55;
+	}
+}
+
+$hydrated = (new PageImportAssets())->hydrate([
+	'g_hero' => [
+		'header' => 'H',
+		'image' => [
+			'src' => 'resources/imports/assets/hero-test.jpg',
+			'alt' => 'Alt hero',
+		],
+		'badges' => [
+			[
+				'icon' => [
+					'src' => 'resources/imports/assets/hero-test.jpg',
+					'alt' => 'Alt badge',
+				],
+				'text' => 'T',
+			],
+		],
+	],
+	'r_hero' => [
+		[
+			'image' => [
+				'src' => 'resources/imports/assets/hero-test.jpg',
+				'alt' => 'Alt tile',
+			],
+			'title' => 'Kafelek',
+		],
+	],
+], 'data');
+
+expect_true(($hydrated['g_hero']['image'] ?? null) === 101, 'g_hero.image → ID załącznika');
+expect_true(($hydrated['g_hero']['badges'][0]['icon'] ?? null) === 101, 'g_hero.badges[0].icon reuse ID');
+expect_true(($hydrated['r_hero'][0]['image'] ?? null) === 101, 'r_hero[0].image reuse ID');
+expect_true(($hydrated['g_hero']['header'] ?? '') === 'H', 'pozostałe pola nietknięte');
+expect_true($GLOBALS['osf_upload_count'] === 1, 'ten sam plik importowany raz');
+expect_true(($GLOBALS['osf_alts'][101] ?? '') === 'Alt hero', 'alt text na załączniku');
+
+$encodedAssets = AcfBlockSerializer::prepareData('hero', $hydrated);
+expect_true(($encodedAssets['g_hero_image'] ?? null) === 101, 'ACF image zapisane jako ID');
+expect_true(($encodedAssets['field_hero_image'] ?? null) === 101, 'v3 field_hero_image = ID');
+expect_true(($encodedAssets['g_hero_badges_0_icon'] ?? null) === 101, 'zagnieżdżony repeater icon jako ID');
+expect_true(($encodedAssets['r_hero_0_image'] ?? null) === 101, 'r_hero[].image jako ID');
+
+$pageId = (new PageImporter())->import($payload);
+expect_true($pageId === 55, 'import strony z obrazem zwraca ID');
+expect_true(
+	(bool) preg_match('/"g_hero_image":\s*\d+/', (string) $GLOBALS['osf_inserted_content']),
+	'post_content zawiera ID obrazu, nie ścieżkę src'
+);
+expect_true(!str_contains((string) $GLOBALS['osf_inserted_content'], 'hero-test.jpg'), 'ścieżka src nie zostaje w bloku');
 
 echo "\n{$passed} passed, {$failed} failed\n";
 exit($failed === 0 ? 0 : 1);
