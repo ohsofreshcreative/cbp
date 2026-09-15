@@ -8,6 +8,11 @@ Nie wymagaj osobnego skilla ani komendy /nowy-blok. Jeśli brakuje nazwy lub pro
 zapytaj o brakujące dane. Dalej stosuj anatomię bloku, analizę wzorców i walidację z tego pliku.
 W podsumowaniu wymień zmienione pliki, sprawdzenia i wymagane komendy użytkownika.
 
+Gdy użytkownik przesyła screenshoty lub projekt całej podstrony, nie twórz od razu bloków.
+Najpierw wykonaj wyłącznie analizę i podział na bloki ACF zgodnie z sekcją
+„Analiza podstrony — podział na bloki ACF”. Implementację konkretnego bloku rozpoczynaj
+dopiero po akceptacji podziału i osobnym zleceniu.
+
 
 Project overview
 
@@ -81,9 +86,12 @@ Nazwa bloku jest zawsze jednowyrazowa, lowercase, bez myślników i podkreśleń
 w klasie PHP (`About`, `Whyus`, `Paths`), `$slug` (`about`, `whyus`, `paths`), pliku blade
 (`about.blade.php`) i klasie CSS sekcji (`b-about`). Tak jest we wszystkich 35 istniejących blokach.
 
-Nazwy bloku nie wymyślaj samodzielnie — gdy zadanie dotyczy nowego bloku (zwłaszcza na podstawie
-screena/designu), użyj nazwy podanej przez użytkownika w prompcie. Jeśli nazwa nie została podana,
-zapytaj, zamiast zgadywać.
+Nazwy bloku nie wymyślaj samodzielnie na etapie implementacji — gdy zadanie dotyczy nowego bloku
+(zwłaszcza na podstawie screena/designu), użyj nazwy podanej przez użytkownika w prompcie albo
+nazwy zaakceptowanej w podziale podstrony. Jeśli nazwa nie została podana, zapytaj, zamiast zgadywać.
+
+Na etapie analizy całej podstrony wolno zaproponować nazwy nowych bloków zgodne z powyższą
+konwencją; nie implementuj ich, dopóki użytkownik nie zaakceptuje podziału i nie zleci bloku.
 
 Blok = 2–3 pliki:
 
@@ -197,6 +205,71 @@ Widok Blade — obowiązkowy szkielet
 
 ⸻
 
+Analiza podstrony — podział na bloki ACF
+
+To jest główny workflow, gdy użytkownik przesyła screenshoty, makiety lub projekt całej
+podstrony (wielu sekcji). Na tym etapie zadanie to wyłącznie analiza i propozycja podziału
+na logiczne bloki ACF zgodne z architekturą repozytorium.
+
+Nie twórz plików, nie zmieniaj kodu projektu i nie implementuj bloków.
+Nie modyfikuj istniejących bloków na tym etapie.
+Nie przechodź do scaffoldu ani implementacji, dopóki użytkownik nie zaakceptuje podziału
+i nie zleci konkretnego bloku.
+
+Kolejność pracy
+
+1. Przeanalizuj cały dostarczony projekt podstrony, a nie tylko wybrane fragmenty.
+2. Rozpoznaj poszczególne sekcje w kolejności od góry do dołu.
+3. Sprawdź istniejące bloki ACF w `app/Blocks/*.php` oraz odpowiadające im widoki
+   w `resources/views/blocks/` — źródłem prawdy jest kod (pola, układ, slug), nie sama
+   nazwa pliku.
+4. Wskaż, które istniejące bloki można wykorzystać ponownie.
+5. Wskaż, które sekcje wymagają utworzenia nowych bloków.
+6. Dla nowych bloków zaproponuj nazwy zgodne z namingiem projektu: jednowyrazowa,
+   lowercase, bez myślników i podkreśleń — ta sama forma w klasie PHP (`About`, `Whyus`),
+   `$slug` (`about`, `whyus`), pliku Blade i klasie CSS (`b-about`, `b-whyus`).
+7. Przedstaw proponowany podział podstrony i poczekaj na akceptację użytkownika.
+
+Jak oceniać reuse wobec nowego bloku
+
+* Preferuj istniejący blok, gdy układ, hierarchia treści i rodzaj pól są zasadniczo
+  te same (np. `hero`, `banner`, `content`, `faq`, `cta`, `numbers`, `logos`, `gallery`).
+* Bliskość wizualna nie wystarczy, jeśli istniejący blok ma inną strukturę treści
+  (np. `content` vs `overlap`, `hero` vs `banner`, `faq` vs `accordion`).
+* Jeśli istniejący blok jest zbliżony, ale wymagałby zmiany — na tym etapie nie zmieniaj
+  go. Zaznacz lukę i zaproponuj reuse bez zmian albo nowy blok.
+* Nie proponuj niemal identycznych duplikatów istniejących bloków.
+
+Format odpowiedzi na tym etapie
+
+Przedstaw podział w kolejności sekcji na podstronie. Dla każdej sekcji podaj:
+
+* krótki opis sekcji z projektu,
+* decyzję: reuse istniejącego bloku (`$slug` + klasa PHP) albo nowy blok,
+* dla nowego bloku: proponowany `$slug` i klasę PHP,
+* zwięzłe uzasadnienie (układ, pola, analogia do istniejącego bloku).
+
+Na końcu wypisz osobno:
+
+* bloki do ponownego użycia,
+* bloki do utworzenia (z proponowanymi nazwami).
+
+Zatrzymaj się po tej propozycji. Nie pytaj, czy „od razu utworzyć” pliki.
+Nie twórz kodu i nie edytuj istniejących bloków, czekając na akceptację.
+
+Po akceptacji
+
+Gdy użytkownik zaakceptuje podział i zleci implementację konkretnego bloku, stosuj
+anatomię bloku, analizę wzorców i walidację z tego pliku. Użyj nazwy zaakceptowanej
+w podziale albo podanej w zleceniu. Nadal nie implementuj ani nie zmieniaj innych,
+niezleconych bloków.
+
+Gdy użytkownik od razu zleca jeden nazwany blok (np. „Nowy blok quote” ze screenshotem
+tej sekcji), nie stosuj tego etapu analitycznego — przejdź do tworzenia bloku zgodnie
+z anatomią powyżej.
+
+⸻
+
 Core principle
 
 Istniejący kod jest głównym wzorcem architektury i konwencji. Przed zmianą przeczytaj podobne implementacje, zrozum ich działanie i wykorzystaj istniejące rozwiązania. Nowe podejście wprowadzaj tylko przy braku odpowiedniego wzorca. Rozbieżności instrukcji z kodem oceniaj świadomie; nie kopiuj błędów.
@@ -213,6 +286,9 @@ Before writing code
 
 Przed implementacją sprawdź strukturę repozytorium, Blade, ACF/PHP, komponenty, SCSS i JS. Rozpoznaj nazewnictwo, kontenery, grid, odstępy, breakpointy, typografię, assety, obrazy i przyciski. Dla projektu graficznego znajdź podobny istniejący UI. Nie generuj plików przed analizą.
 
+Gdy dostarczony materiał to cała podstrona, analiza oznacza podział na bloki ACF
+z sekcji „Analiza podstrony — podział na bloki ACF”, a nie od razu pisanie kodu.
+
 ⸻
 
 Reuse before creation
@@ -222,6 +298,10 @@ Wyszukaj i wykorzystaj istniejące komponenty, helpery, tokeny i wzorce: przycis
 ⸻
 
 Working from screenshots or designs
+
+Gdy screen lub projekt obejmuje całą podstronę, najpierw wykonaj analizę z sekcji
+„Analiza podstrony — podział na bloki ACF” i poczekaj na akceptację. Poniższe zasady
+dotyczą implementacji już zleconego bloku lub pojedynczej sekcji.
 
 Screen lub projekt jest specyfikacją: zachowaj układ, hierarchię, proporcje, odstępy, wyrównanie i kadrowanie. Używaj istniejących tokenów oraz ograniczeń sekcji Styling. Nie wymyślaj dekoracji ani nie upraszczaj istotnych szczegółów tylko dla wygody.
 
@@ -546,6 +626,10 @@ Rozstrzygaj niejasności na podstawie zadania, projektu, kodu i konwencji. Pytaj
 ⸻
 
 Implementation workflow
+
+Gdy zadaniem jest cała podstrona z projektu lub screenshotu, zatrzymaj się na analizie
+i akceptacji podziału z sekcji „Analiza podstrony — podział na bloki ACF”. Implementację
+rozpoczynaj dopiero po zleceniu konkretnego bloku.
 
 Zrozum zadanie → zbadaj repozytorium i podobne implementacje → znajdź elementy do ponownego użycia → wybierz najmniejszą zmianę → zaimplementuj → przejrzyj całość, błędy, responsywność i wpływ na istniejące funkcje. Samo utworzenie plików nie kończy zadania.
 
