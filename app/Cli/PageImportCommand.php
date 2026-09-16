@@ -22,6 +22,7 @@ class PageImportCommand
 	 * ## EXAMPLES
 	 *
 	 *     wp osf page import resources/cli/hero-page.example.json
+	 *     wp osf offer import resources/imports/offers/ekspertyza-poligraficzna-na-potrzeby-postepowania.json
 	 *
 	 * @when after_wp_load
 	 *
@@ -55,11 +56,21 @@ class PageImportCommand
 			return;
 		}
 
-		\WP_CLI::success(sprintf('Utworzono stronę o ID %d.', $id));
+		\WP_CLI::success(sprintf(
+			'Utworzono %s o ID %d.',
+			$payload->postType === 'offer' ? 'wpis CPT oferta' : 'stronę',
+			$id
+		));
 		\WP_CLI::log(sprintf('ID: %d', $id));
 		\WP_CLI::log(sprintf('Tytuł: %s', $payload->title));
 		\WP_CLI::log(sprintf('Slug: %s', $payload->slug));
-		\WP_CLI::log(sprintf('Status: %s (szkic — w Kokpicie: Strony → Wszystkie strony, filtr Szkice)', $payload->status));
+		\WP_CLI::log(sprintf('Typ: %s', $payload->postType));
+
+		if ($payload->postType === 'offer') {
+			\WP_CLI::log(sprintf('Status: %s (szkic — w Kokpicie: Oferta → Wszystkie oferty, filtr Szkice)', $payload->status));
+		} else {
+			\WP_CLI::log(sprintf('Status: %s (szkic — w Kokpicie: Strony → Wszystkie strony, filtr Szkice)', $payload->status));
+		}
 
 		if (function_exists('get_edit_post_link')) {
 			$edit = get_edit_post_link($id, 'raw');

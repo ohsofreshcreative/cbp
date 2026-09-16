@@ -55,6 +55,10 @@ class Problem extends Block
 				'toolbar' => 'full',
 				'media_upload' => true,
 			])
+			->addLink('button1', [
+				'label' => 'Przycisk',
+				'return_format' => 'array',
+			])
 			->endRepeater()
 
 			/*--- USTAWIENIA BLOKU ---*/

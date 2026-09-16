@@ -1,5 +1,5 @@
 {
-  "title": "homepage",
+  "title": "Homepage",
   "slug": "homepage",
   "status": "draft",
   "blocks": [
@@ -61,11 +61,10 @@
       }
     },
     {
-      "block": "offers",
+      "block": "offer",
       "data": {
-        "g_offers": {
-          "header": "Obszary działalności",
-          "link_label": "Sprawdź"
+        "g_offer": {
+          "header": "Obszary działalności"
         },
         "background": "section-white"
       }

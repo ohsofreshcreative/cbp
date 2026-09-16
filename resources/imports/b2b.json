@@ -37,7 +37,12 @@
               "alt": "Przedsiębiorstwa i kancelarie"
             },
             "header": "Przedsiębiorstwa i kancelarie",
-            "text": "<p>Wspieramy firmy, zarządy, działy bezpieczeństwa, HR oraz kancelarie w sytuacjach związanych z nadużyciami, kradzieżami, wyciekiem informacji, konfliktami pracowniczymi i innymi zdarzeniami wymagającymi dodatkowej weryfikacji.</p>"
+            "text": "<p>Wspieramy firmy, zarządy, działy bezpieczeństwa, HR oraz kancelarie w sytuacjach związanych z nadużyciami, kradzieżami, wyciekiem informacji, konfliktami pracowniczymi i innymi zdarzeniami wymagającymi dodatkowej weryfikacji.</p>",
+            "button1": {
+              "title": "Zobacz rozwiązania dla biznesu",
+              "url": "/b2b",
+              "target": ""
+            }
           },
           {
             "image": {
@@ -45,7 +50,12 @@
               "alt": "Sądy i organy ścigania"
             },
             "header": "Sądy i organy ścigania",
-            "text": "<p>Wykonujemy specjalistyczne badania i przygotowujemy ekspertyzy na potrzeby postępowań, wspierając analizę określonych informacji istotnych dla spraw karnych i cywilnych.</p>"
+            "text": "<p>Wykonujemy specjalistyczne badania i przygotowujemy ekspertyzy na potrzeby postępowań, wspierając analizę określonych informacji istotnych dla spraw karnych i cywilnych.</p>",
+            "button1": {
+              "title": "Zobacz rozwiązania dla instytucji",
+              "url": "/offer",
+              "target": ""
+            }
           }
         ],
         "background": "section-white"

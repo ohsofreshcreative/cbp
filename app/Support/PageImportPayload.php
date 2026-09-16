@@ -6,24 +6,40 @@ class PageImportPayload
 {
 	public const STATUSES = ['draft', 'publish', 'pending', 'private'];
 
+	public const POST_TYPES = ['page', 'offer'];
+
 	public string $title;
 
 	public string $slug;
 
 	public string $status;
 
+	public string $postType;
+
+	/** @var array<string, list<string>> */
+	public array $terms;
+
 	public ?string $sourceDir;
 
 	/** @var list<array{block: string, data: array<string, mixed>}> */
 	public array $blocks;
 
-	private function __construct(string $title, string $slug, string $status, array $blocks, ?string $sourceDir = null)
-	{
+	private function __construct(
+		string $title,
+		string $slug,
+		string $status,
+		array $blocks,
+		?string $sourceDir = null,
+		string $postType = 'page',
+		array $terms = []
+	) {
 		$this->title = $title;
 		$this->slug = $slug;
 		$this->status = $status;
 		$this->blocks = $blocks;
 		$this->sourceDir = $sourceDir;
+		$this->postType = $postType;
+		$this->terms = $terms;
 	}
 
 	public static function fromFile(string $path): self
@@ -117,7 +133,53 @@ class PageImportPayload
 			$blocks[] = self::normalizeBlock($item, (int) $index);
 		}
 
-		return new self($title, $slug, $status, $blocks, $sourceDir);
+		$postType = $data['post_type'] ?? 'page';
+
+		if (!is_string($postType) || $postType === '') {
+			throw new PageImportException('Pole "post_type" musi być stringiem.');
+		}
+
+		$postType = strtolower(trim($postType));
+
+		if (!in_array($postType, self::POST_TYPES, true)) {
+			throw new PageImportException(sprintf(
+				'Nieobsługiwany post_type "%s". Dozwolone: %s.',
+				$postType,
+				implode(', ', self::POST_TYPES)
+			));
+		}
+
+		$terms = [];
+
+		if (array_key_exists('terms', $data) && $data['terms'] !== null) {
+			if (!is_array($data['terms']) || self::isList($data['terms'])) {
+				throw new PageImportException('Pole "terms" musi być obiektem {taksonomia: [slug, ...]}.');
+			}
+
+			foreach ($data['terms'] as $taxonomy => $slugs) {
+				if (!is_string($taxonomy) || trim($taxonomy) === '') {
+					throw new PageImportException('Klucze w "terms" muszą być slugami taksonomii.');
+				}
+
+				if (!is_array($slugs) || !self::isList($slugs)) {
+					throw new PageImportException(sprintf('terms.%s musi być tablicą slugów.', $taxonomy));
+				}
+
+				$clean = [];
+
+				foreach ($slugs as $slugItem) {
+					if (!is_string($slugItem) || trim($slugItem) === '') {
+						throw new PageImportException(sprintf('terms.%s zawiera pusty slug.', $taxonomy));
+					}
+
+					$clean[] = trim($slugItem);
+				}
+
+				$terms[trim($taxonomy)] = $clean;
+			}
+		}
+
+		return new self($title, $slug, $status, $blocks, $sourceDir, $postType, $terms);
 	}
 
 	/**

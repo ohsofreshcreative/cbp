@@ -55,6 +55,29 @@ $withoutStatus = PageImportPayload::fromJson(json_encode([
 ], JSON_THROW_ON_ERROR));
 expect_true($withoutStatus->status === 'draft', 'brak statusu → draft');
 expect_true($withoutStatus->slug === 'bez-statusu', 'slug z title');
+expect_true($withoutStatus->postType === 'page', 'domyślny post_type page');
+expect_true($withoutStatus->terms === [], 'brak terms → pusta mapa');
+
+$offerPayload = PageImportPayload::fromJson(json_encode([
+	'title' => 'Ekspertyza test',
+	'slug' => 'ekspertyza-test',
+	'post_type' => 'offer',
+	'terms' => ['offer_category' => ['Instytucje Sądowe i Organy Ścigania']],
+	'blocks' => [['block' => 'hero', 'data' => ['background' => 'none']]],
+], JSON_THROW_ON_ERROR));
+expect_true($offerPayload->postType === 'offer', 'post_type offer');
+expect_true(($offerPayload->terms['offer_category'][0] ?? '') === 'Instytucje Sądowe i Organy Ścigania', 'terms.offer_category');
+
+expect_exception(
+	fn () => PageImportPayload::fromArray(['title' => 'X', 'post_type' => 'product', 'blocks' => []]),
+	'Nieobsługiwany post_type',
+	'zły post_type'
+);
+expect_exception(
+	fn () => PageImportPayload::fromArray(['title' => 'X', 'terms' => ['a', 'b'], 'blocks' => []]),
+	'terms',
+	'terms jako lista'
+);
 
 $content = AcfBlockSerializer::toPostContent($payload->blocks);
 expect_true(str_contains($content, '<!-- wp:acf/hero '), 'komentarz Gutenberga acf/hero');
@@ -326,8 +349,21 @@ if (!function_exists('is_wp_error')) {
 if (!function_exists('wp_insert_post')) {
 	function wp_insert_post($postarr, $wp_error = false)
 	{
+		$GLOBALS['osf_inserted'] = $postarr;
 		$GLOBALS['osf_inserted_content'] = $postarr['post_content'] ?? '';
 		return 55;
+	}
+}
+
+if (!function_exists('wp_set_object_terms')) {
+	function wp_set_object_terms($object_id, $terms, $taxonomy, $append = false)
+	{
+		$GLOBALS['osf_terms'] = [
+			'id' => (int) $object_id,
+			'taxonomy' => $taxonomy,
+			'terms' => $terms,
+		];
+		return [1];
 	}
 }
 
@@ -374,11 +410,30 @@ expect_true(($encodedAssets['r_hero_0_image'] ?? null) === 101, 'r_hero[].image 
 
 $pageId = (new PageImporter())->import($payload);
 expect_true($pageId === 55, 'import strony z obrazem zwraca ID');
+expect_true(($GLOBALS['osf_inserted']['post_type'] ?? '') === 'page', 'import strony ustawia post_type page');
 expect_true(
 	(bool) preg_match('/"g_hero_image":\s*\d+/', (string) $GLOBALS['osf_inserted_content']),
 	'post_content zawiera ID obrazu, nie ścieżkę src'
 );
 expect_true(!str_contains((string) $GLOBALS['osf_inserted_content'], 'hero-test.jpg'), 'ścieżka src nie zostaje w bloku');
+
+$offerFile = dirname(__DIR__, 2) . '/resources/imports/offers/ekspertyza-poligraficzna-na-potrzeby-postepowania.json';
+$offerFromFile = PageImportPayload::fromFile($offerFile);
+expect_true($offerFromFile->postType === 'offer', 'JSON oferty: post_type offer');
+expect_true($offerFromFile->status === 'draft', 'JSON oferty: status draft');
+expect_true($offerFromFile->slug === 'ekspertyza-poligraficzna-na-potrzeby-postepowania', 'JSON oferty: slug z ramki');
+expect_true(($offerFromFile->terms['offer_category'][0] ?? '') === 'Instytucje Sądowe i Organy Ścigania', 'JSON oferty: kategoria CPT');
+expect_true($offerFromFile->blocks[0]['block'] === 'banner', 'JSON oferty: pierwszy blok banner');
+expect_true(!in_array('action', array_column($offerFromFile->blocks, 'block'), true), 'JSON oferty: bez bloku Action');
+
+$GLOBALS['osf_inserted'] = [];
+$GLOBALS['osf_terms'] = [];
+$offerId = (new PageImporter())->import($offerPayload);
+expect_true($offerId === 55, 'import CPT oferta zwraca ID');
+expect_true(($GLOBALS['osf_inserted']['post_type'] ?? '') === 'offer', 'import CPT ustawia post_type offer');
+expect_true(($GLOBALS['osf_inserted']['post_name'] ?? '') === 'ekspertyza-test', 'import CPT zachowuje slug');
+expect_true(($GLOBALS['osf_terms']['taxonomy'] ?? '') === 'offer_category', 'import CPT przypisuje taksonomię');
+expect_true(($GLOBALS['osf_terms']['terms'][0] ?? '') === 'Instytucje Sądowe i Organy Ścigania', 'import CPT zachowuje nazwę kategorii');
 
 echo "\n{$passed} passed, {$failed} failed\n";
 exit($failed === 0 ? 0 : 1);

@@ -35,6 +35,13 @@
 						{!! $item['text'] !!}
 					</div>
 					@endif
+					@if (!empty($item['button1']['url']))
+					<div class="inline-buttons m-btn">
+						<x-button :href="$item['button1']['url']" variant="underline" data-gsap-element="btn">
+							{{ $item['button1']['title'] }}
+						</x-button>
+					</div>
+					@endif
 				</div>
 			</article>
 			@endforeach

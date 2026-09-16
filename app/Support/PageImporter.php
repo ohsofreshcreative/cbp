@@ -33,7 +33,7 @@ class PageImporter
 		}
 
 		$postarr = [
-			'post_type' => 'page',
+			'post_type' => $payload->postType,
 			'post_title' => $payload->title,
 			'post_name' => $payload->slug,
 			'post_status' => $payload->status,
@@ -48,7 +48,7 @@ class PageImporter
 
 		if (is_wp_error($result)) {
 			throw new PageImportException(sprintf(
-				'Nie udało się utworzyć strony: %s',
+				'Nie udało się utworzyć wpisu: %s',
 				$result->get_error_message()
 			));
 		}
@@ -56,7 +56,21 @@ class PageImporter
 		$id = (int) $result;
 
 		if ($id <= 0) {
-			throw new PageImportException('WordPress nie zwrócił ID nowej strony.');
+			throw new PageImportException('WordPress nie zwrócił ID nowego wpisu.');
+		}
+
+		if ($payload->terms !== [] && function_exists('wp_set_object_terms')) {
+			foreach ($payload->terms as $taxonomy => $slugs) {
+				$set = wp_set_object_terms($id, $slugs, $taxonomy);
+
+				if (is_wp_error($set)) {
+					throw new PageImportException(sprintf(
+						'Nie udało się przypisać taksonomii %s: %s',
+						$taxonomy,
+						$set->get_error_message()
+					));
+				}
+			}
 		}
 
 		return $id;

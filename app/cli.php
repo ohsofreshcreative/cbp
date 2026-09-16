@@ -36,6 +36,7 @@ if (!function_exists('osf_register_page_import_command')) {
 
 		\WP_CLI::add_command('osf import', $run, ['when' => 'after_wp_load']);
 		\WP_CLI::add_command('osf page import', $run, ['when' => 'after_wp_load']);
+		\WP_CLI::add_command('osf offer import', $run, ['when' => 'after_wp_load']);
 	}
 }
 

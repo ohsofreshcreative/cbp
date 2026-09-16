@@ -1,5 +1,5 @@
 export function initOffers(scope = document) {
-  scope.querySelectorAll('.b-offer').forEach((root) => {
+  scope.querySelectorAll('.b-offer, .b-offers').forEach((root) => {
     if (root.dataset.offerReady) return;
     const tabs = [...root.querySelectorAll('[role="tab"]')];
     const panels = [...root.querySelectorAll('[role="tabpanel"]')];

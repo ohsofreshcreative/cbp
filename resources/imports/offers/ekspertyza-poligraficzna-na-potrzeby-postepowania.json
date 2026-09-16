@@ -1,6 +1,6 @@
 {
-  "title": "Offer -single",
-  "slug": "offer-single",
+  "title": "Ekspertyza poligraficzna na potrzeby postępowania",
+  "slug": "ekspertyza-poligraficzna-na-potrzeby-postepowania",
   "status": "draft",
   "blocks": [
     {
@@ -37,7 +37,12 @@
               "alt": "Gdy w postępowaniu pojawiają się istotne rozbieżności"
             },
             "header": "Gdy w postępowaniu pojawiają się istotne rozbieżności",
-            "text": "<p>W toku postępowania mogą pojawić się sytuacje, w których zeznania, oświadczenia lub przedstawiane wersje wydarzeń wymagają dodatkowej weryfikacji.</p><p>Badanie może zostać wykorzystane jako element procesu oceny określonych informacji związanych ze sprawą.</p>"
+            "text": "<p>W toku postępowania mogą pojawić się sytuacje, w których zeznania, oświadczenia lub przedstawiane wersje wydarzeń wymagają dodatkowej weryfikacji.</p><p>Badanie może zostać wykorzystane jako element procesu oceny określonych informacji związanych ze sprawą.</p>",
+            "button1": {
+              "title": "Skonsultuj sprawę",
+              "url": "/kontakt",
+              "target": ""
+            }
           },
           {
             "image": {
@@ -220,5 +225,11 @@
         "background": "none"
       }
     }
-  ]
+  ],
+  "post_type": "offer",
+  "terms": {
+    "offer_category": [
+      "Instytucje Sądowe i Organy Ścigania"
+    ]
+  }
 }

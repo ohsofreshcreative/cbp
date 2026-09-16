@@ -26,8 +26,8 @@ Faza 2 — treść (automatycznie po fazie 1, ten sam agent / ta sama sesja):
 - Każda podstrona ma własne pliki (`about-hero.jpg`, nie `b2b-hero.png`), nawet gdy Figma współdzieli fill — inaczej w JSON-ie i w bibliotece mediów WP ląduje cudze zdjęcie.
 - Blog / Blog-single: **nie** twórz `blog.json` / `blog-single.json` i **nie** dopisuj ich do `wp osf page import`. Dopracuj szablony Blade i partiale. Copy artykułu zapisz jako **wpis**: `resources/imports/posts/<slug>.json` + HTML + miniaturka JPG. Dolne CTA strony: `@include('partials.cta')`. Żółte CTA w środku artykułu to blok ACF `action` (`CTA - Wpis`) przez `embeds` + znacznik `<!-- osf:embed:action -->` w HTML — nie twardy HTML w treści.
 - Commit i push na `cursor-work`.
-- **Import WP-CLI zawsze zostaje u użytkownika** (lokalny WordPress / LocalWP). Agent w chmurze nie ma bazy WP — nie uruchamiaj `wp osf page import`, `wp osf post import`, `git pull` na maszynie użytkownika, `yarn build` ani `wp acorn acf:cache`.
-- W podsumowaniu wypisz konkretne komendy: `git pull origin cursor-work`, `wp osf page import resources/imports/<slug>.json` dla każdej **strony** oraz `wp osf post import resources/imports/posts/<slug>.json` dla każdego **wpisu**.
+- **Import WP-CLI zawsze zostaje u użytkownika** (lokalny WordPress / LocalWP). Agent w chmurze nie ma bazy WP — nie uruchamiaj `wp osf page import`, `wp osf offer import`, `wp osf post import`, `git pull` na maszynie użytkownika, `yarn build` ani `wp acorn acf:cache`.
+- W podsumowaniu wypisz konkretne komendy: `git pull origin cursor-work`, `wp osf page import resources/imports/<slug>.json` dla każdej **strony**, `wp osf offer import resources/imports/offers/<slug>.json` dla każdego **wpisu CPT oferta** oraz `wp osf post import resources/imports/posts/<slug>.json` dla każdego **wpisu**.
 
 W podsumowaniu wymień zmienione pliki (w tym Blade listingu/wpisu), sprawdzenia i wymagane komendy użytkownika.
 
@@ -116,8 +116,8 @@ Istniejące CPT — listing z query, nie repeater
 |---|---|---|---|---|
 | `offer` | `oferta` | `offer_category` (`kategoria-oferty`) | `app/Fields/OfferFields.php` (`offer_icon`) | `offers` — `get_posts` opublikowanych wpisów; w JSON strony tylko `header`, `link_label`, opcjonalnie `offer_category` |
 
-Ramka `Offer-single (CPT: offer)` = szablon single + JSON wpisu CPT, nie `offer-single.json` jako Page.
-Importer CPT (`wp osf offer import`) jeszcze nie istnieje — nie udawaj kafelków ofert w repeaterze bloku `offers`.
+Ramka `Offer-single (CPT: offer)` = szablon single + JSON wpisu CPT w `resources/imports/offers/`, nie `offer-single.json` jako Page.
+Lokalnie: `wp osf offer import resources/imports/offers/<slug>.json` (ten sam importer co strony, `post_type: offer`).
 
 Project overview
 
@@ -178,6 +178,7 @@ composer install
 wp acorn acf:cache        # przebuduj cache pól ACF po zmianach w app/Blocks|Fields|Options
 wp acorn view:clear       # gdy Blade zwraca stary widok
 wp osf page import resources/imports/<slug>.json   # lokalnie u użytkownika: strona-szkic z blokami i treścią
+wp osf offer import resources/imports/offers/<slug>.json   # lokalnie: wpis CPT oferta (bloki ACF)
 wp osf post import resources/imports/posts/<slug>.json   # lokalnie: wpis-szkic (treść z Figmy, nie strona)
 ```
 

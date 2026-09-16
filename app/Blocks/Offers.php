@@ -37,10 +37,10 @@ class Offers extends Block
 			])
 			->addTaxonomy('offer_category', [
 				'label' => 'Kategoria oferty',
-				'instructions' => 'Wybierz kategorię CPT Oferta. Blok wyświetli opublikowane wpisy z tej kategorii.',
+				'instructions' => 'Puste = wszystkie kategorie (zakładki jak w Figmie). Wybór ogranicza listę do jednej kategorii CPT Oferta.',
 				'taxonomy' => 'offer_category',
 				'field_type' => 'select',
-				'allow_null' => 0,
+				'allow_null' => 1,
 				'add_term' => 0,
 				'save_terms' => 0,
 				'load_terms' => 0,
@@ -109,37 +109,55 @@ class Offers extends Block
 			$term_id = $term_id[0] ?? null;
 		}
 
-		$posts = [];
+		$terms = get_terms(['taxonomy' => 'offer_category', 'hide_empty' => true]);
+		$categories = [];
 
-		if (!empty($term_id)) {
-			$posts = get_posts([
-				'post_type' => 'offer',
-				'post_status' => 'publish',
-				'posts_per_page' => -1,
-				'orderby' => ['menu_order' => 'ASC', 'title' => 'ASC'],
-				'tax_query' => [[
-					'taxonomy' => 'offer_category',
-					'field' => 'term_id',
-					'terms' => (int) $term_id,
-					'include_children' => false,
-				]],
-			]);
-		}
+		if (!is_wp_error($terms)) {
+			foreach ($terms as $term) {
+				if (!empty($term_id) && (int) $term->term_id !== (int) $term_id) {
+					continue;
+				}
 
-		$items = [];
+				$posts = get_posts([
+					'post_type' => 'offer',
+					'post_status' => 'publish',
+					'posts_per_page' => -1,
+					'orderby' => ['menu_order' => 'ASC', 'title' => 'ASC'],
+					'tax_query' => [[
+						'taxonomy' => 'offer_category',
+						'field' => 'term_id',
+						'terms' => $term->term_id,
+						'include_children' => false,
+					]],
+				]);
 
-		foreach ($posts as $post) {
-			$items[] = [
-				'id' => $post->ID,
-				'title' => get_the_title($post),
-				'url' => get_permalink($post),
-				'icon' => get_field('offer_icon', $post->ID),
-			];
+				if (!$posts) {
+					continue;
+				}
+
+				$items = [];
+
+				foreach ($posts as $post) {
+					$items[] = [
+						'id' => $post->ID,
+						'title' => get_the_title($post),
+						'url' => get_permalink($post),
+						'icon' => get_field('offer_icon', $post->ID),
+					];
+				}
+
+				$categories[] = [
+					'id' => $term->term_id,
+					'name' => $term->name,
+					'items' => $items,
+				];
+			}
 		}
 
 		$fields = [
 			'g_offers' => $g_offers,
-			'items' => $items,
+			'categories' => $categories,
+			'offers_id' => wp_unique_id('offers-'),
 			'link_label' => !empty($g_offers['link_label']) ? $g_offers['link_label'] : 'Sprawdź',
 
 			'section_id' => get_field('section_id'),
