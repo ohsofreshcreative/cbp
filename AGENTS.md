@@ -210,8 +210,10 @@ Nazwa bloku z Figmy
 Normalizacja warstwy → slug:
 - Najpierw zetnij znacznik źródła na końcu nazwy: `(Options)`, `(CPT)`, `(CPT: offer)` itd. `Reviews (Options)` → `reviews`, `Offers (CPT: offer)` → `offers`. Nawias nie wchodzi do sluga.
 - lowercase, wytnij spacje, myślniki i podkreślenia (`Why us` / `Why-Us` → `whyus`).
-- Jeśli po normalizacji slug albo oczywisty alias już istnieje w `app/Blocks` — **użyj istniejącego bloku**, nie twórz drugiego.
-- Aliasy warstw z pliku Figmy (Design / Devs): `Process` → `proces`, `FAQ` → `faq`, `CTA` / `cta-section` → `cta`, `Testimonials` → `reviews`, `Aboutv2` / `Aobut` → `about`, `Solution` → `content`, `Banner` → `banner` (Hero - Podstrona, nie homepage Hero), `Standard` → `cards`.
+- **Slug = znormalizowana nazwa warstwy.** Reuse istniejącego bloku tylko gdy ten slug (albo wpis z tabeli aliasów poniżej) już jest w `app/Blocks`.
+- **Nie aliasuj** warstwy na inny blok tylko dlatego, że nagłówek albo copy wygląda podobnie. Ten sam H2 nie znaczy ten sam blok.
+- `Wehelp` ≠ `Solutions`. Oba mogą mieć nagłówek „W jakich sprawach pomagamy?”, ale układ jest inny: `Wehelp` (B2C) = lista punktów + okrągłe zdjęcie 512px + EKG; `Solutions` (B2B) = dwa kafelki. To dwa osobne bloki (`wehelp`, `solutions`). Nie mapuj Wehelp na `solutions`.
+- Aliasy warstw — **wyłącznie ta lista**, nic „na czuja”: `Process` → `proces`, `FAQ` / `Faq` → `faq`, `CTA` / `Cta` / `cta-section` → `cta`, `Testimonials` → `reviews`, `Aboutv2` / `Aobut` → `about`, `Solution` (liczba pojedyncza) → `content`, `Solutions` (liczba mnoga) → `solutions`, `Banner` → `banner` (Hero - Podstrona, nie homepage Hero), `Standard` → `cards`, `Wehelp` → `wehelp`.
 - Nowe warstwy Devs bez aliasu (slug = nazwa warstwy): `Reach` → `reach`, `Explore` → `explore`, `Gains` → `gains`, `Tiles` → `tiles`.
 - `Blogs` jako **sekcja na stronie** (np. homepage) → blok `posts`. Cała ramka podstrony `Blog` / `Blog-single` to szablony WP, nie alias na blok i nie Page (patrz „Szablony WP, nie Pages”).
 - `Frame 460` i `fi_*` to nie nazwy bloków — pomiń, gdy puste. Żółte CTA we wpisie (`__cta`, „Masz więcej pytań dotyczących badania?”) → blok `action` (`CTA - Wpis`).
@@ -219,6 +221,13 @@ Normalizacja warstwy → slug:
 - Pomiń chrome strony: `menu`, `header`, `footer` i puste kontenery-opakowania.
 
 Nie wymyślaj nazw spoza warstwy i spoza promptu. Nie tłumacz polskich nagłówków na angielski slug, jeśli ramka ma już angielską nazwę (`Dla kogo pracujemy?` to treść, ramka to `Problem` → `problem`).
+
+FAQ — accordion
+
+- W Figmie Devs często są **same pytania**, bez odpowiedzi. Nie wymyślaj odpowiedzi do JSON-a.
+- Accordion zawsze na natywnym `<details>` / `<summary>`. Checkbox + sibling CSS (`input:checked ~ .tabs-content`) nie działa, gdy brak `txt`, a `z-index: -1` / `overflow` / GSAP `transform` zabija klikalność.
+- Panel odpowiedzi renderuj zawsze (także przy pustym `txt`), żeby otwieranie działało.
+- Nie dawaj `data-gsap-element` na wrapper całej listy pytań — GSAP dokłada `transform` i psuje hit-testing. Animuj nagłówek sekcji albo pojedyncze karty (`card`).
 
 Blok = 2–3 pliki:
 
@@ -359,6 +368,8 @@ Wyszukaj i wykorzystaj istniejące komponenty, helpery, tokeny i wzorce: przycis
 Working from screenshots or designs
 
 Screen, ramka Figma albo link `figma.com/design/…?node-id=` jest specyfikacją: zachowaj układ, hierarchię, proporcje, odstępy, wyrównanie i kadrowanie. Używaj istniejących tokenów oraz ograniczeń sekcji Styling. Nie wymyślaj dekoracji ani nie upraszczaj istotnych szczegółów tylko dla wygody.
+
+Dokładność layoutu nie oznacza ściany klas Tailwind ani kompletnego layoutu w SCSS. Szkielet w Blade (grid/flex, kolejność, tło `section-*`, `c-main`, `radius` / `radius-img`). SCSS bloku tylko tam, gdzie utility nie wystarczy (np. koło 512px, rozmiar EKG, ukrycie markera `<summary>`, dashed divider listy). Nie aliasuj sekcji na „podobny” blok — patrz Wehelp ≠ Solutions.
 
 Link Figma bez `node-id` jest niewystarczający — poproś o ramkę sekcji albo podstrony, nie zgaduj węzła. Z Figmy najpierw bloki ACF albo szablony Blade (faza 1), potem od razu JSON **dla Pages** oraz JSON **wpisu** dla `Blog-single` (faza 2). `Blog` / `Blog-single` → Blade listingu/wpisu, bez JSON-a strony. Komendy `wp osf page import` / `wp osf post import` nie uruchamiaj — zostają u użytkownika. Slug bloku bierz z nazwy ramki sekcji (patrz „Nazwa bloku z Figmy”); nazwa podana w prompcie wygrywa.
 

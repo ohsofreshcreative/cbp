@@ -49,12 +49,16 @@
       }
     },
     {
-      "block": "solutions",
+      "block": "wehelp",
       "data": {
-        "g_solutions": {
-          "header": "W jakich sprawach pomagamy?"
+        "g_wehelp": {
+          "header": "W jakich sprawach pomagamy?",
+          "image": {
+            "src": "resources/imports/assets/b2c-wehelp.jpg",
+            "alt": "W jakich sprawach pomagamy?"
+          }
         },
-        "r_solutions": [
+        "r_wehelp": [
           {
             "header": "Sprawy rodzinne i partnerskie",
             "text": "<p>Badania dotyczące określonych kwestii związanych z relacją, wiernością i zaufaniem.</p>"

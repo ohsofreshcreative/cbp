@@ -429,6 +429,27 @@ expect_true(($offerFromFile->terms['offer_category'][0] ?? '') === 'Instytucje S
 expect_true($offerFromFile->blocks[0]['block'] === 'banner', 'JSON oferty: pierwszy blok banner');
 expect_true(!in_array('action', array_column($offerFromFile->blocks, 'block'), true), 'JSON oferty: bez bloku Action');
 
+$b2cFile = dirname(__DIR__, 2) . '/resources/imports/b2c.json';
+$b2cFromFile = PageImportPayload::fromFile($b2cFile);
+$b2cBlocks = array_column($b2cFromFile->blocks, 'block');
+expect_true($b2cFromFile->slug === 'b2c', 'JSON B2C: slug');
+expect_true($b2cBlocks === ['banner', 'problem', 'wehelp', 'offers', 'reach', 'proces', 'values', 'faq', 'cta'], 'JSON B2C: kolejność bloków z ramki Devs');
+expect_true(!in_array('solutions', $b2cBlocks, true), 'JSON B2C: Wehelp nie jest mapowany na solutions');
+expect_true(is_readable(PageImportPayload::blockClassPath('wehelp')), 'Wehelp.php jest w app/Blocks');
+expect_true(($b2cFromFile->blocks[2]['data']['g_wehelp']['image']['src'] ?? '') === 'resources/imports/assets/b2c-wehelp.jpg', 'JSON B2C: unikalne JPG Wehelp');
+
+$b2bFile = dirname(__DIR__, 2) . '/resources/imports/b2b.json';
+$b2bFromFile = PageImportPayload::fromFile($b2bFile);
+$b2bBlocks = array_column($b2bFromFile->blocks, 'block');
+expect_true(in_array('solutions', $b2bBlocks, true), 'JSON B2B: Solutions zostaje solutions');
+expect_true(!in_array('wehelp', $b2bBlocks, true), 'JSON B2B: bez Wehelp');
+
+$faqBlade = file_get_contents(dirname(__DIR__, 2) . '/resources/views/blocks/faq.blade.php');
+expect_true(is_string($faqBlade) && str_contains($faqBlade, '<details'), 'FAQ: natywny details');
+expect_true(is_string($faqBlade) && str_contains($faqBlade, '<summary'), 'FAQ: natywny summary');
+expect_true(is_string($faqBlade) && !str_contains($faqBlade, 'tab-check'), 'FAQ: bez ukrytego checkboxa');
+expect_true(is_string($faqBlade) && str_contains($faqBlade, '__content'), 'FAQ: panel odpowiedzi zawsze w markupu');
+
 $GLOBALS['osf_inserted'] = [];
 $GLOBALS['osf_terms'] = [];
 $offerId = (new PageImporter())->import($offerPayload);
