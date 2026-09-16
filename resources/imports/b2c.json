@@ -79,25 +79,6 @@
       }
     },
     {
-      "block": "action",
-      "data": {
-        "g_action": {
-          "image": {
-            "src": "resources/imports/assets/b2c-action.jpg",
-            "alt": "Nie wiesz czy badanie jest dla Ciebie"
-          },
-          "header": "Nie wiesz czy badanie jest dla <strong>Ciebie</strong>?",
-          "text": "<h3>Nie musisz wiedzieć, czy wariograf jest właściwym rozwiązaniem.</h3><p>Nie oczekujemy, że przed pierwszym kontaktem będziesz wiedzieć, jak wygląda badanie ani jakie pytania można zadać. Podczas <strong>poufnej konsultacji</strong> opowiesz nam o swojej sytuacji, a my wyjaśnimy możliwości i ograniczenia badania.</p>",
-          "button1": {
-            "title": "Porozmawiaj z ekspertem",
-            "url": "/kontakt",
-            "target": ""
-          }
-        },
-        "background": "none"
-      }
-    },
-    {
       "block": "proces",
       "data": {
         "g_proces": {

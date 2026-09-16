@@ -168,7 +168,7 @@ Normalizacja warstwy → slug:
 - Jeśli po normalizacji slug albo oczywisty alias już istnieje w `app/Blocks` — **użyj istniejącego bloku**, nie twórz drugiego.
 - Aliasy warstw z pliku Figmy (Design): `Process` → `proces`, `FAQ` → `faq`, `CTA` / `cta-section` → `cta`, `Testimonials` → `reviews`, `Aboutv2` → `about`, `Solution` → `content`.
 - `Blogs` jako **sekcja na stronie** (np. homepage) → blok `posts`. Cała ramka podstrony `Blog` / `Blog-single` to szablony WP, nie alias na blok i nie Page (patrz „Szablony WP, nie Pages”).
-- `Frame 460` i `fi_*` to nie nazwy bloków — rozpoznaj po zawartości (np. zdjęcie + fala + żółte CTA → `action`) albo pomiń, gdy puste.
+- `Frame 460` i `fi_*` to nie nazwy bloków — **pomiń**. Blok `action` jest chwilowo wyłączony (do późniejszej przebudowy).
 - Nie używaj jako nazwy bloku: `Frame 123`, `Group`, `Rectangle`, `__wrapper`, warstw wewnętrznych ani copy z H1/H2.
 - Pomiń chrome strony: `menu`, `header`, `footer` i puste kontenery-opakowania.
 

@@ -86,25 +86,6 @@
       }
     },
     {
-      "block": "action",
-      "data": {
-        "g_action": {
-          "image": {
-            "src": "resources/imports/assets/b2b-action.jpg",
-            "alt": "Nie każda sprawa wymaga badania"
-          },
-          "header": "Nie każda sprawa wymaga badania.",
-          "text": "<h3>Najpierw poznajemy sprawę. Dopiero potem proponujemy rozwiązanie.</h3><p>Badanie poligraficzne nie jest uniwersalnym narzędziem odpowiednim dla każdej sytuacji. Dlatego każdą współpracę rozpoczynamy od analizy sprawy, określenia jej celu oraz oceny, czy badanie może dostarczyć wartościowych informacji.</p><p>Nie obiecujemy konkretnego wyniku. Pomagamy określić, czy badanie ma sens.</p>",
-          "button1": {
-            "title": "Skonsultuj sprawę",
-            "url": "/kontakt",
-            "target": ""
-          }
-        },
-        "background": "none"
-      }
-    },
-    {
       "block": "proces",
       "data": {
         "g_proces": {
