@@ -1,44 +1,18 @@
 .b-contact {
-	.__data {
-		font-size: 16px;
+	.__breadcrumb {
+		margin-bottom: 48px;
 	}
 
-	.__data a {
-	}
+	.__form {
+		input:not([type='checkbox']):not([type='submit']),
+		textarea {
+			background-color: rgb(20 18 16 / 0.8);
+			border: 1px solid rgb(255 210 63 / 0.2);
+			color: #fff;
+		}
 
-	.__data a:hover {
-		color: var(--text-s-lighter);
-	}
-
-	.__phone {
-		display: flex;
-	}
-
-	.__phone::before {
-		content: url("@images/phone.svg");
-		margin-right: 16px;
-		position: relative;
-		top: 4px;
-		max-width: 40px;
-	}
-
-	.__mail {
-		display: flex;
-	}
-
-	.__mail::before {
-		content: url('@images/mail.svg');
-		margin-right: 16px;
-		position: relative;
-		top: 4px;
-		max-width: 40px;
-	}
-
-	.__address::before {
-		content: url('/wp-content/uploads/2026/01/place.svg');
-		margin-right: 16px;
-		position: relative;
-		top: 4px;
-		max-width: 40px;
+		input[type='submit'] {
+			color: var(--bg, #141210);
+		}
 	}
 }

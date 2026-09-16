@@ -35,11 +35,20 @@ class Contact extends Block
 			->addTab('Dane', ['placement' => 'top'])
 			->addGroup('g_contact_1', ['label' => ''])
 			->addImage('image', [
-				'label' => 'Obraz',
+				'label' => 'Obraz tła',
 				'return_format' => 'array',
 				'preview_size' => 'thumbnail',
 			])
-			->addText('header', ['label' => 'Tytuł'])
+			->addText('header', [
+				'label' => 'Nagłówek',
+				'instructions' => 'Otocz wyróżniony fragment znacznikami <strong>…</strong>, aby nadać mu żółty kolor.',
+			])
+			->addWysiwyg('text', [
+				'label' => 'Treść',
+				'tabs' => 'all',
+				'toolbar' => 'full',
+				'media_upload' => true,
+			])
 			->addText('phone', [
 				'label' => 'Numer telefonu',
 			])
@@ -51,6 +60,13 @@ class Contact extends Block
 				'rows' => 3,
 				'new_lines' => 'br',
 			])
+			->addRepeater('benefits', [
+				'label' => 'Korzyści',
+				'layout' => 'table',
+				'button_label' => 'Dodaj korzyść',
+			])
+			->addText('text', ['label' => 'Tekst'])
+			->endRepeater()
 			->endGroup()
 			/*--- TAB #2 ---*/
 			->addTab('Formularz', ['placement' => 'top'])
@@ -129,7 +145,7 @@ class Contact extends Block
 			'nomt' => (bool) get_field('nomt'),
 			'gap' => (bool) get_field('gap'),
 
-			'background' => get_field('background') ?: 'none',
+			'background' => get_field('background') ?: get_field('default_block_background', 'option') ?: 'none',
 		];
 
 		$fields['sectionClass'] = SectionClasses::fromMap($fields, [
