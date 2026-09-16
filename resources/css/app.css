@@ -169,35 +169,5 @@
 @import 'baguettebox.js/dist/baguetteBox.min.css';
 
 /*-- USED ---*/
-@import '../css/blocks/hero.scss';
 @import '../css/blocks/content.scss';
-@import '../css/blocks/whyus.scss';
-@import '../css/blocks/logos.scss';
-@import '../css/blocks/banner.scss';
-@import '../css/blocks/product.scss';
-@import '../css/blocks/table.scss';
-@import '../css/blocks/products.scss';
 @import '../css/blocks/wysiwyg.scss';
-@import '../css/blocks/history.scss';
-@import '../css/blocks/checks.scss';
-@import '../css/blocks/slider.scss';
-@import '../css/blocks/map.scss';
-@import '../css/blocks/catalogues.scss';
-@import '../css/blocks/what.scss';
-@import '../css/blocks/offers.scss';
-@import '../css/blocks/faq.scss';
-@import '../css/blocks/problem.scss';
-@import '../css/blocks/solutions.scss';
-@import '../css/blocks/blog.scss';
-@import '../css/blocks/action.scss';
-/*-- NOT USED ---*/
-@import '../css/blocks/accordion.scss';
-@import '../css/blocks/cards.scss';
-@import '../css/blocks/category-posts.scss';
-@import '../css/blocks/contact.scss';
-@import '../css/blocks/image.scss';
-@import '../css/blocks/numbers.scss';
-@import '../css/blocks/overlap.scss';
-@import '../css/blocks/tabs.scss';
-
-@import '../css/blocks/offer.scss';
