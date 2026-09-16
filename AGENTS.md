@@ -9,20 +9,21 @@ Nie otwieraj osobnych PR-ów dla kolejnych podstron — commituj i pushuj na `cu
 Jeśli sesja startuje na innej gałęzi, przełącz się na `cursor-work` (stwórz ją z aktualnego HEAD, gdy nie istnieje) i tam pracuj.
 Nazwy `cursor` Git nie przyjmie, dopóki istnieją gałęzie `cursor/…` (konflikt ścieżki refs).
 
-Kolejność jest sztywna — dwóch faz nie odwracaj i nie mieszaj w jednym zadaniu, jeśli da się tego uniknąć.
+Kolejność jest sztywna — faz nie odwracaj. W jednym zadaniu z Figmy/screenem zrób fazę 1, a gdy bloki są w motywie, **od razu sam startuj fazę 2** (JSON + assety + commit + push). Nie czekaj na osobną prośbę „krok 2”.
 
 Faza 1 — bloki ACF (najpierw, dla wszystkich wskazanych podstron):
 - Weź ramki z Figmy (link z `node-id`) albo screen.
 - Zmapuj sekcje na istniejące bloki w `app/Blocks`. Reuse before creation.
 - Brakujące bloki stwórz według anatomii ACF w tym pliku. Trigger: zwykła prośba + link Figma lub screen. Nie wymagaj skilla ani `/nowy-blok`.
 - Nazwę nowego bloku bierz z nazwy warstwy/ramki sekcji w Figmie (patrz „Nazwa bloku z Figmy”). Jeśli użytkownik poda nazwę w prompcie, ta wygrywa.
-- Nie pisz JSON-a importu, nie wołaj WP-CLI, nie dodawaj stron/treści/zdjęć do WordPressa, dopóki bloki potrzebne na tych podstronach są w motywie.
+- Nie pisz JSON-a importu, zanim bloki potrzebne na tych podstronach są w motywie.
 
-Faza 2 — treść przez WP-CLI (dopiero po fazie 1):
+Faza 2 — treść (automatycznie po fazie 1, ten sam agent / ta sama sesja):
 - JSON: `resources/imports/<slug>.json` (tytuł, slug, status `draft`, bloki ACF, dane, obrazy).
 - Assety: `resources/imports/assets/`.
-- Import (użytkownik lokalnie): `wp osf page import resources/imports/<slug>.json`
-- Nie uruchamiaj importu, `yarn build` ani `wp acorn acf:cache` automatycznie — przypomnij w podsumowaniu.
+- Commit i push na `cursor-work`.
+- **Import WP-CLI zawsze zostaje u użytkownika** (lokalny WordPress / LocalWP). Agent w chmurze nie ma bazy WP — nie uruchamiaj `wp osf page import`, `git pull` na maszynie użytkownika, `yarn build` ani `wp acorn acf:cache`.
+- W podsumowaniu wypisz konkretne komendy do wklejenia lokalnie, np. `git pull origin cursor-work` oraz `wp osf page import resources/imports/<slug>.json` dla każdego pliku.
 
 W podsumowaniu wymień zmienione pliki, sprawdzenia i wymagane komendy użytkownika.
 
@@ -79,7 +80,7 @@ yarn build    # produkcyjny build do public/build
 composer install
 wp acorn acf:cache        # przebuduj cache pól ACF po zmianach w app/Blocks|Fields|Options
 wp acorn view:clear       # gdy Blade zwraca stary widok
-wp osf page import resources/imports/<slug>.json   # faza 2: strona-szkic z blokami i treścią
+wp osf page import resources/imports/<slug>.json   # lokalnie u użytkownika: strona-szkic z blokami i treścią
 ```
 
 Node >= 20.
@@ -257,7 +258,7 @@ Working from screenshots or designs
 
 Screen, ramka Figma albo link `figma.com/design/…?node-id=` jest specyfikacją: zachowaj układ, hierarchię, proporcje, odstępy, wyrównanie i kadrowanie. Używaj istniejących tokenów oraz ograniczeń sekcji Styling. Nie wymyślaj dekoracji ani nie upraszczaj istotnych szczegółów tylko dla wygody.
 
-Link Figma bez `node-id` jest niewystarczający — poproś o ramkę sekcji albo podstrony, nie zgaduj węzła. Z Figmy najpierw rób bloki ACF (faza 1), nie od razu import WP-CLI. Slug bloku bierz z nazwy ramki sekcji (patrz „Nazwa bloku z Figmy”).
+Link Figma bez `node-id` jest niewystarczający — poproś o ramkę sekcji albo podstrony, nie zgaduj węzła. Z Figmy najpierw bloki ACF (faza 1), potem od razu JSON importu (faza 2). Komendy `wp osf page import` nie uruchamiaj — zostają u użytkownika. Slug bloku bierz z nazwy ramki sekcji (patrz „Nazwa bloku z Figmy”); nazwa podana w prompcie wygrywa.
 
 ⸻
 
