@@ -15,7 +15,7 @@
             "target": ""
           },
           "image": {
-            "src": "resources/imports/assets/offer-hero.png",
+            "src": "resources/imports/assets/offer-single-hero.jpg",
             "alt": "Ekspertyza poligraficzna na potrzeby postępowania"
           }
         },
@@ -32,7 +32,7 @@
         "r_problem": [
           {
             "image": {
-              "src": "resources/imports/assets/offer-single-problem-01.png",
+              "src": "resources/imports/assets/offer-single-problem-01.jpg",
               "alt": "Gdy w postępowaniu pojawiają się istotne rozbieżności"
             },
             "header": "Gdy w postępowaniu pojawiają się istotne rozbieżności",
@@ -40,7 +40,7 @@
           },
           {
             "image": {
-              "src": "resources/imports/assets/offer-single-problem-02.png",
+              "src": "resources/imports/assets/offer-single-problem-02.jpg",
               "alt": "Przykładowe sytuacje"
             },
             "header": "Przykładowe sytuacje",
@@ -55,7 +55,7 @@
       "data": {
         "g_content": {
           "image": {
-            "src": "resources/imports/assets/offer-single-solution.png",
+            "src": "resources/imports/assets/offer-single-solution.jpg",
             "alt": "Badanie poligraficzne jako element specjalistycznej analizy"
           },
           "header": "Badanie poligraficzne jako element specjalistycznej analizy",

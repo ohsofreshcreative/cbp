@@ -21,6 +21,8 @@ Faza 1 — bloki ACF albo szablony (najpierw, dla wszystkich wskazanych ramek):
 
 Faza 2 — treść (automatycznie po fazie 1, ten sam agent / ta sama sesja):
 - Tylko Pages: JSON `resources/imports/<slug>.json` (tytuł, slug, status `draft`, bloki ACF, dane, obrazy) + assety w `resources/imports/assets/`.
+- Zdjęcia (hero, problem, about, action, kafelki) zapisuj jako **JPG**, nie PNG. Z Figmy: `download_assets` z `defaultFormat: "jpg"` na węźle **samego zdjęcia** (prostokąt fill), nie na całej ramce z menu. Jeśli fill wraca jako PNG — skonwertuj do JPG zanim zapiszesz do `resources/imports/assets/`. Ikony i logotypy zostają SVG.
+- Każda podstrona ma własne pliki (`about-hero.jpg`, nie `b2b-hero.png`), nawet gdy Figma współdzieli fill — inaczej w JSON-ie i w bibliotece mediów WP ląduje cudze zdjęcie.
 - Blog / Blog-single: **nie** twórz `blog.json` / `blog-single.json` i **nie** dopisuj ich do `wp osf page import`. Dopracuj szablony Blade i partiale (hero listingu, siatka wpisów, treść wpisu, related). Copy z Figmy w szablonie albo pola WP (tytuł wpisu, treść, excerpt, miniaturka, kategoria) — nie import strony.
 - Commit i push na `cursor-work`.
 - **Import WP-CLI zawsze zostaje u użytkownika** (lokalny WordPress / LocalWP). Agent w chmurze nie ma bazy WP — nie uruchamiaj `wp osf page import`, `git pull` na maszynie użytkownika, `yarn build` ani `wp acorn acf:cache`.

@@ -8,7 +8,7 @@
       "data": {
         "g_hero": {
           "image": {
-            "src": "resources/imports/assets/homepage-hero.png",
+            "src": "resources/imports/assets/homepage-hero.jpg",
             "alt": "Pomagamy tam, gdzie liczy się prawda"
           },
           "header": "<p>Pomagamy tam, gdzie liczy się <strong>prawda.</strong></p>",
@@ -33,7 +33,7 @@
         "r_hero": [
           {
             "image": {
-              "src": "resources/imports/assets/homepage-hero-tile-b2b.png",
+              "src": "resources/imports/assets/homepage-hero-tile-b2b.jpg",
               "alt": "Dla firm i kancelarii"
             },
             "title": "Dla firm i kancelarii",
@@ -172,7 +172,7 @@
       "data": {
         "g_about": {
           "image": {
-            "src": "resources/imports/assets/homepage-about.png",
+            "src": "resources/imports/assets/homepage-about.jpg",
             "alt": "mgr Katarzyna Jóźwiak"
           },
           "label": "O mnie",

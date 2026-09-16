@@ -15,7 +15,7 @@
             "target": ""
           },
           "image": {
-            "src": "resources/imports/assets/b2b-hero.png",
+            "src": "resources/imports/assets/b2b-hero.jpg",
             "alt": "Profesjonalne wsparcie w sprawach wymagających weryfikacji"
           },
           "badges": [
@@ -48,7 +48,7 @@
         "r_problem": [
           {
             "image": {
-              "src": "resources/imports/assets/b2b-problem-01.png",
+              "src": "resources/imports/assets/b2b-problem-01.jpg",
               "alt": "Przedsiębiorstwa i kancelarie"
             },
             "header": "Przedsiębiorstwa i kancelarie",
@@ -56,7 +56,7 @@
           },
           {
             "image": {
-              "src": "resources/imports/assets/b2b-problem-02.png",
+              "src": "resources/imports/assets/b2b-problem-02.jpg",
               "alt": "Sądy i organy ścigania"
             },
             "header": "Sądy i organy ścigania",
@@ -90,7 +90,7 @@
       "data": {
         "g_action": {
           "image": {
-            "src": "resources/imports/assets/b2b-action.png",
+            "src": "resources/imports/assets/b2b-action.jpg",
             "alt": "Nie każda sprawa wymaga badania"
           },
           "header": "Nie każda sprawa wymaga badania.",
@@ -145,7 +145,7 @@
       "data": {
         "g_values": {
           "image": {
-            "src": "resources/imports/assets/b2b-values.png",
+            "src": "resources/imports/assets/b2b-values.jpg",
             "alt": "Dlaczego Centrum Badań Poligraficznych?"
           },
           "label": "Wartości",

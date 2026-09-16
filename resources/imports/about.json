@@ -15,7 +15,7 @@
             "target": ""
           },
           "image": {
-            "src": "resources/imports/assets/b2b-hero.png",
+            "src": "resources/imports/assets/about-hero.jpg",
             "alt": "Wiedza, doświadczenie i rzetelność w służbie prawdy"
           },
           "button2": {
@@ -37,7 +37,7 @@
         "r_problem": [
           {
             "image": {
-              "src": "resources/imports/assets/b2b-problem-01.png",
+              "src": "resources/imports/assets/about-problem.jpg",
               "alt": "Centrum, w którym technologia spotyka się z doświadczeniem eksperta"
             },
             "header": "Centrum, w którym technologia spotyka się z doświadczeniem eksperta.",
@@ -52,7 +52,7 @@
       "data": {
         "g_about": {
           "image": {
-            "src": "resources/imports/assets/about-portrait.png",
+            "src": "resources/imports/assets/about-portrait.jpg",
             "alt": "mgr Katarzyna Jóźwiak"
           },
           "label": "Poznaj ekspertkę",
