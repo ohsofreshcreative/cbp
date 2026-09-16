@@ -21,8 +21,8 @@
 
 		<div class="__col grid grid-cols-1 md:grid-cols-[minmax(0,296px)_1fr] gap-8">
 			@if (!empty($g_explore['image']['url']))
-			<figure class="__img relative m-0 overflow-hidden radius">
-				<img src="{{ $g_explore['image']['url'] }}" alt="{{ $g_explore['image']['alt'] ?? '' }}" class="size-full object-cover" data-gsap-element="img">
+			<figure class="__img relative m-0 overflow-hidden radius w-full">
+				<img src="{{ $g_explore['image']['url'] }}" alt="{{ $g_explore['image']['alt'] ?? '' }}" class="size-full object-cover" data-gsap-element="img" width="296" height="352">
 				@if (!empty($g_explore['caption']))
 				<figcaption class="__caption absolute bottom-4 left-4">{{ $g_explore['caption'] }}</figcaption>
 				@endif
@@ -32,11 +32,11 @@
 			@if (!empty($r_explore))
 			<div class="__cards grid grid-cols-1 md:grid-cols-2 gap-8">
 				@foreach ($r_explore as $item)
-				<article data-gsap-element="card" class="__card relative flex items-center overflow-hidden radius bg-secondary-800 p-6">
+				<article data-gsap-element="card" class="__card relative flex items-center gap-6 overflow-hidden radius bg-secondary-800 p-6">
 					@if (!empty($item['image']['url']))
-					<img src="{{ $item['image']['url'] }}" alt="{{ $item['image']['alt'] ?? '' }}" class="__logo object-contain">
+					<img src="{{ $item['image']['url'] }}" alt="{{ $item['image']['alt'] ?? '' }}" class="__logo size-28 shrink-0 object-contain" width="112" height="112">
 					@endif
-					<div class="__inside">
+					<div class="__inside min-w-0">
 						@if (!empty($item['header']))
 						<p class="__title">{{ $item['header'] }}</p>
 						@endif
