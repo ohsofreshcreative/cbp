@@ -23,7 +23,7 @@ Faza 2 — treść (automatycznie po fazie 1, ten sam agent / ta sama sesja):
 - Tylko Pages: JSON `resources/imports/<slug>.json` (tytuł, slug, status `draft`, bloki ACF, dane, obrazy) + assety w `resources/imports/assets/`.
 - Zdjęcia (hero, problem, about, action, kafelki) zapisuj jako **JPG**, nie PNG. Z Figmy: `download_assets` z `defaultFormat: "jpg"` na węźle **samego zdjęcia** (prostokąt fill), nie na całej ramce z menu. Jeśli fill wraca jako PNG — skonwertuj do JPG zanim zapiszesz do `resources/imports/assets/`. Ikony i logotypy zostają SVG.
 - Każda podstrona ma własne pliki (`about-hero.jpg`, nie `b2b-hero.png`), nawet gdy Figma współdzieli fill — inaczej w JSON-ie i w bibliotece mediów WP ląduje cudze zdjęcie.
-- Blog / Blog-single: **nie** twórz `blog.json` / `blog-single.json` i **nie** dopisuj ich do `wp osf page import`. Dopracuj szablony Blade i partiale (hero listingu, siatka wpisów, treść wpisu, related). Copy artykułu z ramki `Blog-single` zapisz jako **wpis**: `resources/imports/posts/<slug>.json` + HTML treści + miniaturka JPG. Dolne CTA strony zostaje `@include('partials.cta')`; żółte CTA w środku artykułu należy do `post_content`.
+- Blog / Blog-single: **nie** twórz `blog.json` / `blog-single.json` i **nie** dopisuj ich do `wp osf page import`. Dopracuj szablony Blade i partiale. Copy artykułu zapisz jako **wpis**: `resources/imports/posts/<slug>.json` + HTML + miniaturka JPG. Dolne CTA strony: `@include('partials.cta')`. Żółte CTA w środku artykułu to blok ACF `action` (`CTA - Wpis`) przez `embeds` + znacznik `<!-- osf:embed:action -->` w HTML — nie twardy HTML w treści.
 - Commit i push na `cursor-work`.
 - **Import WP-CLI zawsze zostaje u użytkownika** (lokalny WordPress / LocalWP). Agent w chmurze nie ma bazy WP — nie uruchamiaj `wp osf page import`, `wp osf post import`, `git pull` na maszynie użytkownika, `yarn build` ani `wp acorn acf:cache`.
 - W podsumowaniu wypisz konkretne komendy: `git pull origin cursor-work`, `wp osf page import resources/imports/<slug>.json` dla każdej **strony** oraz `wp osf post import resources/imports/posts/<slug>.json` dla każdego **wpisu**.
@@ -67,7 +67,7 @@ Import wpisu (Blog-single)
 
 Ramka `Blog-single` to treść **wpisu** (`post`), nie strony. Po dopracowaniu Blade zapisz copy z Figmy do:
 
-- `resources/imports/posts/<slug>.json` — `title`, `slug`, `status: draft`, opcjonalnie `date`, `author` (display_name), `categories`, `excerpt`, `featured_image: {src, alt}`, oraz `content` albo `content_file`
+- `resources/imports/posts/<slug>.json` — `title`, `slug`, `status: draft`, opcjonalnie `date`, `author`, `categories`, `excerpt`, `featured_image: {src, alt}`, `content` albo `content_file`, oraz `embeds` (blok `action` / CTA - Wpis w środku artykułu)
 - HTML Gutenberg (`core/paragraph`, `core/heading`, `core/list`, `core/html`) — nagłówki H2 z Figmy, żeby spis treści w `content-single` się zbudował
 - miniaturka JPG w `resources/imports/assets/`
 
@@ -168,7 +168,7 @@ Normalizacja warstwy → slug:
 - Jeśli po normalizacji slug albo oczywisty alias już istnieje w `app/Blocks` — **użyj istniejącego bloku**, nie twórz drugiego.
 - Aliasy warstw z pliku Figmy (Design): `Process` → `proces`, `FAQ` → `faq`, `CTA` / `cta-section` → `cta`, `Testimonials` → `reviews`, `Aboutv2` → `about`, `Solution` → `content`.
 - `Blogs` jako **sekcja na stronie** (np. homepage) → blok `posts`. Cała ramka podstrony `Blog` / `Blog-single` to szablony WP, nie alias na blok i nie Page (patrz „Szablony WP, nie Pages”).
-- `Frame 460` i `fi_*` to nie nazwy bloków — **pomiń**. Blok `action` jest chwilowo wyłączony (do późniejszej przebudowy).
+- `Frame 460` i `fi_*` to nie nazwy bloków — pomiń, gdy puste. Żółte CTA we wpisie (`__cta`, „Masz więcej pytań dotyczących badania?”) → blok `action` (`CTA - Wpis`).
 - Nie używaj jako nazwy bloku: `Frame 123`, `Group`, `Rectangle`, `__wrapper`, warstw wewnętrznych ani copy z H1/H2.
 - Pomiń chrome strony: `menu`, `header`, `footer` i puste kontenery-opakowania.
 

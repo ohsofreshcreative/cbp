@@ -10,10 +10,11 @@ class PostImporter
 			throw new PageImportException('Importer wymaga WordPress (wp_insert_post).');
 		}
 
+		$assets = new PageImportAssets($payload->sourceDir);
 		$featuredId = null;
+		$content = $payload->content;
 
 		if ($payload->featuredImage !== null) {
-			$assets = new PageImportAssets($payload->sourceDir);
 			$hydrated = $assets->hydrate([
 				'image' => $payload->featuredImage,
 			], 'featured_image');
@@ -25,12 +26,28 @@ class PostImporter
 			}
 		}
 
+		foreach ($payload->embeds as $index => $embed) {
+			$placeholder = sprintf('<!-- osf:embed:%s -->', $embed['id']);
+
+			if (!str_contains($content, $placeholder)) {
+				throw new PageImportException(sprintf(
+					'W treści wpisu brakuje znacznika %s dla embeds[%d].',
+					$placeholder,
+					$index
+				));
+			}
+
+			$data = $assets->hydrate($embed['data'], sprintf('embeds[%d].data', $index));
+			$markup = AcfBlockSerializer::serializeBlock($embed['block'], $data);
+			$content = str_replace($placeholder, $markup, $content);
+		}
+
 		$postarr = [
 			'post_type' => 'post',
 			'post_title' => $payload->title,
 			'post_name' => $payload->slug,
 			'post_status' => $payload->status,
-			'post_content' => $payload->content,
+			'post_content' => $content,
 			'post_excerpt' => $payload->excerpt,
 		];
 

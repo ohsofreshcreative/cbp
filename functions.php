@@ -72,7 +72,7 @@ function allow_only_selected_blocks($allowed_block_types, $editor_context)
 			}
 		}
 
-		// Dodatkowo dopuszczamy akapit, nagłówek, listę i HTML (żółte CTA w treści wpisu)
+		// Dodatkowo dopuszczamy akapit, nagłówek, listę i HTML (embedy w treści wpisu)
 		$allowed_blocks[] = 'core/paragraph';
 		$allowed_blocks[] = 'core/heading';
 		$allowed_blocks[] = 'core/list';

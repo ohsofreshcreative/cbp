@@ -2,6 +2,7 @@
 
 require __DIR__ . '/../../app/Support/PageImportException.php';
 require __DIR__ . '/../../app/Support/PageImportAssets.php';
+require __DIR__ . '/../../app/Support/AcfBlockSerializer.php';
 require __DIR__ . '/../../app/Support/PostImportPayload.php';
 require __DIR__ . '/../../app/Support/PostImporter.php';
 
@@ -51,8 +52,11 @@ $fromFile = PostImportPayload::fromFile(
 );
 expect_true($fromFile->slug === 'czy-wariograf-wykrywa-klamstwo', 'slug wpisu z Figmy');
 expect_true(str_contains($fromFile->content, 'Czy wariograf naprawdę wykrywa kłamstwo?'), 'H2 z pliku HTML');
-expect_true(str_contains($fromFile->content, 'Masz więcej pytań dotyczących badania?'), 'żółte CTA w treści');
 expect_true(str_contains($fromFile->content, 'Czy stres może wpłynąć na wynik?'), 'ostatnia sekcja z Figmy');
+expect_true(str_contains($fromFile->content, '<!-- osf:embed:action -->'), 'znacznik embed action w HTML');
+expect_true(count($fromFile->embeds) === 1, 'jeden embed ACF');
+expect_true(($fromFile->embeds[0]['block'] ?? '') === 'action', 'embed to blok action');
+expect_true(str_contains((string) ($fromFile->embeds[0]['data']['g_action']['header'] ?? ''), 'Masz więcej pytań'), 'copy CTA z Figmy');
 expect_true(!str_contains($fromFile->content, 'Jak ekspert interpretuje wyniki?'), 'bez wymyślonych sekcji ze spisu');
 expect_true(($fromFile->featuredImage['src'] ?? '') === 'resources/imports/assets/post-wariograf.jpg', 'miniaturka JPG');
 expect_true($fromFile->excerpt !== '', 'excerpt z leadu');
@@ -242,11 +246,24 @@ expect_true(($GLOBALS['osf_postarr']['post_status'] ?? '') === 'draft', 'status 
 expect_true(($GLOBALS['osf_postarr']['post_author'] ?? null) === 3, 'autor dopasowany po display_name');
 expect_true(($GLOBALS['osf_postarr']['post_date'] ?? '') === '2026-06-12 09:00:00', 'data publikacji z Figmy');
 expect_true(str_contains((string) ($GLOBALS['osf_postarr']['post_content'] ?? ''), 'Co mierzy poligraf?'), 'treść z Figmy w post_content');
+expect_true(str_contains((string) ($GLOBALS['osf_postarr']['post_content'] ?? ''), '<!-- wp:acf/action'), 'blok acf/action w treści wpisu');
+expect_true(str_contains((string) ($GLOBALS['osf_postarr']['post_content'] ?? ''), 'Masz więcej pytań'), 'nagłówek CTA - Wpis w treści');
+expect_true(!str_contains((string) ($GLOBALS['osf_postarr']['post_content'] ?? ''), 'osf:embed:action'), 'znacznik embed zastąpiony');
 expect_true(($GLOBALS['osf_thumbnail'][0] ?? null) === 77, 'miniaturka przypięta do wpisu');
 expect_true(($GLOBALS['osf_thumbnail'][1] ?? null) === 201, 'ID miniaturki z importu JPG');
 expect_true(($GLOBALS['osf_terms']['taxonomy'] ?? '') === 'category', 'przypisano kategorię');
 expect_true(($GLOBALS['osf_inserted_terms'][0]['name'] ?? '') === 'Wiedza i metodologia', 'kategoria z Figmy');
-expect_true($GLOBALS['osf_upload_count'] === 1, 'miniaturka wgrana raz');
+expect_true($GLOBALS['osf_upload_count'] === 2, 'miniaturka i zdjęcie Action wgrane');
+
+expect_exception(
+	fn () => (new PostImporter())->import(PostImportPayload::fromArray([
+		'title' => 'X',
+		'content' => '<p>bez znacznika</p>',
+		'embeds' => [['id' => 'action', 'block' => 'action', 'data' => []]],
+	])),
+	'brakuje znacznika',
+	'embed action bez znacznika w HTML'
+);
 
 $unknownAuthor = PostImportPayload::fromArray([
 	'title' => 'Bez autora',

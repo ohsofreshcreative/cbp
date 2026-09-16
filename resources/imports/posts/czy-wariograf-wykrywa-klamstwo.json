@@ -12,5 +12,28 @@
     "src": "resources/imports/assets/post-wariograf.jpg",
     "alt": "Badanie poligraficzne — czujniki na palcach dłoni"
   },
-  "content_file": "czy-wariograf-wykrywa-klamstwo.html"
+  "content_file": "czy-wariograf-wykrywa-klamstwo.html",
+  "embeds": [
+    {
+      "id": "action",
+      "block": "action",
+      "data": {
+        "g_action": {
+          "image": {
+            "src": "resources/imports/assets/action-cta.jpg",
+            "alt": "Konsultacja z ekspertem"
+          },
+          "header": "Masz więcej pytań dotyczących badania?",
+          "text": "<p>Każda sprawa jest inna. Jeśli zastanawiasz się, czy badanie poligraficzne może być odpowiednim rozwiązaniem w Twojej sytuacji, skonsultuj ją bezpośrednio z ekspertem.</p>",
+          "button1": {
+            "title": "Umów poufną konsultację",
+            "url": "/kontakt",
+            "target": ""
+          }
+        },
+        "background": "none",
+        "nomt": true
+      }
+    }
+  ]
 }

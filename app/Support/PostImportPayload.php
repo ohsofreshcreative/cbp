@@ -26,11 +26,15 @@ class PostImportPayload
 	/** @var array{src: string, alt: string}|null */
 	public ?array $featuredImage;
 
+	/** @var list<array{id: string, block: string, data: array<string, mixed>}> */
+	public array $embeds;
+
 	public ?string $sourceDir;
 
 	/**
 	 * @param list<string> $categories
 	 * @param array{src: string, alt: string}|null $featuredImage
+	 * @param list<array{id: string, block: string, data: array<string, mixed>}> $embeds
 	 */
 	private function __construct(
 		string $title,
@@ -42,6 +46,7 @@ class PostImportPayload
 		?string $author,
 		array $categories,
 		?array $featuredImage,
+		array $embeds = [],
 		?string $sourceDir = null
 	) {
 		$this->title = $title;
@@ -53,6 +58,7 @@ class PostImportPayload
 		$this->author = $author;
 		$this->categories = $categories;
 		$this->featuredImage = $featuredImage;
+		$this->embeds = $embeds;
 		$this->sourceDir = $sourceDir;
 	}
 
@@ -147,6 +153,7 @@ class PostImportPayload
 		$author = self::normalizeOptionalString($data['author'] ?? null, 'author');
 		$categories = self::normalizeCategories($data['categories'] ?? []);
 		$featuredImage = self::normalizeFeaturedImage($data['featured_image'] ?? null);
+		$embeds = self::normalizeEmbeds($data['embeds'] ?? []);
 
 		return new self(
 			$title,
@@ -158,6 +165,7 @@ class PostImportPayload
 			$author,
 			$categories,
 			$featuredImage,
+			$embeds,
 			$sourceDir
 		);
 	}
@@ -333,6 +341,83 @@ class PostImportPayload
 			'src' => trim($src),
 			'alt' => is_string($alt) ? $alt : (string) $alt,
 		];
+	}
+
+	/**
+	 * @return list<array{id: string, block: string, data: array<string, mixed>}>
+	 */
+	private static function normalizeEmbeds(mixed $embeds): array
+	{
+		if ($embeds === null || $embeds === []) {
+			return [];
+		}
+
+		if (!is_array($embeds) || !self::isList($embeds)) {
+			throw new PageImportException('Pole "embeds" musi być tablicą bloków ACF do wstawienia w treść.');
+		}
+
+		$out = [];
+
+		foreach ($embeds as $index => $item) {
+			$label = sprintf('embeds[%d]', $index);
+
+			if (!is_array($item) || self::isList($item)) {
+				throw new PageImportException(sprintf('%s musi być obiektem z polami "id", "block" i "data".', $label));
+			}
+
+			$id = $item['id'] ?? null;
+
+			if (!is_string($id) || trim($id) === '') {
+				throw new PageImportException(sprintf('%s.id jest wymagane i musi być stringiem (np. action).', $label));
+			}
+
+			$id = strtolower(trim($id));
+
+			if (!preg_match('/^[a-z][a-z0-9]*$/', $id)) {
+				throw new PageImportException(sprintf('%s.id "%s" jest niepoprawne.', $label, $item['id']));
+			}
+
+			$slug = $item['block'] ?? null;
+
+			if (!is_string($slug) || trim($slug) === '') {
+				throw new PageImportException(sprintf('%s.block jest wymagane i musi być slugiem ACF (np. action).', $label));
+			}
+
+			$slug = strtolower(trim($slug));
+
+			if (!preg_match('/^[a-z][a-z0-9]*$/', $slug)) {
+				throw new PageImportException(sprintf('%s.block "%s" jest niepoprawny.', $label, $item['block']));
+			}
+
+			$studly = str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $slug)));
+			$file = dirname(__DIR__) . '/Blocks/' . $studly . '.php';
+
+			if (!is_readable($file)) {
+				throw new PageImportException(sprintf(
+					'%s.block "%s" nie istnieje w app/Blocks.',
+					$label,
+					$slug
+				));
+			}
+
+			$data = $item['data'] ?? [];
+
+			if ($data === null) {
+				$data = [];
+			}
+
+			if (!is_array($data) || ($data !== [] && self::isList($data))) {
+				throw new PageImportException(sprintf('%s.data musi być obiektem z danymi ACF.', $label));
+			}
+
+			$out[] = [
+				'id' => $id,
+				'block' => $slug,
+				'data' => $data,
+			];
+		}
+
+		return $out;
 	}
 
 	private static function slugify(string $value): string
