@@ -11,21 +11,35 @@ Nazwy `cursor` Git nie przyjmie, dopóki istnieją gałęzie `cursor/…` (konfl
 
 Kolejność jest sztywna — faz nie odwracaj. W jednym zadaniu z Figmy/screenem zrób fazę 1, a gdy bloki są w motywie, **od razu sam startuj fazę 2** (JSON + assety + commit + push). Nie czekaj na osobną prośbę „krok 2”.
 
-Faza 1 — bloki ACF (najpierw, dla wszystkich wskazanych podstron):
+Faza 1 — bloki ACF albo szablony (najpierw, dla wszystkich wskazanych ramek):
 - Weź ramki z Figmy (link z `node-id`) albo screen.
-- Zmapuj sekcje na istniejące bloki w `app/Blocks`. Reuse before creation.
+- Najpierw rozstrzygnij typ ramki (patrz „Szablony WP, nie Pages”). `Blog` i `Blog-single` to **nie** Pages — od razu edytuj Blade listingu / wpisu, nie składaj strony Gutenberg.
+- Dla prawdziwych Pages: zmapuj sekcje na istniejące bloki w `app/Blocks`. Reuse before creation.
 - Brakujące bloki stwórz według anatomii ACF w tym pliku. Trigger: zwykła prośba + link Figma lub screen. Nie wymagaj skilla ani `/nowy-blok`.
 - Nazwę nowego bloku bierz z nazwy warstwy/ramki sekcji w Figmie (patrz „Nazwa bloku z Figmy”). Jeśli użytkownik poda nazwę w prompcie, ta wygrywa.
-- Nie pisz JSON-a importu, zanim bloki potrzebne na tych podstronach są w motywie.
+- Nie pisz JSON-a importu, zanim bloki potrzebne na tych podstronach są w motywie. Dla Blog / Blog-single JSON-a strony nie pisz wcale.
 
 Faza 2 — treść (automatycznie po fazie 1, ten sam agent / ta sama sesja):
-- JSON: `resources/imports/<slug>.json` (tytuł, slug, status `draft`, bloki ACF, dane, obrazy).
-- Assety: `resources/imports/assets/`.
+- Tylko Pages: JSON `resources/imports/<slug>.json` (tytuł, slug, status `draft`, bloki ACF, dane, obrazy) + assety w `resources/imports/assets/`.
+- Blog / Blog-single: **nie** twórz `blog.json` / `blog-single.json` i **nie** dopisuj ich do `wp osf page import`. Dopracuj szablony Blade i partiale (hero listingu, siatka wpisów, treść wpisu, related). Copy z Figmy w szablonie albo pola WP (tytuł wpisu, treść, excerpt, miniaturka, kategoria) — nie import strony.
 - Commit i push na `cursor-work`.
 - **Import WP-CLI zawsze zostaje u użytkownika** (lokalny WordPress / LocalWP). Agent w chmurze nie ma bazy WP — nie uruchamiaj `wp osf page import`, `git pull` na maszynie użytkownika, `yarn build` ani `wp acorn acf:cache`.
-- W podsumowaniu wypisz konkretne komendy do wklejenia lokalnie, np. `git pull origin cursor-work` oraz `wp osf page import resources/imports/<slug>.json` dla każdego pliku.
+- W podsumowaniu wypisz konkretne komendy tylko dla **Pages**, np. `git pull origin cursor-work` oraz `wp osf page import resources/imports/<slug>.json` dla każdego pliku strony.
 
-W podsumowaniu wymień zmienione pliki, sprawdzenia i wymagane komendy użytkownika.
+W podsumowaniu wymień zmienione pliki (w tym Blade listingu/wpisu), sprawdzenia i wymagane komendy użytkownika.
+
+Szablony WP, nie Pages
+
+Ramki Figmy `Blog` i `Blog-single` (też `Blog - single`, cała podstrona `Blogs`) **nie są stronami** z Kokpitu → Strony. Nie składaj ich z bloków ACF przez importer.
+
+| Ramka Figma | Co to jest w WP | Pliki, które masz zmienić |
+|---|---|---|
+| `Blog` | listing wpisów: `is_home()` (Ustawienia → Czytanie → strona wpisów) oraz `is_category()` | `resources/views/home.blade.php` (główny listing; **utwórz**, gdy brakuje), `resources/views/category.blade.php`, kafelki `resources/views/partials/content.blade.php`. `index.blade.php` tylko jako fallback pętli, nie jako „strona Blog”. |
+| `Blog-single` / `Blog - single` | pojedynczy wpis (`post`, `is_single()`) | `resources/views/single.blade.php`, `resources/views/partials/content-single.blade.php` |
+
+Blok ACF `posts` (`app/Blocks/Posts.php`, widok `resources/views/blocks/posts.php`) to lista wpisów **wpleciona w inną stronę** (np. homepage). Nie zastępuje widoku bloga.
+
+Na tych widokach pomiń chrome (`menu`, `header`, `footer`) tak samo jak na Pages. CTA bierz z opcji motywu (`g_octa` / blok opcji), wzorzec: `category.blade.php` — nie importuj bloku `cta` jako osobnej strony.
 
 
 Project overview
@@ -54,6 +68,9 @@ Theme root: `wp-content/themes/bergermann` (Sage 11 + Acorn 5, PHP >= 8.2, names
 | `app/Walkers/*.php` | walkery menu (desktop + mobile) |
 | `app/setup.php`, `app/filters.php`, `app/post-types.php` | ładowane z `functions.php` przez `collect([...])` |
 | `resources/views/blocks/*.blade.php` | widoki bloków (nazwa = `$slug`) |
+| `resources/views/home.blade.php`, `category.blade.php` | listing wpisów (`is_home` / kategoria) — **nie** Page |
+| `resources/views/single.blade.php`, `partials/content-single.blade.php` | pojedynczy wpis — **nie** Page |
+| `resources/views/partials/content.blade.php` | kafelek wpisu na listingu |
 | `resources/views/components/*.blade.php` | `x-button`, `x-picture`, `x-alert`, `x-icon.arrow-up` |
 | `resources/views/sections|partials|layouts` | header/footer/sidebar, partiale, layout `app` |
 | `resources/css/variables.scss` | **cały design system** (~1500 linii) |
@@ -111,7 +128,8 @@ Nazwa bloku z Figmy
 Normalizacja warstwy → slug:
 - lowercase, wytnij spacje, myślniki i podkreślenia (`Why us` / `Why-Us` → `whyus`).
 - Jeśli po normalizacji slug albo oczywisty alias już istnieje w `app/Blocks` — **użyj istniejącego bloku**, nie twórz drugiego.
-- Aliasy warstw z pliku Figmy (Design): `Process` → `proces`, `FAQ` → `faq`, `CTA` / `cta-section` → `cta`, `Testimonials` → `reviews`, `Aboutv2` → `about`, `Blogs` → `posts`, `Solution` → `content`.
+- Aliasy warstw z pliku Figmy (Design): `Process` → `proces`, `FAQ` → `faq`, `CTA` / `cta-section` → `cta`, `Testimonials` → `reviews`, `Aboutv2` → `about`, `Solution` → `content`.
+- `Blogs` jako **sekcja na stronie** (np. homepage) → blok `posts`. Cała ramka podstrony `Blog` / `Blog-single` to szablony WP, nie alias na blok i nie Page (patrz „Szablony WP, nie Pages”).
 - `Frame 460` i `fi_*` to nie nazwy bloków — rozpoznaj po zawartości (np. zdjęcie + fala + żółte CTA → `action`) albo pomiń, gdy puste.
 - Nie używaj jako nazwy bloku: `Frame 123`, `Group`, `Rectangle`, `__wrapper`, warstw wewnętrznych ani copy z H1/H2.
 - Pomiń chrome strony: `menu`, `header`, `footer` i puste kontenery-opakowania.
@@ -258,7 +276,7 @@ Working from screenshots or designs
 
 Screen, ramka Figma albo link `figma.com/design/…?node-id=` jest specyfikacją: zachowaj układ, hierarchię, proporcje, odstępy, wyrównanie i kadrowanie. Używaj istniejących tokenów oraz ograniczeń sekcji Styling. Nie wymyślaj dekoracji ani nie upraszczaj istotnych szczegółów tylko dla wygody.
 
-Link Figma bez `node-id` jest niewystarczający — poproś o ramkę sekcji albo podstrony, nie zgaduj węzła. Z Figmy najpierw bloki ACF (faza 1), potem od razu JSON importu (faza 2). Komendy `wp osf page import` nie uruchamiaj — zostają u użytkownika. Slug bloku bierz z nazwy ramki sekcji (patrz „Nazwa bloku z Figmy”); nazwa podana w prompcie wygrywa.
+Link Figma bez `node-id` jest niewystarczający — poproś o ramkę sekcji albo podstrony, nie zgaduj węzła. Z Figmy najpierw bloki ACF albo szablony Blade (faza 1), potem od razu JSON **tylko dla Pages** (faza 2). `Blog` / `Blog-single` → Blade listingu/wpisu, bez JSON-a strony. Komendy `wp osf page import` nie uruchamiaj — zostają u użytkownika. Slug bloku bierz z nazwy ramki sekcji (patrz „Nazwa bloku z Figmy”); nazwa podana w prompcie wygrywa.
 
 ⸻
 
