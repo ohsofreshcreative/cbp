@@ -9,7 +9,7 @@ Nie otwieraj osobnych PR-ów dla kolejnych podstron — commituj i pushuj na `cu
 Jeśli sesja startuje na innej gałęzi, przełącz się na `cursor-work` (stwórz ją z aktualnego HEAD, gdy nie istnieje) i tam pracuj.
 Nazwy `cursor` Git nie przyjmie, dopóki istnieją gałęzie `cursor/…` (konflikt ścieżki refs).
 
-Kolejność jest sztywna — faz nie odwracaj. W jednym zadaniu z Figmy/screenem zrób fazę 1, a gdy bloki są w motywie, **od razu sam startuj fazę 2** (JSON + assety + commit + push). Nie czekaj na osobną prośbę „krok 2”.
+Kolejność jest sztywna — faz nie odwracaj. W jednym zadaniu z Figmy/screenem zrób fazę 1, a gdy bloki albo szablony są na miejscu, **od razu sam startuj fazę 2**. Dla Pages: JSON + assety + commit + push. Dla Blog / Blog-single: dopracowane Blade + commit + push, **bez** JSON-a strony. Nie czekaj na osobną prośbę „krok 2”.
 
 Faza 1 — bloki ACF albo szablony (najpierw, dla wszystkich wskazanych ramek):
 - Weź ramki z Figmy (link z `node-id`) albo screen.
