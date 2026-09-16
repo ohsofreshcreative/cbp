@@ -18,13 +18,11 @@
 	@endif
 
 	@if (!empty($g_banner['video']) || !empty($g_banner['image']))
-	<div class="absolute inset-0 z-1 pointer-events-none" style="background: linear-gradient(90deg, #171F87 5.84%, rgba(23, 31, 135, 0.20) 100.47%);"></div>
+	<div class="absolute inset-0 z-1 pointer-events-none bg-linear-to-r from-page via-page/80 to-transparent"></div>
 	@endif
 
 	@if (!empty($g_banner['shape']))
-	<img class="absolute -bottom-[109px] w-[2109px] max-w-none left-1/2 -translate-x-1/2" src="{{ get_template_directory_uri() }}/resources/images/banner-shape.svg" />
-	@else
-	<img class="absolute -bottom-[109px] w-[2109px] max-w-none left-1/2 -translate-x-1/2" src="{{ get_template_directory_uri() }}/resources/images/banner-shape2.svg" />
+	<img class="absolute -bottom-[109px] w-[2109px] max-w-none left-1/2 -translate-x-1/2" src="{{ get_template_directory_uri() }}/resources/images/banner-shape.svg" alt="" />
 	@endif
 
 	<div class=" __wrapper c-main relative z-10">

@@ -6,64 +6,63 @@ use Log1x\AcfComposer\Block;
 use StoutLogic\AcfBuilder\FieldsBuilder;
 use App\Support\SectionClasses;
 
-class Cards extends Block
+class Gains extends Block
 {
-	public $name = 'Kafelki z obrazem';
-	public $description = 'cards';
-	public $slug = 'cards';
+	public $name = 'Gains';
+	public $description = 'gains';
+	public $slug = 'gains';
 	public $category = 'formatting';
-	public $icon = 'ellipsis';
-	public $keywords = ['cards', 'kafelki'];
+	public $icon = 'awards';
+	public $keywords = ['gains', 'korzyści'];
 	public $mode = 'edit';
 	public $supports = [
 		'align' => false,
 		'mode' => true,
 		'jsx' => true,
+		'anchor' => true,
+		'customClassName' => true,
 	];
 
 	public function fields()
 	{
-		$cards = new FieldsBuilder('cards');
+		$gains = new FieldsBuilder('gains');
 
-		$cards
-			->setLocation('block', '==', 'acf/cards') // ważne!
-			/*--- TAB #1 ---*/
-			->addTab('Treści', ['placement' => 'top'])
-			->addGroup('g_cards', ['label' => ''])
-			->addText('header', ['label' => 'Nagłówek'])
-			->addTextarea('text', [
-				'label' => 'Opis',
-				'rows' => 4,
-				'new_lines' => 'br',
+		$gains
+			->setLocation('block', '==', 'acf/gains')
+			->addTab('Elementy', ['placement' => 'top'])
+			->addGroup('g_gains', ['label' => ''])
+			->addText('header', [
+				'label' => 'Nagłówek',
 			])
-			->addLink('button', [
-				'label' => 'Przycisk',
+			->addWysiwyg('text', [
+				'label' => 'Treść',
+				'tabs' => 'all',
+				'toolbar' => 'full',
+				'media_upload' => true,
+			])
+			->addImage('image', [
+				'label' => 'Obraz dekoracyjny',
 				'return_format' => 'array',
+				'preview_size' => 'thumbnail',
 			])
 			->endGroup()
 
-			/*--- TAB #2 ---*/
 			->addTab('Kafelki', ['placement' => 'top'])
-			->addRepeater('r_cards', [
+			->addRepeater('r_gains', [
 				'label' => 'Kafelki',
-				'layout' => 'table', // 'row', 'block', albo 'table'
-				'min' => 1,
-				'button_label' => 'Dodaj kafelek'
+				'layout' => 'table',
+				'button_label' => 'Dodaj kafelek',
 			])
-			->addImage('image', [
-				'label' => 'Obraz',
-				'return_format' => 'array', // lub 'url', lub 'id'
-				'preview_size' => 'thumbnail',
-			])
-			->addText('title', [
+			->addText('header', [
 				'label' => 'Nagłówek',
 			])
-			->addTextarea('text', [
-				'label' => 'Opis',
+			->addWysiwyg('text', [
+				'label' => 'Treść',
+				'tabs' => 'all',
+				'toolbar' => 'full',
+				'media_upload' => true,
 			])
 			->endRepeater()
-
-			/*--- USTAWIENIA BLOKU ---*/
 
 			->addTab('Ustawienia bloku', ['placement' => 'top'])
 			->addText('section_id', [
@@ -97,29 +96,29 @@ class Cards extends Block
 				'ui_off_text' => 'Nie',
 			])
 			->addSelect('background', [
-                'label' => 'Kolor tła',
-                'choices' => [
-                    'none' => 'Brak (domyślne)',
-                    'section-white' => 'Białe',
-                    'section-light' => 'Jasne',
-                    'section-gray' => 'Szare',
-                    'section-brand' => 'Marki',
-                    'section-gradient' => 'Gradient',
-                    'section-dark' => 'Ciemne',
-                ],
-                'default_value' => 'section-dark',
-                'ui' => 0, // Ulepszony interfejs
-                'allow_null' => 0,
-            ]);
+				'label' => 'Kolor tła',
+				'choices' => [
+					'none' => 'Brak (domyślne)',
+					'section-white' => 'Białe',
+					'section-light' => 'Jasne',
+					'section-gray' => 'Szare',
+					'section-brand' => 'Marki',
+					'section-gradient' => 'Gradient',
+					'section-dark' => 'Ciemne',
+				],
+				'default_value' => 'section-white',
+				'ui' => 0,
+				'allow_null' => 0,
+			]);
 
-		return $cards;
+		return $gains;
 	}
 
 	public function with(): array
 	{
 		$fields = [
-			'g_cards' => get_field('g_cards'),
-			'r_cards' => get_field('r_cards'),
+			'g_gains' => get_field('g_gains') ?: [],
+			'r_gains' => get_field('r_gains') ?: [],
 
 			'section_id' => get_field('section_id'),
 			'section_class' => get_field('section_class'),

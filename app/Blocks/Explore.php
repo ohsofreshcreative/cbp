@@ -6,64 +6,68 @@ use Log1x\AcfComposer\Block;
 use StoutLogic\AcfBuilder\FieldsBuilder;
 use App\Support\SectionClasses;
 
-class Cards extends Block
+class Explore extends Block
 {
-	public $name = 'Kafelki z obrazem';
-	public $description = 'cards';
-	public $slug = 'cards';
+	public $name = 'Explore';
+	public $description = 'explore';
+	public $slug = 'explore';
 	public $category = 'formatting';
-	public $icon = 'ellipsis';
-	public $keywords = ['cards', 'kafelki'];
+	public $icon = 'id';
+	public $keywords = ['explore', 'ekspertka', 'kwalifikacje'];
 	public $mode = 'edit';
 	public $supports = [
 		'align' => false,
 		'mode' => true,
 		'jsx' => true,
+		'anchor' => true,
+		'customClassName' => true,
 	];
 
 	public function fields()
 	{
-		$cards = new FieldsBuilder('cards');
+		$explore = new FieldsBuilder('explore');
 
-		$cards
-			->setLocation('block', '==', 'acf/cards') // ważne!
-			/*--- TAB #1 ---*/
-			->addTab('Treści', ['placement' => 'top'])
-			->addGroup('g_cards', ['label' => ''])
-			->addText('header', ['label' => 'Nagłówek'])
-			->addTextarea('text', [
-				'label' => 'Opis',
-				'rows' => 4,
-				'new_lines' => 'br',
+		$explore
+			->setLocation('block', '==', 'acf/explore')
+			->addTab('Elementy', ['placement' => 'top'])
+			->addGroup('g_explore', ['label' => ''])
+			->addText('label', [
+				'label' => 'Etykieta',
 			])
-			->addLink('button', [
-				'label' => 'Przycisk',
-				'return_format' => 'array',
-			])
-			->endGroup()
-
-			/*--- TAB #2 ---*/
-			->addTab('Kafelki', ['placement' => 'top'])
-			->addRepeater('r_cards', [
-				'label' => 'Kafelki',
-				'layout' => 'table', // 'row', 'block', albo 'table'
-				'min' => 1,
-				'button_label' => 'Dodaj kafelek'
+			->addText('header', [
+				'label' => 'Nagłówek',
 			])
 			->addImage('image', [
 				'label' => 'Obraz',
-				'return_format' => 'array', // lub 'url', lub 'id'
+				'return_format' => 'array',
 				'preview_size' => 'thumbnail',
 			])
-			->addText('title', [
+			->addText('caption', [
+				'label' => 'Podpis zdjęcia',
+			])
+			->endGroup()
+
+			->addTab('Kafelki', ['placement' => 'top'])
+			->addRepeater('r_explore', [
+				'label' => 'Kafelki',
+				'layout' => 'table',
+				'button_label' => 'Dodaj kafelek',
+			])
+			->addImage('image', [
+				'label' => 'Obraz',
+				'return_format' => 'array',
+				'preview_size' => 'thumbnail',
+			])
+			->addText('header', [
 				'label' => 'Nagłówek',
 			])
-			->addTextarea('text', [
-				'label' => 'Opis',
+			->addWysiwyg('text', [
+				'label' => 'Treść',
+				'tabs' => 'all',
+				'toolbar' => 'full',
+				'media_upload' => true,
 			])
 			->endRepeater()
-
-			/*--- USTAWIENIA BLOKU ---*/
 
 			->addTab('Ustawienia bloku', ['placement' => 'top'])
 			->addText('section_id', [
@@ -97,29 +101,29 @@ class Cards extends Block
 				'ui_off_text' => 'Nie',
 			])
 			->addSelect('background', [
-                'label' => 'Kolor tła',
-                'choices' => [
-                    'none' => 'Brak (domyślne)',
-                    'section-white' => 'Białe',
-                    'section-light' => 'Jasne',
-                    'section-gray' => 'Szare',
-                    'section-brand' => 'Marki',
-                    'section-gradient' => 'Gradient',
-                    'section-dark' => 'Ciemne',
-                ],
-                'default_value' => 'section-dark',
-                'ui' => 0, // Ulepszony interfejs
-                'allow_null' => 0,
-            ]);
+				'label' => 'Kolor tła',
+				'choices' => [
+					'none' => 'Brak (domyślne)',
+					'section-white' => 'Białe',
+					'section-light' => 'Jasne',
+					'section-gray' => 'Szare',
+					'section-brand' => 'Marki',
+					'section-gradient' => 'Gradient',
+					'section-dark' => 'Ciemne',
+				],
+				'default_value' => 'section-dark',
+				'ui' => 0,
+				'allow_null' => 0,
+			]);
 
-		return $cards;
+		return $explore;
 	}
 
 	public function with(): array
 	{
 		$fields = [
-			'g_cards' => get_field('g_cards'),
-			'r_cards' => get_field('r_cards'),
+			'g_explore' => get_field('g_explore') ?: [],
+			'r_explore' => get_field('r_explore') ?: [],
 
 			'section_id' => get_field('section_id'),
 			'section_class' => get_field('section_class'),
