@@ -1,6 +1,7 @@
 <?php
 
 require __DIR__ . '/../../app/Support/PageImportException.php';
+require __DIR__ . '/../../app/Support/PageImportPayload.php';
 require __DIR__ . '/../../app/Support/PageImportAssets.php';
 require __DIR__ . '/../../app/Support/AcfBlockSerializer.php';
 require __DIR__ . '/../../app/Support/PostImportPayload.php';

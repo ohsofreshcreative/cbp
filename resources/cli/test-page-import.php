@@ -100,6 +100,9 @@ expect_exception(fn () => PageImportPayload::fromJson('{'), 'Niepoprawny JSON', 
 expect_exception(fn () => PageImportPayload::fromArray(['blocks' => []]), 'title', 'brak title');
 expect_exception(fn () => PageImportPayload::fromArray(['title' => 'X', 'status' => 'live', 'blocks' => []]), 'Nieobsługiwany status', 'zły status');
 expect_exception(fn () => PageImportPayload::fromArray(['title' => 'X', 'blocks' => [['block' => 'doesnotexist', 'data' => []]]]), 'nie istnieje', 'nieznany blok');
+expect_true(is_readable(PageImportPayload::blockClassPath('hero')), 'Hero.php jest w app/Blocks na cursor-work');
+expect_true(is_readable(PageImportPayload::blockClassPath('banner')), 'Banner.php jest w app/Blocks');
+expect_true(is_readable(PageImportPayload::blockClassPath('action')), 'Action.php jest w app/Blocks');
 expect_exception(fn () => PageImportPayload::fromArray(['title' => 'X', 'blocks' => [['block' => 'hero-banner', 'data' => []]]]), 'niepoprawny', 'slug z myślnikiem');
 expect_exception(fn () => PageImportPayload::fromArray(['title' => 'X', 'blocks' => [['block' => 'hero', 'data' => ['a', 'b']]]]), 'obiektem', 'data jako lista');
 expect_exception(fn () => PageImportPayload::fromFile('/tmp/missing-osf-page.json'), 'Nie można odczytać', 'brak pliku');

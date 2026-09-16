@@ -389,16 +389,7 @@ class PostImportPayload
 				throw new PageImportException(sprintf('%s.block "%s" jest niepoprawny.', $label, $item['block']));
 			}
 
-			$studly = str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $slug)));
-			$file = dirname(__DIR__) . '/Blocks/' . $studly . '.php';
-
-			if (!is_readable($file)) {
-				throw new PageImportException(sprintf(
-					'%s.block "%s" nie istnieje w app/Blocks.',
-					$label,
-					$slug
-				));
-			}
+			PageImportPayload::assertBlockFile($slug, $label);
 
 			$data = $item['data'] ?? [];
 

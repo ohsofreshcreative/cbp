@@ -207,7 +207,7 @@ class PageImportPayload
 			));
 		}
 
-		self::assertKnownBlock($slug, $label);
+		self::assertBlockFile($slug, $label);
 
 		$data = $item['data'] ?? [];
 
@@ -226,17 +226,36 @@ class PageImportPayload
 		];
 	}
 
-	private static function assertKnownBlock(string $slug, string $label): void
+	public static function blockClassPath(string $slug): string
 	{
 		$studly = str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $slug)));
-		$file = dirname(__DIR__) . '/Blocks/' . $studly . '.php';
+
+		return dirname(__DIR__) . '/Blocks/' . $studly . '.php';
+	}
+
+	public static function assertBlockFile(string $slug, string $label): void
+	{
+		$file = self::blockClassPath($slug);
 
 		if (!is_readable($file)) {
+			$dir = dirname($file);
+			$phpCount = is_dir($dir) ? count(glob($dir . '/*.php') ?: []) : 0;
+			$hint = '';
+
+			if ($phpCount < 5) {
+				$hint = sprintf(
+					' Katalog %s ma %d plików PHP — na cursor-work powinno ich być ~40 (Hero, Banner, Action, …). W katalogu motywu: git fetch origin && git checkout origin/cursor-work -- app/Blocks resources/views/blocks',
+					$dir,
+					$phpCount
+				);
+			}
+
 			throw new PageImportException(sprintf(
-				'%s.block "%s" nie istnieje w app/Blocks. Oczekiwano pliku %s.',
+				'%s.block "%s" nie istnieje w %s.%s',
 				$label,
 				$slug,
-				'app/Blocks/' . $studly . '.php'
+				$file,
+				$hint
 			));
 		}
 
@@ -247,7 +266,7 @@ class PageImportPayload
 				'%s.block "%s" nie zgadza się z $slug w %s.',
 				$label,
 				$slug,
-				'app/Blocks/' . $studly . '.php'
+				'app/Blocks/' . basename($file)
 			));
 		}
 	}
