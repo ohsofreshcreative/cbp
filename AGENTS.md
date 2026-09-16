@@ -34,12 +34,32 @@ Ramki Figmy `Blog` i `Blog-single` (też `Blog - single`, cała podstrona `Blogs
 
 | Ramka Figma | Co to jest w WP | Pliki, które masz zmienić |
 |---|---|---|
-| `Blog` | listing wpisów: `is_home()` (Ustawienia → Czytanie → strona wpisów) oraz `is_category()` | `resources/views/home.blade.php` (główny listing; **utwórz**, gdy brakuje), `resources/views/category.blade.php`, kafelki `resources/views/partials/content.blade.php`. `index.blade.php` tylko jako fallback pętli, nie jako „strona Blog”. |
+| `Blog` | listing wpisów: `is_home()` (Ustawienia → Czytanie → strona wpisów) oraz `is_category()` | `resources/views/home.blade.php` (główny listing; **utwórz**, gdy brakuje), `resources/views/category.blade.php`, kafelki `resources/views/partials/content-post.blade.php`. `partials/content.blade.php` zostaw dla wyszukiwarki. `index.blade.php` tylko jako fallback pętli, nie jako „strona Blog”. |
 | `Blog-single` / `Blog - single` | pojedynczy wpis (`post`, `is_single()`) | `resources/views/single.blade.php`, `resources/views/partials/content-single.blade.php` |
 
 Blok ACF `posts` (`app/Blocks/Posts.php`, widok `resources/views/blocks/posts.php`) to lista wpisów **wpleciona w inną stronę** (np. homepage). Nie zastępuje widoku bloga.
 
-Na tych widokach pomiń chrome (`menu`, `header`, `footer`) tak samo jak na Pages. CTA bierz z opcji motywu (`g_octa` / blok opcji), wzorzec: `category.blade.php` — nie importuj bloku `cta` jako osobnej strony.
+Na tych widokach pomiń chrome (`menu`, `header`, `footer`) tak samo jak na Pages. CTA bierz z opcji motywu (`g_octa` / blok opcji) przez **jeden** include:
+
+```
+@include('partials.cta')
+```
+
+Partial `resources/views/partials/cta.blade.php` to ten sam snippet (`get_field('g_octa', 'option')` + `@include('blocks.cta')`). **Nie dodawaj drugiego CTA**, gdy widok już ma `@include('partials.cta')` albo ręczny blok:
+
+```
+@php
+$g_octa = get_field('g_octa', 'option');
+$form = true;
+$sectionClass = '-smt';
+$section_id = '';
+$section_class = '';
+$background = 'none';
+@endphp
+@include('blocks.cta')
+```
+
+Nie importuj bloku `cta` jako osobnej strony Blog / Blog-single.
 
 
 Project overview
@@ -70,7 +90,9 @@ Theme root: `wp-content/themes/bergermann` (Sage 11 + Acorn 5, PHP >= 8.2, names
 | `resources/views/blocks/*.blade.php` | widoki bloków (nazwa = `$slug`) |
 | `resources/views/home.blade.php`, `category.blade.php` | listing wpisów (`is_home` / kategoria) — **nie** Page |
 | `resources/views/single.blade.php`, `partials/content-single.blade.php` | pojedynczy wpis — **nie** Page |
-| `resources/views/partials/content.blade.php` | kafelek wpisu na listingu |
+| `resources/views/partials/content-post.blade.php` | kafelek wpisu na Blogu (listing + related) |
+| `resources/views/partials/cta.blade.php` | globalne CTA z opcji — include raz, na dole widoku |
+| `resources/views/partials/content.blade.php` | kafelek wpisu w wyszukiwarce |
 | `resources/views/components/*.blade.php` | `x-button`, `x-picture`, `x-alert`, `x-icon.arrow-up` |
 | `resources/views/sections|partials|layouts` | header/footer/sidebar, partiale, layout `app` |
 | `resources/css/variables.scss` | **cały design system** (~1500 linii) |
