@@ -1,0 +1,47 @@
+{
+  "title": "Blog - single",
+  "slug": "blog-single",
+  "status": "draft",
+  "blocks": [
+    {
+      "block": "hero",
+      "data": {
+        "g_hero": {
+          "header": "<p>Czy wariograf wykrywa kłamstwo? Co naprawdę mierzy poligraf?</p>",
+          "text": "<p>Autor: Katarzyna Jóźwiak. Opublikowano: 12 czerwca 2026.</p>"
+        },
+        "background": "none",
+        "nomt": true
+      }
+    },
+    {
+      "block": "content",
+      "data": {
+        "g_content": {
+          "header": "Czy wariograf naprawdę wykrywa kłamstwo?",
+          "text": "<p>Wariograf często przedstawiany jest jako urządzenie, które potrafi jednoznacznie wskazać, czy ktoś mówi prawdę. Rzeczywistość jest bardziej złożona. Poligraf rejestruje określone reakcje fizjologiczne organizmu, a ich analiza wymaga odpowiednio przygotowanej procedury i wiedzy eksperta.</p><p>Najważniejszy mit warto wyjaśnić już na początku.</p><p>Poligraf nie posiada funkcji, która pozwala urządzeniu „rozpoznać kłamstwo”. Aparatura rejestruje reakcje fizjologiczne pojawiające się podczas odpowiedzi na określone pytania. Dlatego bardziej precyzyjne jest mówienie o badaniu poligraficznym niż o „maszynie wykrywającej kłamstwa”.</p><p>To właśnie ekspert analizuje zarejestrowane dane w kontekście zastosowanej procedury i określonego celu badania.</p>"
+        },
+        "background": "section-white"
+      }
+    },
+    {
+      "block": "posts",
+      "data": {
+        "posts_settings": {
+          "show_image": true,
+          "show_excerpt": false
+        }
+      }
+    },
+    {
+      "block": "cta",
+      "data": {
+        "form": true,
+        "content": true,
+        "header": "Masz sprawę wymagającą <strong>specjalistycznej</strong> analizy?",
+        "txt": "<p>Opowiedz nam o sytuacji. Podczas pierwszej konsultacji określimy zakres problemu, odpowiemy na pytania i ocenimy, czy badanie poligraficzne może być właściwym narzędziem.</p>",
+        "background": "none"
+      }
+    }
+  ]
+}

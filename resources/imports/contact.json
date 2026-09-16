@@ -1,0 +1,24 @@
+{
+  "title": "Contact",
+  "slug": "contact",
+  "status": "draft",
+  "blocks": [
+    {
+      "block": "contact",
+      "data": {
+        "g_contact_1": {
+          "header": "Masz sprawę wymagającą specjalistycznej analizy?",
+          "phone": "+48 505 636 646",
+          "mail": "centrumbadanpoligraficznych@gmail.com",
+          "address": "ul. Mrówcza 243 lok 107, 04-697 Warszawa"
+        },
+        "g_contact_2": {
+          "title": "Wyślij zgłoszenie",
+          "shortcode": "[contact-form-7 id=\"f12c470\" title=\"Contact form 1\"]"
+        },
+        "background": "none",
+        "nomt": true
+      }
+    }
+  ]
+}

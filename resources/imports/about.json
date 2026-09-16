@@ -1,0 +1,126 @@
+{
+  "title": "About",
+  "slug": "about",
+  "status": "draft",
+  "blocks": [
+    {
+      "block": "hero",
+      "data": {
+        "g_hero": {
+          "header": "<p>Wiedza, doświadczenie i rzetelność w służbie prawdy</p>",
+          "text": "<p>Centrum Badań Poligraficznych specjalizuje się w profesjonalnych badaniach poligraficznych i ekspertyzach wykonywanych dla klientów indywidualnych, przedsiębiorstw oraz instytucji.</p>",
+          "button1": {
+            "title": "Skontaktuj się z ekspertem",
+            "url": "/kontakt",
+            "target": ""
+          },
+          "image": {
+            "src": "resources/imports/assets/b2b-hero.png",
+            "alt": "Wiedza, doświadczenie i rzetelność w służbie prawdy"
+          },
+          "button2": {
+            "title": "Poznaj nasze usługi",
+            "url": "/offer",
+            "target": ""
+          }
+        },
+        "background": "none",
+        "nomt": true
+      }
+    },
+    {
+      "block": "problem",
+      "data": {
+        "g_problem": {
+          "header": "Kim jesteśmy?"
+        },
+        "r_problem": [
+          {
+            "image": {
+              "src": "resources/imports/assets/b2b-problem-01.png",
+              "alt": "Centrum, w którym technologia spotyka się z doświadczeniem eksperta"
+            },
+            "header": "Centrum, w którym technologia spotyka się z doświadczeniem eksperta.",
+            "text": "<p>W Centrum Badań Poligraficznych koncentrujemy się na rzetelnym podejściu do każdej sprawy. Najpierw poznajemy jej kontekst i określamy, jakie informacje mają zostać zweryfikowane. Następnie przygotowujemy odpowiednią procedurę i przeprowadzamy badanie zgodnie z przyjętą metodyką.</p><p>Naszym celem nie jest potwierdzanie z góry założonej wersji wydarzeń. <strong>Naszym zadaniem jest przeprowadzenie rzetelnej i bezstronnej analizy.</strong></p>"
+          }
+        ],
+        "background": "section-white"
+      }
+    },
+    {
+      "block": "about",
+      "data": {
+        "g_about": {
+          "image": {
+            "src": "resources/imports/assets/about-portrait.png",
+            "alt": "mgr Katarzyna Jóźwiak"
+          },
+          "label": "Poznaj ekspertkę",
+          "header": "Doświadczenie i kwalifikacje",
+          "text": "<p>Biegła sądowa z zakresu badań poligraficznych przy Sądzie Okręgowym w Warszawie. Ponad 8 lat praktyki w badaniach poligraficznych. Członek stowarzyszenia American Polygraph Association oraz Polskiego Stowarzyszenia Poligraferów.</p>"
+        },
+        "background": "none"
+      }
+    },
+    {
+      "block": "values",
+      "data": {
+        "g_values": {
+          "header": "Nasze standardy",
+          "text": "<p>Każde badanie wymaga odpowiedniego przygotowania. Dlatego pracujemy według jasno określonych zasad, które pozwalają zachować spójność i rzetelność całego procesu.</p>",
+          "r_values": [
+            {
+              "icon": {
+                "src": "resources/imports/assets/values-bezstronnosc.svg",
+                "alt": "Bezstronność"
+              },
+              "header": "Bezstronność",
+              "opis": "Nie zakładamy wyniku badania przed jego rozpoczęciem. Analizujemy określony problem i dane uzyskane podczas procedury."
+            },
+            {
+              "icon": {
+                "src": "resources/imports/assets/values-poufnosc.svg",
+                "alt": "Pełna poufność"
+              },
+              "header": "Pełna poufność",
+              "opis": "Informacje dotyczące sprawy, osoby badanej i przebiegu współpracy traktujemy z zachowaniem najwyższej dyskrecji."
+            },
+            {
+              "icon": {
+                "src": "resources/imports/assets/values-podejscie.svg",
+                "alt": "Indywidualne podejście"
+              },
+              "header": "Indywidualne podejście",
+              "opis": "Nie korzystamy z jednego schematu dla każdej sprawy. Zakres badania i pytania są przygotowywane z uwzględnieniem jej konkretnego charakteru."
+            },
+            {
+              "icon": {
+                "src": "resources/imports/assets/values-apa.svg",
+                "alt": "Standardy"
+              },
+              "header": "Standardy",
+              "opis": "Badania prowadzone są z uwzględnieniem standardów American Polygraph Association."
+            }
+          ]
+        },
+        "background": "none"
+      }
+    },
+    {
+      "block": "reviews",
+      "data": {
+        "background": "none"
+      }
+    },
+    {
+      "block": "cta",
+      "data": {
+        "form": true,
+        "content": true,
+        "header": "Masz sprawę wymagającą <strong>specjalistycznej</strong> analizy?",
+        "txt": "<p>Opowiedz nam o sytuacji. Podczas pierwszej konsultacji określimy zakres problemu, odpowiemy na pytania i ocenimy, czy badanie poligraficzne może być właściwym narzędziem.</p>",
+        "background": "none"
+      }
+    }
+  ]
+}

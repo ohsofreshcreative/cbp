@@ -1,0 +1,42 @@
+{
+  "title": "Blog",
+  "slug": "blog",
+  "status": "draft",
+  "blocks": [
+    {
+      "block": "hero",
+      "data": {
+        "g_hero": {
+          "header": "<p>Wiedza, która pomaga podejmować <strong>świadome</strong> decyzje</p>",
+          "text": "<p>Poznaj odpowiedzi na najczęstsze pytania dotyczące badań poligraficznych, ich przebiegu, zastosowania oraz możliwości i ograniczeń.</p>",
+          "button1": {
+            "title": "Umów rozmowę",
+            "url": "/kontakt",
+            "target": ""
+          }
+        },
+        "background": "none",
+        "nomt": true
+      }
+    },
+    {
+      "block": "posts",
+      "data": {
+        "posts_settings": {
+          "show_image": true,
+          "show_excerpt": false
+        }
+      }
+    },
+    {
+      "block": "cta",
+      "data": {
+        "form": true,
+        "content": true,
+        "header": "Masz sprawę wymagającą <strong>specjalistycznej</strong> analizy?",
+        "txt": "<p>Opowiedz nam o sytuacji. Podczas pierwszej konsultacji określimy zakres problemu, odpowiemy na pytania i ocenimy, czy badanie poligraficzne może być właściwym narzędziem.</p>",
+        "background": "none"
+      }
+    }
+  ]
+}

@@ -1,0 +1,233 @@
+{
+  "title": "B2C",
+  "slug": "b2c",
+  "status": "draft",
+  "blocks": [
+    {
+      "block": "hero",
+      "data": {
+        "g_hero": {
+          "header": "<p>Masz wątpliwości, na które potrzebujesz rzetelnej odpowiedzi?</p>",
+          "text": "<p>W trudnych sytuacjach rodzinnych, partnerskich i prywatnych pomagamy uporządkować informacje i zweryfikować konkretne kwestie w sposób dyskretny, profesjonalny i bezstronny.</p>",
+          "button1": {
+            "title": "Umów poufną konsultację",
+            "url": "/kontakt",
+            "target": ""
+          },
+          "image": {
+            "src": "resources/imports/assets/b2c-hero.png",
+            "alt": "Masz wątpliwości, na które potrzebujesz rzetelnej odpowiedzi?"
+          },
+          "button2": {
+            "title": "Zobacz, jak wygląda badanie",
+            "url": "#proces",
+            "target": ""
+          }
+        },
+        "background": "none",
+        "nomt": true
+      }
+    },
+    {
+      "block": "problem",
+      "data": {
+        "g_problem": {
+          "header": "Twoja sytuacja"
+        },
+        "r_problem": [
+          {
+            "image": {
+              "src": "resources/imports/assets/b2c-problem.png",
+              "alt": "Nie musisz opierać ważnej decyzji wyłącznie na domysłach"
+            },
+            "header": "Nie musisz opierać ważnej decyzji wyłącznie na domysłach.",
+            "text": "<p>Podejrzenie niewierności, sprzeczne informacje, wzajemne oskarżenia czy niewyjaśnione zdarzenie mogą powodować ogromne napięcie. Czasami rozmowy nie wystarczają, a kolejne pytania prowadzą jedynie do większej niepewności.</p><p>Jeżeli potrzebujesz zweryfikować konkretną informację, pierwszym krokiem może być spokojna rozmowa z ekspertem.</p>"
+          }
+        ],
+        "background": "section-white"
+      }
+    },
+    {
+      "block": "solutions",
+      "data": {
+        "g_solutions": {
+          "header": "W jakich sprawach pomagamy?"
+        },
+        "r_solutions": [
+          {
+            "header": "Sprawy rodzinne i partnerskie",
+            "text": "<p>Badania dotyczące określonych kwestii związanych z relacją, wiernością i zaufaniem.</p>"
+          },
+          {
+            "header": "Weryfikacja lojalności",
+            "text": "<p>Dla osób, które chcą zweryfikować konkretne informacje dotyczące zachowania partnera.</p>"
+          },
+          {
+            "header": "Fałszywe oskarżenia",
+            "text": "<p>Wsparcie w sytuacjach, w których pojawiają się zarzuty lub sprzeczne wersje wydarzeń.</p>"
+          },
+          {
+            "header": "Kradzieże i konflikty prywatne",
+            "text": "<p>Badania dotyczące konkretnych zdarzeń, których przebieg lub okoliczności pozostają niewyjaśnione.</p>"
+          },
+          {
+            "header": "Sprawy cywilne",
+            "text": "<p>Możliwość konsultacji w sytuacjach, w których badanie może stanowić element szerszej analizy sprawy.</p>"
+          }
+        ],
+        "background": "section-dark"
+      }
+    },
+    {
+      "block": "action",
+      "data": {
+        "g_action": {
+          "image": {
+            "src": "resources/imports/assets/b2c-action.png",
+            "alt": "Nie wiesz czy badanie jest dla Ciebie"
+          },
+          "header": "Nie wiesz czy badanie jest dla <strong>Ciebie</strong>?",
+          "text": "<h3>Nie musisz wiedzieć, czy wariograf jest właściwym rozwiązaniem.</h3><p>Nie oczekujemy, że przed pierwszym kontaktem będziesz wiedzieć, jak wygląda badanie ani jakie pytania można zadać. Podczas <strong>poufnej konsultacji</strong> opowiesz nam o swojej sytuacji, a my wyjaśnimy możliwości i ograniczenia badania.</p>",
+          "button1": {
+            "title": "Porozmawiaj z ekspertem",
+            "url": "/kontakt",
+            "target": ""
+          }
+        },
+        "background": "none"
+      }
+    },
+    {
+      "block": "proces",
+      "data": {
+        "g_proces": {
+          "header": "Jak wygląda proces współpracy?"
+        },
+        "r_proces": [
+          {
+            "number": "01",
+            "title": "Konsultacja",
+            "txt": "<p>Pierwszym krokiem jest poufna rozmowa, podczas której poznajemy Twoją sytuację, odpowiadamy na pytania i oceniamy, czy badanie będzie odpowiednim rozwiązaniem.</p>"
+          },
+          {
+            "number": "02",
+            "title": "Przygotowanie pytań",
+            "txt": "<p>Wspólnie ustalamy zakres badania oraz precyzyjne pytania, aby były jednoznaczne, zrozumiałe i dostosowane do charakteru sprawy.</p>"
+          },
+          {
+            "number": "03",
+            "title": "Badanie",
+            "txt": "<p>Badanie odbywa się w komfortowych warunkach i prowadzone jest zgodnie z międzynarodowymi standardami przez certyfikowanego eksperta.</p>"
+          },
+          {
+            "number": "04",
+            "title": "Analiza",
+            "txt": "<p>Po zakończeniu badania wyniki są szczegółowo analizowane z uwzględnieniem wszystkich zarejestrowanych reakcji oraz przebiegu całego procesu.</p>"
+          },
+          {
+            "number": "05",
+            "title": "Wyniki",
+            "txt": "<p>Otrzymujesz rzetelne podsumowanie wyników wraz z ich interpretacją, które może stanowić wsparcie w dalszych decyzjach lub postępowaniu.</p>"
+          }
+        ],
+        "section_id": "proces",
+        "background": "section-dark"
+      }
+    },
+    {
+      "block": "values",
+      "data": {
+        "g_values": {
+          "label": "Nasze wartości",
+          "header": "Dlaczego Centrum Badań Poligraficznych?",
+          "text": "<p>Nasza działalność opiera się na kilku kluczowych filarach: profesjonalnych badaniach wariograficznych, wsparciu przedsiębiorstw i instytucji, obsłudze klientów indywidualnych, ekspertyzach i konsultacjach, bezpieczeństwie informacji oraz ciągłym rozwoju kompetencji i metod badawczych. Dzięki temu zapewniamy rzetelne, obiektywne i poufne usługi na najwyższym poziomie.</p>",
+          "r_values": [
+            {
+              "icon": {
+                "src": "resources/imports/assets/values-biegly.svg",
+                "alt": "Biegła sądowa"
+              },
+              "header": "Biegła sądowa",
+              "opis": "Opinia przygotowana zgodnie z wymaganiami wymiaru sprawiedliwości."
+            },
+            {
+              "icon": {
+                "src": "resources/imports/assets/values-apa.svg",
+                "alt": "Metodyka APA"
+              },
+              "header": "Metodyka APA",
+              "opis": "Badania prowadzone są z uwzględnieniem standardów American Polygraph Association."
+            },
+            {
+              "icon": {
+                "src": "resources/imports/assets/values-poufnosc.svg",
+                "alt": "Pełna poufność"
+              },
+              "header": "Pełna poufność",
+              "opis": "Każda sprawa objęta jest pełną dyskrecją."
+            },
+            {
+              "icon": {
+                "src": "resources/imports/assets/values-podejscie.svg",
+                "alt": "Empatyczne podejście"
+              },
+              "header": "Empatyczne podejście",
+              "opis": "Badanie prowadzone przez kobietę-eksperta."
+            },
+            {
+              "icon": {
+                "src": "resources/imports/assets/values-aparatura.svg",
+                "alt": "Nowoczesna aparatura"
+              },
+              "header": "Nowoczesna aparatura",
+              "opis": "Profesjonalny sprzęt wykorzystywany przez certyfikowanych specjalistów."
+            },
+            {
+              "icon": {
+                "src": "resources/imports/assets/values-bezstronnosc.svg",
+                "alt": "Bezstronność"
+              },
+              "header": "Bezstronność",
+              "opis": "Nie szukamy winnych. Weryfikujemy fakty."
+            }
+          ]
+        },
+        "background": "none"
+      }
+    },
+    {
+      "block": "faq",
+      "data": {
+        "g_faq": {
+          "label": "FAQ",
+          "header": "Najczęściej zadawane pytania"
+        },
+        "r_faq": [
+          {
+            "title": "Czy stres wpłynie na wynik"
+          },
+          {
+            "title": "Czy ktoś dowie się o moim badaniu?"
+          },
+          {
+            "title": "Czy badanie boli?"
+          },
+          {
+            "title": "Czy mogę odmówić udziału?"
+          }
+        ],
+        "background": "section-dark"
+      }
+    },
+    {
+      "block": "cta",
+      "data": {
+        "form": true,
+        "content": true,
+        "header": "Nie musisz mieć wszystkich odpowiedzi, żeby zrobić <strong>pierwszy</strong> krok.",
+        "txt": "<p>Opowiedz nam o swojej sytuacji podczas konsultacji. Wyjaśnimy, jak wygląda badanie, odpowiemy na Twoje pytania i wspólnie ocenimy, czy będzie ono odpowiednim rozwiązaniem.</p>",
+        "background": "none"
+      }
+    }
+  ]
+}

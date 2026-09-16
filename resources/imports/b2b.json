@@ -7,12 +7,17 @@
       "block": "hero",
       "data": {
         "g_hero": {
+          "header": "<p>Profesjonalne wsparcie w sprawach wymagających weryfikacji</p>",
+          "text": "<p>Badania poligraficzne i ekspertyzy dla przedsiębiorstw, kancelarii, sądów oraz organów ścigania.</p>",
+          "button1": {
+            "title": "Skontaktuj się z ekspertem",
+            "url": "/kontakt",
+            "target": ""
+          },
           "image": {
             "src": "resources/imports/assets/b2b-hero.png",
             "alt": "Profesjonalne wsparcie w sprawach wymagających weryfikacji"
           },
-          "header": "<p>Profesjonalne wsparcie w sprawach wymagających weryfikacji</p>",
-          "text": "<p>Badania poligraficzne i ekspertyzy dla przedsiębiorstw, kancelarii, sądów oraz organów ścigania.</p>",
           "badges": [
             {
               "icon": {
@@ -28,12 +33,7 @@
               },
               "text": "Członek American Polygraph Association"
             }
-          ],
-          "button1": {
-            "title": "Skontaktuj się z ekspertem",
-            "url": "/kontakt",
-            "target": ""
-          }
+          ]
         },
         "background": "none",
         "nomt": true
@@ -83,16 +83,6 @@
           }
         ],
         "background": "section-dark"
-      }
-    },
-    {
-      "block": "offers",
-      "data": {
-        "g_offers": {
-          "header": "Oferta",
-          "link_label": "Sprawdź"
-        },
-        "background": "section-white"
       }
     },
     {
@@ -164,7 +154,7 @@
           "r_values": [
             {
               "icon": {
-                "src": "resources/imports/assets/b2b-values-biegly.svg",
+                "src": "resources/imports/assets/values-biegly.svg",
                 "alt": "Biegła sądowa"
               },
               "header": "Biegła sądowa",
@@ -172,7 +162,7 @@
             },
             {
               "icon": {
-                "src": "resources/imports/assets/b2b-values-apa.svg",
+                "src": "resources/imports/assets/values-apa.svg",
                 "alt": "Metodyka APA"
               },
               "header": "Metodyka APA",
@@ -180,7 +170,7 @@
             },
             {
               "icon": {
-                "src": "resources/imports/assets/b2b-values-poufnosc.svg",
+                "src": "resources/imports/assets/values-poufnosc.svg",
                 "alt": "Pełna poufność"
               },
               "header": "Pełna poufność",
@@ -188,15 +178,15 @@
             },
             {
               "icon": {
-                "src": "resources/imports/assets/b2b-values-podejscie.svg",
-                "alt": "Indywiudalne podejście"
+                "src": "resources/imports/assets/values-podejscie.svg",
+                "alt": "Indywidualne podejście"
               },
-              "header": "Indywiudalne podejście",
+              "header": "Indywidualne podejście",
               "opis": "Każda sprawa jest analizowana osobno, zanim zaproponujemy konkretny zakres badania."
             },
             {
               "icon": {
-                "src": "resources/imports/assets/b2b-values-aparatura.svg",
+                "src": "resources/imports/assets/values-aparatura.svg",
                 "alt": "Nowoczesna aparatura"
               },
               "header": "Nowoczesna aparatura",
@@ -204,7 +194,7 @@
             },
             {
               "icon": {
-                "src": "resources/imports/assets/b2b-values-bezstronnosc.svg",
+                "src": "resources/imports/assets/values-bezstronnosc.svg",
                 "alt": "Bezstronność"
               },
               "header": "Bezstronność",
