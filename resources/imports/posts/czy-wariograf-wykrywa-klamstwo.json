@@ -1,0 +1,16 @@
+{
+  "title": "Czy wariograf wykrywa kłamstwo? Co naprawdę mierzy poligraf?",
+  "slug": "czy-wariograf-wykrywa-klamstwo",
+  "status": "draft",
+  "date": "2026-06-12",
+  "author": "Katarzyna Jóźwiak",
+  "categories": [
+    "Wiedza i metodologia"
+  ],
+  "excerpt": "Wariograf często przedstawiany jest jako urządzenie, które potrafi jednoznacznie wskazać, czy ktoś mówi prawdę. Rzeczywistość jest bardziej złożona. Poligraf rejestruje określone reakcje fizjologiczne organizmu, a ich analiza wymaga odpowiednio przygotowanej procedury i wiedzy eksperta.",
+  "featured_image": {
+    "src": "resources/imports/assets/post-wariograf.jpg",
+    "alt": "Badanie poligraficzne — czujniki na palcach dłoni"
+  },
+  "content_file": "czy-wariograf-wykrywa-klamstwo.html"
+}

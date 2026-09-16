@@ -85,5 +85,38 @@
 		h3 span {
 			color: #fff;
 		}
+
+		.post-metrics {
+			max-width: 624px;
+		}
+
+		.post-metrics__item {
+			border-top: 1px dashed var(--color-primary-dark, #aa8c2a);
+			padding-top: 16px;
+		}
+
+		.post-metrics__item:first-child {
+			border-top: 0;
+			padding-top: 0;
+		}
+
+		.post-metrics__title {
+			color: var(--color-primary-light, #ffd95f);
+			margin: 0;
+		}
+
+		.post-cta {
+			background: var(--color-primary);
+			color: #0d0d0d;
+			padding: 48px 56px;
+		}
+
+		.post-cta__title {
+			margin: 0;
+		}
+
+		.post-cta__btn {
+			margin: 0;
+		}
 	}
 }
