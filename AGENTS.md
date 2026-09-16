@@ -13,14 +13,15 @@ Kolejność jest sztywna — faz nie odwracaj. W jednym zadaniu z Figmy/screenem
 
 Faza 1 — bloki ACF albo szablony (najpierw, dla wszystkich wskazanych ramek):
 - Weź ramki z Figmy (link z `node-id`) albo screen.
-- Najpierw rozstrzygnij typ ramki (patrz „Szablony WP, nie Pages”). `Blog` i `Blog-single` to **nie** Pages — od razu edytuj Blade listingu / wpisu, nie składaj strony Gutenberg.
-- Dla prawdziwych Pages: zmapuj sekcje na istniejące bloki w `app/Blocks`. Reuse before creation.
+- Najpierw rozstrzygnij typ ramki (patrz „Szablony WP, nie Pages” oraz „Źródło danych: Options i CPT”). `Blog` i `Blog-single` to **nie** Pages — od razu edytuj Blade listingu / wpisu, nie składaj strony Gutenberg.
+- Dla prawdziwych Pages: zmapuj sekcje na istniejące bloki w `app/Blocks`. Reuse before creation. Jeśli blok już czyta z Options albo CPT — nie twórz drugiej strony opcji ani repeatera z kafelkami w JSON strony.
 - Brakujące bloki stwórz według anatomii ACF w tym pliku. Trigger: zwykła prośba + link Figma lub screen. Nie wymagaj skilla ani `/nowy-blok`.
 - Nazwę nowego bloku bierz z nazwy warstwy/ramki sekcji w Figmie (patrz „Nazwa bloku z Figmy”). Jeśli użytkownik poda nazwę w prompcie, ta wygrywa.
 - Nie pisz JSON-a importu, zanim bloki potrzebne na tych podstronach są w motywie. Dla Blog / Blog-single JSON-a **strony** nie pisz wcale — treść artykułu idzie do JSON-a wpisu (faza 2).
 
 Faza 2 — treść (automatycznie po fazie 1, ten sam agent / ta sama sesja):
 - Tylko Pages: JSON `resources/imports/<slug>.json` (tytuł, slug, status `draft`, bloki ACF, dane, obrazy) + assety w `resources/imports/assets/`.
+- Bloki z Options / CPT: w JSON strony tylko pola lokalne (tło, nagłówek listingu, override CTA). Kafelki opinii, certyfikatów, logotypów i ofert **nie** idą do JSON strony — patrz „Źródło danych: Options i CPT”.
 - Zdjęcia (hero, problem, about, action, kafelki) zapisuj jako **JPG**, nie PNG. Z Figmy: `download_assets` z `defaultFormat: "jpg"` na węźle **samego zdjęcia** (prostokąt fill), nie na całej ramce z menu. Jeśli fill wraca jako PNG — skonwertuj do JPG zanim zapiszesz do `resources/imports/assets/`. Ikony i logotypy zostają SVG.
 - Każda podstrona ma własne pliki (`about-hero.jpg`, nie `b2b-hero.png`), nawet gdy Figma współdzieli fill — inaczej w JSON-ie i w bibliotece mediów WP ląduje cudze zdjęcie.
 - Blog / Blog-single: **nie** twórz `blog.json` / `blog-single.json` i **nie** dopisuj ich do `wp osf page import`. Dopracuj szablony Blade i partiale. Copy artykułu zapisz jako **wpis**: `resources/imports/posts/<slug>.json` + HTML + miniaturka JPG. Dolne CTA strony: `@include('partials.cta')`. Żółte CTA w środku artykułu to blok ACF `action` (`CTA - Wpis`) przez `embeds` + znacznik `<!-- osf:embed:action -->` w HTML — nie twardy HTML w treści.
@@ -75,6 +76,48 @@ Nie wymyślaj sekcji, których nie ma w body ramki (spis treści w Figmie bywa d
 
 Lokalnie: `wp osf post import resources/imports/posts/<slug>.json`
 
+Źródło danych: Options i CPT
+
+Nawias na końcu nazwy ramki Figmy to znacznik źródła, nie część sluga ani nazwy bloku.
+Przed normalizacją warstwy zetnij: `(Options)`, `(CPT)`, `(CPT: slug)`.
+
+| Miejsce | Przykład | Znaczenie |
+|---|---|---|
+| Główna ramka podstrony | `Offer-single (CPT: offer)` | całość = wpis CPT, nie Page |
+| Sekcja na stronie | `Offers (CPT: offer)` | blok na Page, kafelki z CPT |
+| Sekcja na stronie | `Reviews (Options)` | blok na Page, treść z Options |
+
+Bez nawiasu i tak honoruj mapę poniżej. Samo istnienie strony Options albo query CPT w `with()` wygrywa nad copy z Figmy w JSON strony.
+
+Istniejące strony Options — **nie twórz drugich**
+
+Te strony już są. Blok tylko je wyświetla. Inny układ w Figmie = zmiana **Blade/SCSS istniejącego bloku**, nie nowa Options i nie `reviews2` / `cta2`.
+
+| Kokpit | Plik | slug | Pole | Blok ACF (`$slug`) | JSON strony (Page import) |
+|---|---|---|---|---|---|
+| Wezwanie do działania | `app/Options/OCta.php` (`Octa`) | `octa` | `g_octa` | `cta` | lokalne: `form`, `content`, opcjonalny override `header` / `txt`, tło. Nie wklejaj do JSON strony image / benefits / phone / shortcode z Options. |
+| Opinie | `app/Options/OReviews.php` (`Oreviews`) | `oreviews` | `header`, `reviews_rating`, `reviews_google_url`, `r_reviews` | `reviews` | zwykle samo tło |
+| Certyfikaty i uprawnienia | `app/Options/OCertificates.php` (`OCertificates`) | `ocertificates` | `g_certificates` | `certificates` | zwykle samo tło |
+| Logotypy partnerów | `app/Options/OLogos.php` (`OLogos`) | `ologos` | `g_logos` | `logos` | zwykle samo tło |
+
+`theme-settings` (`app/Fields/ThemeSettings.php`) to logo i dane kontaktowe (View Composer `App`), nie blok sekcji.
+
+Gdy Options już jest, a Figma ma inny layout tej sekcji:
+- zmień widok istniejącego bloku (`resources/views/blocks/cta.blade.php`, `reviews.blade.php`, `certificates.blade.php`, `logos.blade.php`) i ewentualnie jego SCSS,
+- **nie** twórz drugiej strony Options ani drugiego bloku,
+- **nie** przenoś kafelków z Options do pól bloku / repeatera w JSON strony,
+- treść (opinie, certyfikaty, logotypy, bazowe CTA) zostaje w Kokpicie na stronie Options.
+
+CTA jest hybrydą: treść bazowa z `g_octa` (Options). Na stronie można nadpisać `header` / `txt`, gdy `content` = true, oraz przełączyć `form`. Dolne CTA na Blogu: `@include('partials.cta')`, nie drugi import bloku.
+
+Istniejące CPT — listing z query, nie repeater
+
+| CPT | rewrite | Taksonomia | Pola ACF | Blok listingu |
+|---|---|---|---|---|
+| `offer` | `oferta` | `offer_category` (`kategoria-oferty`) | `app/Fields/OfferFields.php` (`offer_icon`) | `offers` — `get_posts` opublikowanych wpisów; w JSON strony tylko `header`, `link_label`, opcjonalnie `offer_category` |
+
+Ramka `Offer-single (CPT: offer)` = szablon single + JSON wpisu CPT, nie `offer-single.json` jako Page.
+Importer CPT (`wp osf offer import`) jeszcze nie istnieje — nie udawaj kafelków ofert w repeaterze bloku `offers`.
 
 Project overview
 
@@ -95,7 +138,7 @@ Theme root: `wp-content/themes/bergermann` (Sage 11 + Acorn 5, PHP >= 8.2, names
 | Ścieżka | Zawartość |
 |---|---|
 | `app/Blocks/*.php` | 35 bloków ACF Composer (`Log1x\AcfComposer\Block`) |
-| `app/Options/*.php` | strony opcji ACF (`OCta`, `OLogos`, `OReviews`) |
+| `app/Options/*.php` | strony opcji ACF (`OCta`, `OReviews`, `OCertificates`, `OLogos`) |
 | `app/Fields/*.php` | grupy pól (`ThemeSettings`, `OfferFields`, `PostCategory`) |
 | `app/Support/SectionClasses.php` | budowanie klas sekcji + lista teł |
 | `app/View/Composers/*.php` | View Composers (`App` działa na `*`) |
@@ -164,6 +207,7 @@ Nazwa bloku z Figmy
 3. Pytaj tylko gdy po pominięciu chrome i kontenerów nie zostaje żadna sensowna nazwa.
 
 Normalizacja warstwy → slug:
+- Najpierw zetnij znacznik źródła na końcu nazwy: `(Options)`, `(CPT)`, `(CPT: offer)` itd. `Reviews (Options)` → `reviews`, `Offers (CPT: offer)` → `offers`. Nawias nie wchodzi do sluga.
 - lowercase, wytnij spacje, myślniki i podkreślenia (`Why us` / `Why-Us` → `whyus`).
 - Jeśli po normalizacji slug albo oczywisty alias już istnieje w `app/Blocks` — **użyj istniejącego bloku**, nie twórz drugiego.
 - Aliasy warstw z pliku Figmy (Design / Devs): `Process` → `proces`, `FAQ` → `faq`, `CTA` / `cta-section` → `cta`, `Testimonials` → `reviews`, `Aboutv2` / `Aobut` → `about`, `Solution` → `content`, `Banner` → `banner` (Hero - Podstrona, nie homepage Hero), `Standard` → `cards`.
@@ -790,7 +834,9 @@ WordPress / WooCommerce — stan faktyczny
   plus `core/paragraph`, `core/heading`, `core/list`. Nowy blok core trzeba tam świadomie dopuścić.
 - Contact Form 7: `wpcf7_autop_or_not` wyłączone, custom tag `[subsidy_checkboxes]`.
 - Woo: wrappery `woocommerce_output_content_wrapper` są usunięte — layout robi motyw.
-- Opcje globalne: strona `theme-settings` (`App\Fields\ThemeSettings`) + strony `OCta`, `OLogos`, `OReviews`.
+- Opcje globalne: strona `theme-settings` (`App\Fields\ThemeSettings`) + strony Options
+  `OCta` (Wezwanie do działania), `OReviews` (Opinie), `OCertificates` (Certyfikaty), `OLogos` (Logotypy partnerów).
+  Bloki `cta` / `reviews` / `certificates` / `logos` czytają z tych stron — patrz „Źródło danych: Options i CPT”.
   Dane globalne (logo, dane kontaktowe) są wstrzykiwane do wszystkich widoków przez
   `App\View\Composers\App` — nie wołaj `get_field(..., 'option')` w Blade, jeśli dane już tam są.
 
