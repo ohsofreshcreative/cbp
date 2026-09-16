@@ -4,10 +4,10 @@
   "status": "draft",
   "blocks": [
     {
-      "block": "hero",
+      "block": "banner",
       "data": {
-        "g_hero": {
-          "header": "<p>Profesjonalne wsparcie w sprawach wymagających weryfikacji</p>",
+        "g_banner": {
+          "title": "Profesjonalne wsparcie w sprawach wymagających weryfikacji",
           "text": "<p>Badania poligraficzne i ekspertyzy dla przedsiębiorstw, kancelarii, sądów oraz organów ścigania.</p>",
           "button1": {
             "title": "Skontaktuj się z ekspertem",
@@ -18,22 +18,7 @@
             "src": "resources/imports/assets/b2b-hero.jpg",
             "alt": "Profesjonalne wsparcie w sprawach wymagających weryfikacji"
           },
-          "badges": [
-            {
-              "icon": {
-                "src": "resources/imports/assets/b2b-hero-badge-biegly.svg",
-                "alt": "Biegła Sądowa"
-              },
-              "text": "Biegła Sądowa"
-            },
-            {
-              "icon": {
-                "src": "resources/imports/assets/b2b-hero-badge-apa.svg",
-                "alt": "Członek American Polygraph Association"
-              },
-              "text": "Członek American Polygraph Association"
-            }
-          ]
+          "shape": false
         },
         "background": "none",
         "nomt": true
@@ -83,6 +68,36 @@
           }
         ],
         "background": "section-dark"
+      }
+    },
+    {
+      "block": "offers",
+      "data": {
+        "g_offers": {
+          "header": "Oferta",
+          "link_label": "Sprawdź"
+        },
+        "background": "section-white"
+      }
+    },
+    {
+      "block": "reach",
+      "data": {
+        "g_reach": {
+          "image": {
+            "src": "resources/imports/assets/b2b-reach.jpg",
+            "alt": "Nie każda sprawa wymaga badania."
+          },
+          "header": "<p>Nie każda sprawa wymaga badania.</p>",
+          "subheader": "Najpierw poznajemy sprawę. Dopiero potem proponujemy rozwiązanie.",
+          "text": "<p>Badanie poligraficzne nie jest uniwersalnym narzędziem odpowiednim dla każdej sytuacji. Dlatego każdą współpracę rozpoczynamy od analizy sprawy, określenia jej celu oraz oceny, czy badanie może dostarczyć wartościowych informacji.</p><p>Nie obiecujemy konkretnego wyniku. Pomagamy określić, czy badanie ma sens.</p>",
+          "button1": {
+            "title": "Skonsultuj sprawę",
+            "url": "/kontakt",
+            "target": ""
+          }
+        },
+        "background": "section-white"
       }
     },
     {

@@ -188,28 +188,34 @@
       }
     },
     {
-      "block": "faq",
+      "block": "certificates",
       "data": {
-        "g_faq": {
+        "background": "section-dark"
+      }
+    },
+    {
+      "block": "myth",
+      "data": {
+        "g_myth": {
           "header": "Obalamy mity",
-          "text": "<p>Wokół badań poligraficznych narosło wiele nieporozumień. Sprawdź, co jest faktem, a co jedynie popularnym mitem.</p>"
+          "text": "Wokół badań poligraficznych narosło wiele nieporozumień. Sprawdź, co jest faktem, a co jedynie popularnym mitem."
         },
-        "r_faq": [
+        "r_myth": [
           {
-            "title": "Wariograf wykrywa kłamstwa.",
-            "txt": "<p>Wariograf nie wykrywa kłamstw – rejestruje reakcje fizjologiczne organizmu, które są analizowane przez certyfikowanego eksperta w odniesieniu do konkretnych pytań.</p>"
+            "myth": "Wariograf wykrywa kłamstwa.",
+            "explanation": "Wariograf nie wykrywa kłamstw – rejestruje reakcje fizjologiczne organizmu, które są analizowane przez certyfikowanego eksperta w odniesieniu do konkretnych pytań."
           },
           {
-            "title": "Wariograf wykrywa kłamstwa.",
-            "txt": "<p>Wariograf nie wykrywa kłamstw – rejestruje reakcje fizjologiczne organizmu, które są analizowane przez certyfikowanego eksperta w odniesieniu do konkretnych pytań.</p>"
+            "myth": "Wariograf wykrywa kłamstwa.",
+            "explanation": "Wariograf nie wykrywa kłamstw – rejestruje reakcje fizjologiczne organizmu, które są analizowane przez certyfikowanego eksperta w odniesieniu do konkretnych pytań."
           },
           {
-            "title": "Wariograf wykrywa kłamstwa.",
-            "txt": "<p>Wariograf nie wykrywa kłamstw – rejestruje reakcje fizjologiczne organizmu, które są analizowane przez certyfikowanego eksperta w odniesieniu do konkretnych pytań.</p>"
+            "myth": "Wariograf wykrywa kłamstwa.",
+            "explanation": "Wariograf nie wykrywa kłamstw – rejestruje reakcje fizjologiczne organizmu, które są analizowane przez certyfikowanego eksperta w odniesieniu do konkretnych pytań."
           },
           {
-            "title": "Wariograf wykrywa kłamstwa.",
-            "txt": "<p>Wariograf nie wykrywa kłamstw – rejestruje reakcje fizjologiczne organizmu, które są analizowane przez certyfikowanego eksperta w odniesieniu do konkretnych pytań.</p>"
+            "myth": "Wariograf wykrywa kłamstwa.",
+            "explanation": "Wariograf nie wykrywa kłamstw – rejestruje reakcje fizjologiczne organizmu, które są analizowane przez certyfikowanego eksperta w odniesieniu do konkretnych pytań."
           }
         ],
         "background": "section-dark"

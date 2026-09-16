@@ -1,13 +1,13 @@
 {
-  "title": "Offer - single",
+  "title": "Offer -single",
   "slug": "offer-single",
   "status": "draft",
   "blocks": [
     {
-      "block": "hero",
+      "block": "banner",
       "data": {
-        "g_hero": {
-          "header": "<p>Ekspertyza poligraficzna na potrzeby postępowania</p>",
+        "g_banner": {
+          "title": "Ekspertyza poligraficzna na potrzeby postępowania",
           "text": "<p>Badanie poligraficzne prowadzone przez Biegłego Sądowego może stanowić element szerszej analizy sprawy, pomagając weryfikować określone informacje istotne dla prowadzonego postępowania.</p>",
           "button1": {
             "title": "Skonsultuj sprawę",
@@ -17,7 +17,8 @@
           "image": {
             "src": "resources/imports/assets/offer-single-hero.jpg",
             "alt": "Ekspertyza poligraficzna na potrzeby postępowania"
-          }
+          },
+          "shape": false
         },
         "background": "none",
         "nomt": true
@@ -101,99 +102,88 @@
       }
     },
     {
-      "block": "values",
+      "block": "gains",
       "data": {
-        "g_values": {
+        "g_gains": {
           "header": "Co daje specjalistyczna ekspertyza?",
           "text": "<p>Badanie poligraficzne nie zastępuje innych dowodów ani czynności procesowych. Może natomiast dostarczyć dodatkowych informacji, które pomagają w szerszej analizie określonego zagadnienia.</p>",
-          "r_values": [
-            {
-              "icon": {
-                "src": "resources/imports/assets/values-biegly.svg",
-                "alt": "Dodatkowa perspektywa"
-              },
-              "header": "Dodatkowa perspektywa",
-              "opis": "Ekspertyza pozwala uzupełnić analizę sprawy o wyniki specjalistycznego badania dotyczącego wcześniej określonych kwestii."
-            },
-            {
-              "icon": {
-                "src": "resources/imports/assets/values-apa.svg",
-                "alt": "Uporządkowanie informacji"
-              },
-              "header": "Uporządkowanie informacji",
-              "opis": "Precyzyjne określenie przedmiotu badania pozwala skoncentrować analizę na konkretnych faktach i zagadnieniach istotnych dla sprawy."
-            },
-            {
-              "icon": {
-                "src": "resources/imports/assets/values-poufnosc.svg",
-                "alt": "Niezależna analiza ekspercka"
-              },
-              "header": "Niezależna analiza ekspercka",
-              "opis": "Badanie prowadzone jest przez specjalistę posiadającego odpowiednie kwalifikacje i doświadczenie, z zachowaniem zasad bezstronności."
-            },
-            {
-              "icon": {
-                "src": "resources/imports/assets/values-aparatura.svg",
-                "alt": "Udokumentowany proces"
-              },
-              "header": "Udokumentowany proces",
-              "opis": "Przebieg badania, zastosowana metodologia oraz wyniki analizy są odpowiednio dokumentowane."
-            },
-            {
-              "icon": {
-                "src": "resources/imports/assets/values-bezstronnosc.svg",
-                "alt": "Wsparcie w podejmowaniu dalszych decyzji"
-              },
-              "header": "Wsparcie w podejmowaniu dalszych decyzji",
-              "opis": "Wyniki ekspertyzy mogą stanowić dodatkowy materiał wspierający analizę sprawy przez sąd, pełnomocnika, organ prowadzący postępowanie lub inny uprawniony podmiot."
-            }
-          ]
+          "image": {
+            "src": "resources/imports/assets/offer-single-gains.jpg",
+            "alt": ""
+          }
         },
-        "background": "none"
+        "r_gains": [
+          {
+            "header": "Dodatkowa perspektywa",
+            "text": "<p>Ekspertyza pozwala uzupełnić analizę sprawy o wyniki specjalistycznego badania dotyczącego wcześniej określonych kwestii.</p>"
+          },
+          {
+            "header": "Uporządkowanie informacji",
+            "text": "<p>Precyzyjne określenie przedmiotu badania pozwala skoncentrować analizę na konkretnych faktach i zagadnieniach istotnych dla sprawy.</p>"
+          },
+          {
+            "header": "Niezależna analiza ekspercka",
+            "text": "<p>Badanie prowadzone jest przez specjalistę posiadającego odpowiednie kwalifikacje i doświadczenie, z zachowaniem zasad bezstronności.</p>"
+          },
+          {
+            "header": "Udokumentowany proces",
+            "text": "<p>Przebieg badania, zastosowana metodologia oraz wyniki analizy są odpowiednio dokumentowane.</p>"
+          },
+          {
+            "header": "Wsparcie w podejmowaniu dalszych decyzji",
+            "text": "<p>Wyniki ekspertyzy mogą stanowić dodatkowy materiał wspierający analizę sprawy przez sąd, pełnomocnika, organ prowadzący postępowanie lub inny uprawniony podmiot.</p>"
+          }
+        ],
+        "background": "section-white"
       }
     },
     {
-      "block": "values",
+      "block": "tiles",
       "data": {
-        "g_values": {
+        "g_tiles": {
           "label": "Kompetencje eksperta",
           "header": "Ekspertyza wymaga więcej niż odpowiedniej aparatury",
-          "r_values": [
-            {
-              "icon": {
-                "src": "resources/imports/assets/values-biegly.svg",
-                "alt": "Biegła sądowa"
-              },
-              "header": "Biegła sądowa",
-              "opis": "Opinia przygotowana zgodnie z wymaganiami wymiaru sprawiedliwości."
-            },
-            {
-              "icon": {
-                "src": "resources/imports/assets/values-apa.svg",
-                "alt": "Standardy APA"
-              },
-              "header": "Standardy APA",
-              "opis": "Badania prowadzone są z uwzględnieniem standardów American Polygraph Association."
-            },
-            {
-              "icon": {
-                "src": "resources/imports/assets/values-poufnosc.svg",
-                "alt": "Pełna poufność"
-              },
-              "header": "Pełna poufność",
-              "opis": "Informacje dotyczące sprawy oraz dane przekazane podczas współpracy są traktowane z zachowaniem najwyższych standardów poufności."
-            },
-            {
-              "icon": {
-                "src": "resources/imports/assets/values-bezstronnosc.svg",
-                "alt": "Bezstronność"
-              },
-              "header": "Bezstronność",
-              "opis": "Każde badanie koncentruje się na określonym przedmiocie i nie zakłada z góry konkretnego wyniku."
-            }
-          ]
+          "image": {
+            "src": "resources/imports/assets/offer-single-tiles.jpg",
+            "alt": "mgr Katarzyna Jóźwiak"
+          },
+          "caption": "mgr Katarzyna Jóźwiak"
         },
-        "background": "none"
+        "r_tiles": [
+          {
+            "header": "Biegła sądowa",
+            "text": "<p>Opinia przygotowana zgodnie z wymaganiami wymiaru sprawiedliwości.</p>",
+            "icon": {
+              "src": "resources/imports/assets/tiles-biegly.svg",
+              "alt": "Biegła sądowa"
+            }
+          },
+          {
+            "header": "Standardy APA",
+            "text": "<p>Badania prowadzone są z uwzględnieniem standardów American Polygraph Association.</p>",
+            "icon": {
+              "src": "resources/imports/assets/tiles-apa.svg",
+              "alt": "Standardy APA"
+            }
+          },
+          {
+            "header": "Pełna poufność",
+            "text": "<p>Informacje dotyczące sprawy oraz dane przekazane podczas współpracy są traktowane z zachowaniem najwyższych standardów poufności.</p>",
+            "icon": {
+              "src": "resources/imports/assets/tiles-poufnosc.svg",
+              "alt": "Pełna poufność"
+            }
+          },
+          {
+            "header": "Bezstronność",
+            "text": "<p>Każde badanie koncentruje się na określonym przedmiocie i nie zakłada z góry konkretnego wyniku.</p>",
+            "icon": {
+              "src": "resources/imports/assets/tiles-bezstronnosc.svg",
+              "alt": "Bezstronność"
+            }
+          }
+        ],
+        "background": "section-dark"
       }
     },
     {

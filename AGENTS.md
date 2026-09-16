@@ -166,7 +166,8 @@ Nazwa bloku z Figmy
 Normalizacja warstwy → slug:
 - lowercase, wytnij spacje, myślniki i podkreślenia (`Why us` / `Why-Us` → `whyus`).
 - Jeśli po normalizacji slug albo oczywisty alias już istnieje w `app/Blocks` — **użyj istniejącego bloku**, nie twórz drugiego.
-- Aliasy warstw z pliku Figmy (Design): `Process` → `proces`, `FAQ` → `faq`, `CTA` / `cta-section` → `cta`, `Testimonials` → `reviews`, `Aboutv2` → `about`, `Solution` → `content`.
+- Aliasy warstw z pliku Figmy (Design / Devs): `Process` → `proces`, `FAQ` → `faq`, `CTA` / `cta-section` → `cta`, `Testimonials` → `reviews`, `Aboutv2` / `Aobut` → `about`, `Solution` → `content`, `Banner` → `banner` (Hero - Podstrona, nie homepage Hero), `Standard` → `cards`.
+- Nowe warstwy Devs bez aliasu (slug = nazwa warstwy): `Reach` → `reach`, `Explore` → `explore`, `Gains` → `gains`, `Tiles` → `tiles`.
 - `Blogs` jako **sekcja na stronie** (np. homepage) → blok `posts`. Cała ramka podstrony `Blog` / `Blog-single` to szablony WP, nie alias na blok i nie Page (patrz „Szablony WP, nie Pages”).
 - `Frame 460` i `fi_*` to nie nazwy bloków — pomiń, gdy puste. Żółte CTA we wpisie (`__cta`, „Masz więcej pytań dotyczących badania?”) → blok `action` (`CTA - Wpis`).
 - Nie używaj jako nazwy bloku: `Frame 123`, `Group`, `Rectangle`, `__wrapper`, warstw wewnętrznych ani copy z H1/H2.

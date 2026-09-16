@@ -4,25 +4,26 @@
   "status": "draft",
   "blocks": [
     {
-      "block": "hero",
+      "block": "banner",
       "data": {
-        "g_hero": {
-          "header": "<p>Masz wątpliwości, na które potrzebujesz rzetelnej odpowiedzi?</p>",
+        "g_banner": {
+          "title": "Masz wątpliwości, na które potrzebujesz rzetelnej odpowiedzi?",
           "text": "<p>W trudnych sytuacjach rodzinnych, partnerskich i prywatnych pomagamy uporządkować informacje i zweryfikować konkretne kwestie w sposób dyskretny, profesjonalny i bezstronny.</p>",
           "button1": {
             "title": "Umów poufną konsultację",
             "url": "/kontakt",
             "target": ""
           },
-          "image": {
-            "src": "resources/imports/assets/b2c-hero.jpg",
-            "alt": "Masz wątpliwości, na które potrzebujesz rzetelnej odpowiedzi?"
-          },
           "button2": {
             "title": "Zobacz, jak wygląda badanie",
             "url": "#proces",
             "target": ""
-          }
+          },
+          "image": {
+            "src": "resources/imports/assets/b2c-hero.jpg",
+            "alt": "Masz wątpliwości, na które potrzebujesz rzetelnej odpowiedzi?"
+          },
+          "shape": false
         },
         "background": "none",
         "nomt": true
@@ -79,10 +80,40 @@
       }
     },
     {
+      "block": "offers",
+      "data": {
+        "g_offers": {
+          "header": "Oferta",
+          "link_label": "Sprawdź"
+        },
+        "background": "section-white"
+      }
+    },
+    {
+      "block": "reach",
+      "data": {
+        "g_reach": {
+          "image": {
+            "src": "resources/imports/assets/b2c-reach.jpg",
+            "alt": "Nie wiesz czy badanie jest dla Ciebie?"
+          },
+          "header": "<p>Nie wiesz czy badanie jest dla <strong>Ciebie</strong>?</p>",
+          "subheader": "Nie musisz wiedzieć, czy wariograf jest właściwym rozwiązaniem.",
+          "text": "<p>Nie oczekujemy, że przed pierwszym kontaktem będziesz wiedzieć, jak wygląda badanie ani jakie pytania można zadać. Podczas <strong>poufnej konsultacji</strong> opowiesz nam o swojej sytuacji, a my wyjaśnimy możliwości i ograniczenia badania.</p>",
+          "button1": {
+            "title": "Porozmawiaj z ekspertem",
+            "url": "/kontakt",
+            "target": ""
+          }
+        },
+        "background": "section-white"
+      }
+    },
+    {
       "block": "proces",
       "data": {
         "g_proces": {
-          "header": "Jak wygląda proces współpracy?"
+          "header": "Jak przebiega badanie?"
         },
         "r_proces": [
           {

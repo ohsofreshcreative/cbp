@@ -4,13 +4,18 @@
   "status": "draft",
   "blocks": [
     {
-      "block": "hero",
+      "block": "banner",
       "data": {
-        "g_hero": {
-          "header": "<p>Profesjonalne badania i ekspertyzy, gdy liczy się prawda</p>",
+        "g_banner": {
+          "title": "Profesjonalne badania i ekspertyzy, gdy liczy się prawda",
           "text": "<p>Wspieramy klientów indywidualnych, przedsiębiorstwa oraz instytucje w sytuacjach wymagających rzetelnej i niezależnej oceny.</p>",
           "button1": {
             "title": "Umów konsultację",
+            "url": "/kontakt",
+            "target": ""
+          },
+          "button2": {
+            "title": "Porozmawiaj z ekspertem",
             "url": "/kontakt",
             "target": ""
           },
@@ -18,11 +23,7 @@
             "src": "resources/imports/assets/offer-hero.jpg",
             "alt": "Profesjonalne badania i ekspertyzy, gdy liczy się prawda"
           },
-          "button2": {
-            "title": "Porozmawiaj z ekspertem",
-            "url": "/kontakt",
-            "target": ""
-          }
+          "shape": false
         },
         "background": "none",
         "nomt": true
