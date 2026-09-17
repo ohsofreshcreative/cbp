@@ -1,66 +1,53 @@
 .b-faq {
-	&.section-dark {
-		background: var(--bg);
-	}
-
-	.__label {
-		font-size: 14px;
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-	}
-
-	input.tab-check {
-		position: absolute !important;
-		opacity: 0 !important;
-		z-index: -1 !important;
-	}
-
-	.tabs {
+	.__list {
 		width: 100%;
-		overflow: hidden;
-		background: var(--color-secondary-800);
-		border-radius: var(--radius);
-		margin-bottom: 16px !important;
 	}
 
-	.tabs-label {
-		padding: 18px 28px;
-		margin-bottom: 0 !important;
+	.__item + .__item {
+		margin-top: 16px;
+	}
+
+	.__summary {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+		padding: 32px 40px;
 		cursor: pointer;
-
-		.__arrow {
-			transition: transform 0.3s ease-in-out;
-		}
+		list-style: none;
 	}
 
-	.tabs-content {
-		max-height: 0;
-		transition: all 0.3s;
-		padding: 0 28px;
-		overflow: hidden;
+	.__summary::-webkit-details-marker,
+	.__summary::marker {
+		display: none;
+		content: '';
 	}
 
-	.tabs-content p {
+	.__arrow {
+		flex-shrink: 0;
+		transition: transform 0.3s ease-in-out;
+	}
+
+	.__item[open] .__arrow {
+		transform: rotate(180deg);
+	}
+
+	.__content {
+		padding: 0 40px 32px;
+	}
+
+	.__content p {
 		margin: 0 0 16px;
 		color: rgb(255 255 255 / 0.65);
 	}
 
-	.tabs-content p:last-child {
+	.__content p:last-child {
 		margin-bottom: 0;
 	}
 
-	.tabs-content ul {
+	.__content ul {
 		list-style-type: disc;
 		padding-left: 16px;
 		color: rgb(255 255 255 / 0.65);
-	}
-
-	input:checked + .tabs-label .__arrow {
-		transform: rotate(180deg);
-	}
-
-	input:checked ~ .tabs-content {
-		max-height: 1200px;
-		padding: 0 28px 20px;
 	}
 }

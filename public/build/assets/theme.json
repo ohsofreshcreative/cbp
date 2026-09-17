@@ -1574,6 +1574,11 @@
           "color": "rgb(var(--s-900))"
         },
         {
+          "name": "Secondary (Dark)",
+          "slug": "secondary-dark",
+          "color": "rgb(var(--s-dark))"
+        },
+        {
           "name": "Third",
           "slug": "third",
           "color": "rgb(var(--third))"
@@ -1592,11 +1597,6 @@
           "name": "Primary (Light)",
           "slug": "primary-light",
           "color": "var(--color-primary-300)"
-        },
-        {
-          "name": "Secondary (Light)",
-          "slug": "secondary-light",
-          "color": "var(--color-secondary-200)"
         },
         {
           "name": "Secondary (Lighter)",

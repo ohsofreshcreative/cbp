@@ -1,0 +1,240 @@
+{
+  "title": "Homepage",
+  "slug": "homepage",
+  "status": "draft",
+  "blocks": [
+    {
+      "block": "hero",
+      "data": {
+        "g_hero": {
+          "image": {
+            "src": "resources/imports/assets/homepage-hero.jpg",
+            "alt": "Pomagamy tam, gdzie liczy się prawda"
+          },
+          "header": "<p>Pomagamy tam, gdzie liczy się <strong>prawda.</strong></p>",
+          "text": "<p>Usuwamy niepewność z życia prywatnego i biznesu, dostarczając niezależnych ekspertyz oraz badań poligraficznych zgodnych z najwyższymi standardami naukowymi.</p>",
+          "badges": [
+            {
+              "icon": {
+                "src": "resources/imports/assets/b2b-hero-badge-biegly.svg",
+                "alt": "Biegła Sądowa"
+              },
+              "text": "Biegła Sądowa"
+            },
+            {
+              "icon": {
+                "src": "resources/imports/assets/b2b-hero-badge-apa.svg",
+                "alt": "Członek American Polygraph Association"
+              },
+              "text": "Członek American Polygraph Association"
+            }
+          ]
+        },
+        "r_hero": [
+          {
+            "image": {
+              "src": "resources/imports/assets/homepage-hero-tile-b2b.jpg",
+              "alt": "Dla firm i kancelarii"
+            },
+            "title": "Dla firm i kancelarii",
+            "button": {
+              "title": "Dla firm i kancelarii",
+              "url": "/b2b",
+              "target": ""
+            }
+          },
+          {
+            "image": {
+              "src": "resources/imports/assets/homepage-hero-tile-b2c.jpg",
+              "alt": "Dla klientów indywidualnych"
+            },
+            "title": "Dla klientów indywidualnych",
+            "button": {
+              "title": "Dla klientów indywidualnych",
+              "url": "/b2c",
+              "target": ""
+            }
+          }
+        ],
+        "background": "none",
+        "nomt": true
+      }
+    },
+    {
+      "block": "offer",
+      "data": {
+        "g_offer": {
+          "header": "Obszary działalności"
+        },
+        "background": "section-white"
+      }
+    },
+    {
+      "block": "values",
+      "data": {
+        "g_values": {
+          "label": "Nasze wartości",
+          "header": "Dlaczego Centrum Badań Poligraficznych?",
+          "text": "<p>Nasza działalność opiera się na kilku kluczowych filarach: profesjonalnych badaniach wariograficznych, wsparciu przedsiębiorstw i instytucji, obsłudze klientów indywidualnych, ekspertyzach i konsultacjach, bezpieczeństwie informacji oraz ciągłym rozwoju kompetencji i metod badawczych. Dzięki temu zapewniamy rzetelne, obiektywne i poufne usługi na najwyższym poziomie.</p>",
+          "r_values": [
+            {
+              "icon": {
+                "src": "resources/imports/assets/values-biegly.svg",
+                "alt": "Biegła sądowa"
+              },
+              "header": "Biegła sądowa",
+              "opis": "Opinia przygotowana zgodnie z wymaganiami wymiaru sprawiedliwości."
+            },
+            {
+              "icon": {
+                "src": "resources/imports/assets/values-apa.svg",
+                "alt": "Metodyka APA"
+              },
+              "header": "Metodyka APA",
+              "opis": "Badania prowadzone według światowych standardów."
+            },
+            {
+              "icon": {
+                "src": "resources/imports/assets/values-poufnosc.svg",
+                "alt": "Pełna poufność"
+              },
+              "header": "Pełna poufność",
+              "opis": "Każda sprawa objęta jest pełną dyskrecją."
+            },
+            {
+              "icon": {
+                "src": "resources/imports/assets/values-podejscie.svg",
+                "alt": "Empatyczne podejście"
+              },
+              "header": "Empatyczne podejście",
+              "opis": "Badanie prowadzone przez kobietę-eksperta."
+            },
+            {
+              "icon": {
+                "src": "resources/imports/assets/values-aparatura.svg",
+                "alt": "Nowoczesna aparatura"
+              },
+              "header": "Nowoczesna aparatura",
+              "opis": "Profesjonalny sprzęt wykorzystywany przez certyfikowanych specjalistów."
+            },
+            {
+              "icon": {
+                "src": "resources/imports/assets/values-bezstronnosc.svg",
+                "alt": "Bezstronność"
+              },
+              "header": "Bezstronność",
+              "opis": "Nie szukamy winnych. Weryfikujemy fakty."
+            }
+          ]
+        },
+        "background": "none"
+      }
+    },
+    {
+      "block": "proces",
+      "data": {
+        "g_proces": {
+          "header": "Jak wygląda proces współpracy?"
+        },
+        "r_proces": [
+          {
+            "number": "01",
+            "title": "Konsultacja",
+            "txt": "<p>Pierwszym krokiem jest poufna rozmowa, podczas której poznajemy Twoją sytuację, odpowiadamy na pytania i oceniamy, czy badanie będzie odpowiednim rozwiązaniem.</p>"
+          },
+          {
+            "number": "02",
+            "title": "Przygotowanie pytań",
+            "txt": "<p>Wspólnie ustalamy zakres badania oraz precyzyjne pytania, aby były jednoznaczne, zrozumiałe i dostosowane do charakteru sprawy.</p>"
+          },
+          {
+            "number": "03",
+            "title": "Badanie",
+            "txt": "<p>Badanie odbywa się w komfortowych warunkach i prowadzone jest zgodnie z międzynarodowymi standardami przez certyfikowanego eksperta.</p>"
+          },
+          {
+            "number": "04",
+            "title": "Analiza",
+            "txt": "<p>Po zakończeniu badania wyniki są szczegółowo analizowane z uwzględnieniem wszystkich zarejestrowanych reakcji oraz przebiegu całego procesu.</p>"
+          },
+          {
+            "number": "05",
+            "title": "Wyniki",
+            "txt": "<p>Otrzymujesz rzetelne podsumowanie wyników wraz z ich interpretacją, które może stanowić wsparcie w dalszych decyzjach lub postępowaniu.</p>"
+          }
+        ],
+        "background": "section-dark"
+      }
+    },
+    {
+      "block": "about",
+      "data": {
+        "g_about": {
+          "image": {
+            "src": "resources/imports/assets/homepage-about.jpg",
+            "alt": "mgr Katarzyna Jóźwiak"
+          },
+          "label": "O mnie",
+          "header": "Poznaj ekspertkę, której możesz zaufać",
+          "text": "<p>Za każdym badaniem stoi nie tylko nowoczesna aparatura, ale przede wszystkim wiedza, doświadczenie i odpowiedzialność eksperta. Jako Biegła Sądowa oraz członkini American Polygraph Association prowadzę badania zgodnie z międzynarodowymi standardami, zapewniając pełną bezstronność, poufność i indywidualne podejście do każdej sprawy.</p>",
+          "button1": {
+            "title": "Dowiedz się więcej",
+            "url": "/about",
+            "target": ""
+          }
+        },
+        "background": "section-white"
+      }
+    },
+    {
+      "block": "certificates",
+      "data": {
+        "background": "section-dark"
+      }
+    },
+    {
+      "block": "myth",
+      "data": {
+        "g_myth": {
+          "header": "Obalamy mity",
+          "text": "Wokół badań poligraficznych narosło wiele nieporozumień. Sprawdź, co jest faktem, a co jedynie popularnym mitem."
+        },
+        "r_myth": [
+          {
+            "myth": "Wariograf wykrywa kłamstwa.",
+            "explanation": "Wariograf nie wykrywa kłamstw – rejestruje reakcje fizjologiczne organizmu, które są analizowane przez certyfikowanego eksperta w odniesieniu do konkretnych pytań."
+          },
+          {
+            "myth": "Wariograf wykrywa kłamstwa.",
+            "explanation": "Wariograf nie wykrywa kłamstw – rejestruje reakcje fizjologiczne organizmu, które są analizowane przez certyfikowanego eksperta w odniesieniu do konkretnych pytań."
+          },
+          {
+            "myth": "Wariograf wykrywa kłamstwa.",
+            "explanation": "Wariograf nie wykrywa kłamstw – rejestruje reakcje fizjologiczne organizmu, które są analizowane przez certyfikowanego eksperta w odniesieniu do konkretnych pytań."
+          },
+          {
+            "myth": "Wariograf wykrywa kłamstwa.",
+            "explanation": "Wariograf nie wykrywa kłamstw – rejestruje reakcje fizjologiczne organizmu, które są analizowane przez certyfikowanego eksperta w odniesieniu do konkretnych pytań."
+          }
+        ],
+        "background": "section-dark"
+      }
+    },
+    {
+      "block": "reviews",
+      "data": {
+        "background": "none"
+      }
+    },
+    {
+      "block": "cta",
+      "data": {
+        "form": true,
+        "content": true,
+        "header": "Masz wątpliwości? Zacznij od rozmowy z <strong>ekspertem</strong>.",
+        "txt": "<p>Niezależnie od tego, czy reprezentujesz firmę, instytucję czy potrzebujesz wsparcia jako osoba prywatna – pomożemy ocenić sytuację i zaproponujemy najlepsze rozwiązanie.</p>",
+        "background": "none"
+      }
+    }
+  ]
+}

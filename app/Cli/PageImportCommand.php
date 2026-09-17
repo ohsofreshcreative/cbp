@@ -22,6 +22,7 @@ class PageImportCommand
 	 * ## EXAMPLES
 	 *
 	 *     wp osf page import resources/cli/hero-page.example.json
+	 *     wp osf offer import resources/imports/offers/ekspertyza-poligraficzna-na-potrzeby-postepowania.json
 	 *
 	 * @when after_wp_load
 	 *
@@ -34,9 +35,18 @@ class PageImportCommand
 
 		try {
 			$payload = PageImportPayload::fromFile($this->resolvePath((string) $file));
-			$id = (new PageImporter())->import($payload);
+			$importer = new PageImporter();
+			$id = $importer->import($payload);
 		} catch (PageImportException $e) {
 			\WP_CLI::error($e->getMessage());
+			return;
+		} catch (\Throwable $e) {
+			\WP_CLI::error(sprintf(
+				'Błąd importu: %s (%s:%d)',
+				$e->getMessage(),
+				$e->getFile(),
+				$e->getLine()
+			));
 			return;
 		}
 
@@ -47,8 +57,34 @@ class PageImportCommand
 			return;
 		}
 
-		\WP_CLI::success(sprintf('Utworzono stronę o ID %d.', $id));
+		$kind = $payload->postType === 'offer' ? 'wpis CPT oferta' : 'stronę';
+		$action = $importer->updated ? 'Zaktualizowano' : 'Utworzono';
+
+		\WP_CLI::success(sprintf(
+			'%s %s o ID %d.',
+			$action,
+			$kind,
+			$id
+		));
 		\WP_CLI::log(sprintf('ID: %d', $id));
+		\WP_CLI::log(sprintf('Tytuł: %s', $payload->title));
+		\WP_CLI::log(sprintf('Slug: %s', $payload->slug));
+		\WP_CLI::log(sprintf('Typ: %s', $payload->postType));
+		\WP_CLI::log(sprintf('Bloki: %s', implode(', ', array_column($payload->blocks, 'block'))));
+
+		if ($payload->postType === 'offer') {
+			\WP_CLI::log(sprintf('Status: %s (szkic — w Kokpicie: Oferta → Wszystkie oferty, filtr Szkice)', $payload->status));
+		} else {
+			\WP_CLI::log(sprintf('Status: %s (szkic — w Kokpicie: Strony → Wszystkie strony, filtr Szkice)', $payload->status));
+		}
+
+		if (function_exists('get_edit_post_link')) {
+			$edit = get_edit_post_link($id, 'raw');
+
+			if (is_string($edit) && $edit !== '') {
+				\WP_CLI::log(sprintf('Edycja: %s', $edit));
+			}
+		}
 	}
 
 	private function resolvePath(string $file): string

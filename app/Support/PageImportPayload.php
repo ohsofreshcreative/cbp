@@ -6,24 +6,40 @@ class PageImportPayload
 {
 	public const STATUSES = ['draft', 'publish', 'pending', 'private'];
 
+	public const POST_TYPES = ['page', 'offer'];
+
 	public string $title;
 
 	public string $slug;
 
 	public string $status;
 
+	public string $postType;
+
+	/** @var array<string, list<string>> */
+	public array $terms;
+
 	public ?string $sourceDir;
 
 	/** @var list<array{block: string, data: array<string, mixed>}> */
 	public array $blocks;
 
-	private function __construct(string $title, string $slug, string $status, array $blocks, ?string $sourceDir = null)
-	{
+	private function __construct(
+		string $title,
+		string $slug,
+		string $status,
+		array $blocks,
+		?string $sourceDir = null,
+		string $postType = 'page',
+		array $terms = []
+	) {
 		$this->title = $title;
 		$this->slug = $slug;
 		$this->status = $status;
 		$this->blocks = $blocks;
 		$this->sourceDir = $sourceDir;
+		$this->postType = $postType;
+		$this->terms = $terms;
 	}
 
 	public static function fromFile(string $path): self
@@ -117,7 +133,55 @@ class PageImportPayload
 			$blocks[] = self::normalizeBlock($item, (int) $index);
 		}
 
-		return new self($title, $slug, $status, $blocks, $sourceDir);
+		self::assertPageBlockMapping($slug, $blocks);
+
+		$postType = $data['post_type'] ?? 'page';
+
+		if (!is_string($postType) || $postType === '') {
+			throw new PageImportException('Pole "post_type" musi być stringiem.');
+		}
+
+		$postType = strtolower(trim($postType));
+
+		if (!in_array($postType, self::POST_TYPES, true)) {
+			throw new PageImportException(sprintf(
+				'Nieobsługiwany post_type "%s". Dozwolone: %s.',
+				$postType,
+				implode(', ', self::POST_TYPES)
+			));
+		}
+
+		$terms = [];
+
+		if (array_key_exists('terms', $data) && $data['terms'] !== null) {
+			if (!is_array($data['terms']) || self::isList($data['terms'])) {
+				throw new PageImportException('Pole "terms" musi być obiektem {taksonomia: [slug, ...]}.');
+			}
+
+			foreach ($data['terms'] as $taxonomy => $slugs) {
+				if (!is_string($taxonomy) || trim($taxonomy) === '') {
+					throw new PageImportException('Klucze w "terms" muszą być slugami taksonomii.');
+				}
+
+				if (!is_array($slugs) || !self::isList($slugs)) {
+					throw new PageImportException(sprintf('terms.%s musi być tablicą slugów.', $taxonomy));
+				}
+
+				$clean = [];
+
+				foreach ($slugs as $slugItem) {
+					if (!is_string($slugItem) || trim($slugItem) === '') {
+						throw new PageImportException(sprintf('terms.%s zawiera pusty slug.', $taxonomy));
+					}
+
+					$clean[] = trim($slugItem);
+				}
+
+				$terms[trim($taxonomy)] = $clean;
+			}
+		}
+
+		return new self($title, $slug, $status, $blocks, $sourceDir, $postType, $terms);
 	}
 
 	/**
@@ -145,7 +209,7 @@ class PageImportPayload
 			));
 		}
 
-		self::assertKnownBlock($slug, $label);
+		self::assertBlockFile($slug, $label);
 
 		$data = $item['data'] ?? [];
 
@@ -164,17 +228,56 @@ class PageImportPayload
 		];
 	}
 
-	private static function assertKnownBlock(string $slug, string $label): void
+	public static function blockClassPath(string $slug): string
 	{
 		$studly = str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $slug)));
-		$file = dirname(__DIR__) . '/Blocks/' . $studly . '.php';
+
+		return dirname(__DIR__) . '/Blocks/' . $studly . '.php';
+	}
+
+	/**
+	 * @param list<array{block: string, data: array<string, mixed>}> $blocks
+	 */
+	public static function assertPageBlockMapping(string $pageSlug, array $blocks): void
+	{
+		$names = array_column($blocks, 'block');
+
+		if ($pageSlug === 'b2c' && in_array('solutions', $names, true)) {
+			throw new PageImportException(
+				'Strona B2C: ramka Wehelp z Figmy to blok wehelp, nie solutions. Popraw JSON (resources/imports/b2c.json).'
+			);
+		}
+
+		if ($pageSlug === 'b2b' && in_array('wehelp', $names, true)) {
+			throw new PageImportException(
+				'Strona B2B: ramka Solutions z Figmy to blok solutions, nie wehelp. Popraw JSON (resources/imports/b2b.json).'
+			);
+		}
+	}
+
+	public static function assertBlockFile(string $slug, string $label): void
+	{
+		$file = self::blockClassPath($slug);
 
 		if (!is_readable($file)) {
+			$dir = dirname($file);
+			$phpCount = is_dir($dir) ? count(glob($dir . '/*.php') ?: []) : 0;
+			$hint = '';
+
+			if ($phpCount < 5) {
+				$hint = sprintf(
+					' Katalog %s ma %d plików PHP — na cursor-work powinno ich być ~40 (Hero, Banner, Action, …). W katalogu motywu: git fetch origin && git checkout origin/cursor-work -- app/Blocks resources/views/blocks',
+					$dir,
+					$phpCount
+				);
+			}
+
 			throw new PageImportException(sprintf(
-				'%s.block "%s" nie istnieje w app/Blocks. Oczekiwano pliku %s.',
+				'%s.block "%s" nie istnieje w %s.%s',
 				$label,
 				$slug,
-				'app/Blocks/' . $studly . '.php'
+				$file,
+				$hint
 			));
 		}
 
@@ -185,7 +288,7 @@ class PageImportPayload
 				'%s.block "%s" nie zgadza się z $slug w %s.',
 				$label,
 				$slug,
-				'app/Blocks/' . $studly . '.php'
+				'app/Blocks/' . basename($file)
 			));
 		}
 	}

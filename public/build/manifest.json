@@ -36,7 +36,7 @@
     "src": "editor.deps.json"
   },
   "resources/css/app.css": {
-    "file": "assets/app-Bp8LT61w.css",
+    "file": "assets/app-BakbHGDo.css",
     "name": "app",
     "names": [
       "app.css"
@@ -54,13 +54,11 @@
       "assets/NeueMontreal-BoldItalic-DOVUbZrl.otf",
       "assets/btn-arrow-BCoyKg90.svg",
       "assets/bottom-arrow-BE5KB43S.svg",
-      "assets/pointer-5_58814e.svg",
-      "assets/phone-HYNTkel6.svg",
-      "assets/mail-Cwopa4lM.svg"
+      "assets/pointer-5_58814e.svg"
     ]
   },
   "resources/css/editor.css": {
-    "file": "assets/editor-CGSK_kUi.css",
+    "file": "assets/editor-Dn_2EKRt.css",
     "name": "editor",
     "names": [
       "editor.css"
@@ -78,9 +76,7 @@
       "assets/NeueMontreal-BoldItalic-DOVUbZrl.otf",
       "assets/btn-arrow-BCoyKg90.svg",
       "assets/bottom-arrow-BE5KB43S.svg",
-      "assets/pointer-5_58814e.svg",
-      "assets/phone-HYNTkel6.svg",
-      "assets/mail-Cwopa4lM.svg"
+      "assets/pointer-5_58814e.svg"
     ]
   },
   "resources/fonts/NeueMontreal-Bold.otf": {
@@ -123,20 +119,12 @@
     "file": "assets/btn-arrow-BCoyKg90.svg",
     "src": "resources/images/btn-arrow.svg"
   },
-  "resources/images/mail.svg": {
-    "file": "assets/mail-Cwopa4lM.svg",
-    "src": "resources/images/mail.svg"
-  },
-  "resources/images/phone.svg": {
-    "file": "assets/phone-HYNTkel6.svg",
-    "src": "resources/images/phone.svg"
-  },
   "resources/images/pointer.svg": {
     "file": "assets/pointer-5_58814e.svg",
     "src": "resources/images/pointer.svg"
   },
   "resources/js/app.js": {
-    "file": "assets/app-D4Wy--VE.js",
+    "file": "assets/app-BGl9nlFh.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -145,8 +133,15 @@
       "resources/js/blocks/tabs.js",
       "resources/js/blocks/proces.js",
       "resources/js/blocks/slider.js",
-      "resources/js/blocks/catalogues.js"
+      "resources/js/blocks/catalogues.js",
+      "resources/js/blocks/blog.js"
     ]
+  },
+  "resources/js/blocks/blog.js": {
+    "file": "assets/blog-BW4l3Ipd.js",
+    "name": "blog",
+    "src": "resources/js/blocks/blog.js",
+    "isDynamicEntry": true
   },
   "resources/js/blocks/catalogues.js": {
     "file": "assets/catalogues-BZO8FkbB.js",

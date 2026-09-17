@@ -9,6 +9,7 @@ class Archive extends Composer
     protected static $views = [
         'archive',
         'category',
+        'home',
         'tag',
     ];
 

@@ -1,0 +1,235 @@
+{
+  "title": "Ekspertyza poligraficzna na potrzeby postępowania",
+  "slug": "ekspertyza-poligraficzna-na-potrzeby-postepowania",
+  "status": "draft",
+  "blocks": [
+    {
+      "block": "banner",
+      "data": {
+        "g_banner": {
+          "title": "Ekspertyza poligraficzna na potrzeby postępowania",
+          "text": "<p>Badanie poligraficzne prowadzone przez Biegłego Sądowego może stanowić element szerszej analizy sprawy, pomagając weryfikować określone informacje istotne dla prowadzonego postępowania.</p>",
+          "button1": {
+            "title": "Skonsultuj sprawę",
+            "url": "/kontakt",
+            "target": ""
+          },
+          "image": {
+            "src": "resources/imports/assets/offer-single-hero.jpg",
+            "alt": "Ekspertyza poligraficzna na potrzeby postępowania"
+          },
+          "shape": false
+        },
+        "background": "none",
+        "nomt": true
+      }
+    },
+    {
+      "block": "problem",
+      "data": {
+        "g_problem": {
+          "header": "Kiedy ekspertyza może być pomocna?"
+        },
+        "r_problem": [
+          {
+            "image": {
+              "src": "resources/imports/assets/offer-single-problem-01.jpg",
+              "alt": "Gdy w postępowaniu pojawiają się istotne rozbieżności"
+            },
+            "header": "Gdy w postępowaniu pojawiają się istotne rozbieżności",
+            "text": "<p>W toku postępowania mogą pojawić się sytuacje, w których zeznania, oświadczenia lub przedstawiane wersje wydarzeń wymagają dodatkowej weryfikacji.</p><p>Badanie może zostać wykorzystane jako element procesu oceny określonych informacji związanych ze sprawą.</p>",
+            "button1": {
+              "title": "Skonsultuj sprawę",
+              "url": "/kontakt",
+              "target": ""
+            }
+          },
+          {
+            "image": {
+              "src": "resources/imports/assets/offer-single-problem-02.jpg",
+              "alt": "Przykładowe sytuacje"
+            },
+            "header": "Przykładowe sytuacje",
+            "text": "<p><strong>Rozbieżne wersje wydarzeń</strong><br>Gdy poszczególne osoby przedstawiają odmienne informacje dotyczące konkretnego zdarzenia.</p><p><strong>Weryfikacja określonych informacji</strong><br>Gdy istotne dla sprawy jest ustalenie, czy osoba posiada wiedzę dotyczącą konkretnych faktów lub zdarzeń.</p><p><strong>Postępowania karne</strong><br>W sprawach, w których określone informacje dotyczące badanego mogą mieć znaczenie dla prowadzonego postępowania.</p><p><strong>Wsparcie linii obrony</strong><br>Dla kancelarii prawnych i pełnomocników poszukujących specjalistycznego wsparcia przy prowadzeniu sprawy.</p>"
+          }
+        ],
+        "background": "section-white"
+      }
+    },
+    {
+      "block": "content",
+      "data": {
+        "g_content": {
+          "image": {
+            "src": "resources/imports/assets/offer-single-solution.jpg",
+            "alt": "Badanie poligraficzne jako element specjalistycznej analizy"
+          },
+          "header": "Badanie poligraficzne jako element specjalistycznej analizy",
+          "text": "<p>Badanie poligraficzne polega na rejestracji wybranych reakcji fizjologicznych organizmu podczas odpowiedzi na odpowiednio przygotowane pytania. Zarejestrowane dane są następnie analizowane przez eksperta zgodnie z przyjętą metodyką.</p><p>Celem badania nie jest poszukiwanie odpowiedzi na wszystkie pytania dotyczące sprawy. Zakres badania koncentruje się na jasno określonych kwestiach, które można poddać odpowiedniej procedurze badawczej.</p>"
+        },
+        "background": "none"
+      }
+    },
+    {
+      "block": "proces",
+      "data": {
+        "g_proces": {
+          "header": "Jak przebiega badanie?"
+        },
+        "r_proces": [
+          {
+            "number": "01",
+            "title": "Konsultacja",
+            "txt": "<p>Poznajemy charakter sprawy, jej kontekst oraz cel planowanego badania.</p>"
+          },
+          {
+            "number": "02",
+            "title": "Analiza",
+            "txt": "<p>Określamy, jakie kwestie mogą zostać poddane badaniu i jakie informacje są potrzebne do jego właściwego przygotowania.</p>"
+          },
+          {
+            "number": "03",
+            "title": "Badanie",
+            "txt": "<p>Przeprowadzamy badanie w kontrolowanych warunkach, zgodnie z przyjętą metodyką.</p>"
+          },
+          {
+            "number": "04",
+            "title": "Analiza",
+            "txt": "<p>Zebrane dane są analizowane przez eksperta.</p>"
+          },
+          {
+            "number": "05",
+            "title": "Ekspertyza / dokumentacja",
+            "txt": "<p>W zależności od charakteru zlecenia przygotowywana jest odpowiednia dokumentacja dotycząca badania i jego wyników.</p>"
+          }
+        ],
+        "background": "section-dark"
+      }
+    },
+    {
+      "block": "gains",
+      "data": {
+        "g_gains": {
+          "header": "Co daje specjalistyczna ekspertyza?",
+          "text": "<p>Badanie poligraficzne nie zastępuje innych dowodów ani czynności procesowych. Może natomiast dostarczyć dodatkowych informacji, które pomagają w szerszej analizie określonego zagadnienia.</p>",
+          "image": {
+            "src": "resources/imports/assets/offer-single-gains.jpg",
+            "alt": ""
+          }
+        },
+        "r_gains": [
+          {
+            "header": "Dodatkowa perspektywa",
+            "text": "<p>Ekspertyza pozwala uzupełnić analizę sprawy o wyniki specjalistycznego badania dotyczącego wcześniej określonych kwestii.</p>"
+          },
+          {
+            "header": "Uporządkowanie informacji",
+            "text": "<p>Precyzyjne określenie przedmiotu badania pozwala skoncentrować analizę na konkretnych faktach i zagadnieniach istotnych dla sprawy.</p>"
+          },
+          {
+            "header": "Niezależna analiza ekspercka",
+            "text": "<p>Badanie prowadzone jest przez specjalistę posiadającego odpowiednie kwalifikacje i doświadczenie, z zachowaniem zasad bezstronności.</p>"
+          },
+          {
+            "header": "Udokumentowany proces",
+            "text": "<p>Przebieg badania, zastosowana metodologia oraz wyniki analizy są odpowiednio dokumentowane.</p>"
+          },
+          {
+            "header": "Wsparcie w podejmowaniu dalszych decyzji",
+            "text": "<p>Wyniki ekspertyzy mogą stanowić dodatkowy materiał wspierający analizę sprawy przez sąd, pełnomocnika, organ prowadzący postępowanie lub inny uprawniony podmiot.</p>"
+          }
+        ],
+        "background": "section-white"
+      }
+    },
+    {
+      "block": "tiles",
+      "data": {
+        "g_tiles": {
+          "label": "Kompetencje eksperta",
+          "header": "Ekspertyza wymaga więcej niż odpowiedniej aparatury",
+          "image": {
+            "src": "resources/imports/assets/offer-single-tiles.jpg",
+            "alt": "mgr Katarzyna Jóźwiak"
+          },
+          "caption": "mgr Katarzyna Jóźwiak"
+        },
+        "r_tiles": [
+          {
+            "header": "Biegła sądowa",
+            "text": "<p>Opinia przygotowana zgodnie z wymaganiami wymiaru sprawiedliwości.</p>",
+            "icon": {
+              "src": "resources/imports/assets/tiles-biegly.svg",
+              "alt": "Biegła sądowa"
+            }
+          },
+          {
+            "header": "Standardy APA",
+            "text": "<p>Badania prowadzone są z uwzględnieniem standardów American Polygraph Association.</p>",
+            "icon": {
+              "src": "resources/imports/assets/tiles-apa.svg",
+              "alt": "Standardy APA"
+            }
+          },
+          {
+            "header": "Pełna poufność",
+            "text": "<p>Informacje dotyczące sprawy oraz dane przekazane podczas współpracy są traktowane z zachowaniem najwyższych standardów poufności.</p>",
+            "icon": {
+              "src": "resources/imports/assets/tiles-poufnosc.svg",
+              "alt": "Pełna poufność"
+            }
+          },
+          {
+            "header": "Bezstronność",
+            "text": "<p>Każde badanie koncentruje się na określonym przedmiocie i nie zakłada z góry konkretnego wyniku.</p>",
+            "icon": {
+              "src": "resources/imports/assets/tiles-bezstronnosc.svg",
+              "alt": "Bezstronność"
+            }
+          }
+        ],
+        "background": "section-dark"
+      }
+    },
+    {
+      "block": "faq",
+      "data": {
+        "g_faq": {
+          "label": "FAQ",
+          "header": "Najczęściej zadawane pytania"
+        },
+        "r_faq": [
+          {
+            "title": "Czy badanie może zostać wykonane na potrzeby postępowania?"
+          },
+          {
+            "title": "Czy firma może zlecić badanie pracownika?"
+          },
+          {
+            "title": "Czy badanie może dotyczyć kradzieży lub wycieku informacji?"
+          },
+          {
+            "title": "Czy kancelaria prawna może zlecić badanie?"
+          }
+        ],
+        "background": "section-dark"
+      }
+    },
+    {
+      "block": "cta",
+      "data": {
+        "form": true,
+        "content": true,
+        "header": "Masz sprawę wymagającą <strong>specjalistycznej</strong> analizy?",
+        "txt": "<p>Opowiedz nam o sytuacji. Podczas pierwszej konsultacji określimy zakres problemu, odpowiemy na pytania i ocenimy, czy badanie poligraficzne może być właściwym narzędziem.</p>",
+        "background": "none"
+      }
+    }
+  ],
+  "post_type": "offer",
+  "terms": {
+    "offer_category": [
+      "Instytucje Sądowe i Organy Ścigania"
+    ]
+  }
+}

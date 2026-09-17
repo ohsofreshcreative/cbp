@@ -1,9 +1,20 @@
 <!-- hero --->
 
+@php
+	$hasTiles = !empty($r_hero);
+	$badges = $g_hero['badges'] ?? [];
+	$button1 = $g_hero['button1'] ?? null;
+	$button2 = $g_hero['button2'] ?? null;
+	$hasButton1 = !empty($button1['url']);
+	$hasButton2 = !empty($button2['url']);
+	$button1Variant = (!$hasTiles && !$hasButton2) ? 'primary' : 'secondary';
+@endphp
+
 <section
 	data-gsap-anim="section"
 	@if(!empty($section_id)) id="{{ $section_id }}" @endif
-	@class([ 'b-hero relative h-screen flex flex-col -spt overflow-visible' ,
+	@class([ 'b-hero relative flex flex-col overflow-visible' ,
+	$hasTiles ? 'h-screen -spt' : '-menu-pt',
 	$sectionClass=> filled($sectionClass),
 	$section_class => filled($section_class),
 	$background => filled($background) && $background !== 'none',
@@ -14,7 +25,7 @@
 		<source src="{{ $g_hero['video'] }}" type="video/mp4">
 	</video>
 	@elseif(!empty($g_hero['image']))
-	<figure class="absolute inset-0 w-full h-full z-0 m-0">
+	<figure @class(['absolute z-0 m-0 overflow-hidden', $hasTiles ? 'inset-0 w-full h-full' : 'inset-y-0 right-0 h-full w-full md:w-[64%]'])>
 		<picture class="w-full h-full">
 			<img src="{{ $g_hero['image']['url'] }}" alt="{{ $g_hero['image']['alt'] }}" class="w-full h-full object-cover" />
 		</picture>
@@ -22,11 +33,29 @@
 	@endif
 
 	@if (!empty($g_hero['video']) || !empty($g_hero['image']))
-	<div class="absolute inset-0 z-1 pointer-events-none" style="background: linear-gradient(90deg, #000 0%, rgba(0, 0, 0, 0.20) 100%);"></div>
+	<div @class(['absolute inset-0 z-1 pointer-events-none', !$hasTiles ? '__veil' : '']) @if($hasTiles) style="background: linear-gradient(90deg, #000 0%, rgba(0, 0, 0, 0.20) 100%);" @endif></div>
 	@endif
 
-	<div class=" __wrapper c-wide relative z-10 grid grid-cols-1 md:grid-cols-2 justify-end items-end !mt-auto gap-20 md:gap-10 pb-40">
-		<div class="__content relative w-full md:w-8/12 z-20">
+	<div @class([
+		'__wrapper relative z-10',
+		$hasTiles ? 'c-wide grid grid-cols-1 md:grid-cols-2 justify-end items-end !mt-auto gap-20 md:gap-10 pb-40' : 'c-main flex flex-col justify-center py-10 md:pt-10 md:pb-36',
+	])>
+		<div @class(['__content relative z-20', $hasTiles ? 'w-full md:w-8/12' : 'w-full'])>
+			@if (!empty($badges) && !$hasTiles)
+			<div class="__badges mb-6 flex flex-wrap gap-3 text-primary">
+				@foreach ($badges as $badge)
+					@if (!empty($badge['text']))
+					<div class="__badge flex max-w-full items-center gap-3 rounded-full border border-primary px-5 py-2">
+						@if (!empty($badge['icon']['url']))
+						<img src="{{ $badge['icon']['url'] }}" alt="" class="h-4 w-4 shrink-0 object-contain" />
+						@endif
+						<span class="min-w-0 break-words">{{ $badge['text'] }}</span>
+					</div>
+					@endif
+				@endforeach
+			</div>
+			@endif
+
 			<div data-gsap-element="header" class="text-h2 [&_p]:font-header text-white">
 				{!! $g_hero['header'] !!}
 			</div>
@@ -36,9 +65,9 @@
 			</div>
 			@endif
 
-			@if (!empty($g_hero['badges']))
+			@if (!empty($badges) && $hasTiles)
 			<div class="__badges mt-8 flex flex-wrap gap-3 text-primary">
-				@foreach ($g_hero['badges'] as $badge)
+				@foreach ($badges as $badge)
 					@if (!empty($badge['text']))
 					<div class="__badge flex max-w-full items-center gap-3 rounded-full border border-primary px-5 py-2 text-sm">
 						@if (!empty($badge['icon']['url']))
@@ -51,28 +80,30 @@
 			</div>
 			@endif
 
-			@if (!empty($g_hero['button1']) || !empty($g_hero['button2']))
+			@if ($hasButton1 || $hasButton2)
 			<div class="inline-buttons m-btn">
+				@if ($hasButton1)
 				<x-button
-					:href="$g_hero['button1']['url']"
-					variant="secondary"
-					class=""
+					:href="$button1['url']"
+					:variant="$button1Variant"
 					data-gsap-element="btn">
-					{{ $g_hero['button1']['title'] }}
+					{{ $button1['title'] }}
 				</x-button>
+				@endif
 
+				@if ($hasButton2)
 				<x-button
-					:href="$g_hero['button2']['url']"
+					:href="$button2['url']"
 					variant="white"
-					class=""
 					data-gsap-element="btn">
-					{{ $g_hero['button2']['title'] }}
+					{{ $button2['title'] }}
 				</x-button>
+				@endif
 			</div>
 			@endif
 		</div>
 
-		@if (!empty($r_hero))
+		@if ($hasTiles)
 		<div data-gsap-element="tiles" class="__tiles grid grid-cols-2 gap-4">
 			@foreach ($r_hero as $tile)
 			<a

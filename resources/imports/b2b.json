@@ -1,0 +1,249 @@
+{
+  "title": "B2B",
+  "slug": "b2b",
+  "status": "draft",
+  "blocks": [
+    {
+      "block": "banner",
+      "data": {
+        "g_banner": {
+          "title": "Profesjonalne wsparcie w sprawach wymagających weryfikacji",
+          "text": "<p>Badania poligraficzne i ekspertyzy dla przedsiębiorstw, kancelarii, sądów oraz organów ścigania.</p>",
+          "button1": {
+            "title": "Skontaktuj się z ekspertem",
+            "url": "/kontakt",
+            "target": ""
+          },
+          "image": {
+            "src": "resources/imports/assets/b2b-hero.jpg",
+            "alt": "Profesjonalne wsparcie w sprawach wymagających weryfikacji"
+          },
+          "shape": false
+        },
+        "background": "none",
+        "nomt": true
+      }
+    },
+    {
+      "block": "problem",
+      "data": {
+        "g_problem": {
+          "header": "Dla kogo pracujemy?"
+        },
+        "r_problem": [
+          {
+            "image": {
+              "src": "resources/imports/assets/b2b-problem-01.jpg",
+              "alt": "Przedsiębiorstwa i kancelarie"
+            },
+            "header": "Przedsiębiorstwa i kancelarie",
+            "text": "<p>Wspieramy firmy, zarządy, działy bezpieczeństwa, HR oraz kancelarie w sytuacjach związanych z nadużyciami, kradzieżami, wyciekiem informacji, konfliktami pracowniczymi i innymi zdarzeniami wymagającymi dodatkowej weryfikacji.</p>",
+            "button1": {
+              "title": "Zobacz rozwiązania dla biznesu",
+              "url": "/b2b",
+              "target": ""
+            }
+          },
+          {
+            "image": {
+              "src": "resources/imports/assets/b2b-problem-02.jpg",
+              "alt": "Sądy i organy ścigania"
+            },
+            "header": "Sądy i organy ścigania",
+            "text": "<p>Wykonujemy specjalistyczne badania i przygotowujemy ekspertyzy na potrzeby postępowań, wspierając analizę określonych informacji istotnych dla spraw karnych i cywilnych.</p>",
+            "button1": {
+              "title": "Zobacz rozwiązania dla instytucji",
+              "url": "/offer",
+              "target": ""
+            }
+          }
+        ],
+        "background": "section-white"
+      }
+    },
+    {
+      "block": "solutions",
+      "data": {
+        "g_solutions": {
+          "header": "W jakich sprawach pomagamy?"
+        },
+        "r_solutions": [
+          {
+            "header": "Dla biznesu",
+            "text": "<p><strong>Kradzieże i straty</strong><br>Weryfikacja określonych informacji związanych ze zdarzeniami powodującymi straty finansowe lub materialne.</p><p><strong>Nadużycia pracownicze</strong><br>Wsparcie sytuacji, w których pojawiają się uzasadnione wątpliwości dotyczące działań pracownika lub współpracownika.</p><p><strong>Wycieki informacji</strong><br>Badania dotyczące określonych okoliczności związanych z ujawnieniem poufnych danych lub informacji.</p><p><strong>Postępowania wyjaśniające</strong><br>Dodatkowe narzędzie wspierające wewnętrzne wyjaśnianie konkretnych zdarzeń.</p><p><strong>Rekrutacja na stanowiska wysokiego zaufania</strong><br>Badania mogące stanowić element szerszego procesu oceny kandydatów na stanowiska wymagające szczególnej odpowiedzialności.</p>"
+          },
+          {
+            "header": "Dla instytucji",
+            "text": "<p><strong>Postępowania karne</strong><br>Specjalistyczne badania dotyczące określonych kwestii istotnych dla prowadzonego postępowania.</p><p><strong>Postępowania cywilne</strong><br>Ekspertyzy wspierające analizę konkretnych informacji związanych ze sprawą.</p><p><strong>Opinie biegłego</strong><br>Przygotowywanie specjalistycznych opinii i ekspertyz w zakresie posiadanych kompetencji.</p><p><strong>Weryfikacja określonych informacji</strong><br>Badania dotyczące konkretnych faktów lub zdarzeń, których ustalenie może mieć znaczenie dla sprawy.</p><p><strong>Wsparcie kancelarii prawnych</strong><br>Współpraca z pełnomocnikami i obrońcami przy sprawach wymagających specjalistycznej analizy.</p>"
+          }
+        ],
+        "background": "section-dark"
+      }
+    },
+    {
+      "block": "offers",
+      "data": {
+        "g_offers": {
+          "header": "Oferta",
+          "link_label": "Sprawdź"
+        },
+        "background": "section-white"
+      }
+    },
+    {
+      "block": "reach",
+      "data": {
+        "g_reach": {
+          "image": {
+            "src": "resources/imports/assets/b2b-reach.jpg",
+            "alt": "Nie każda sprawa wymaga badania."
+          },
+          "header": "<p>Nie każda sprawa wymaga badania.</p>",
+          "subheader": "Najpierw poznajemy sprawę. Dopiero potem proponujemy rozwiązanie.",
+          "text": "<p>Badanie poligraficzne nie jest uniwersalnym narzędziem odpowiednim dla każdej sytuacji. Dlatego każdą współpracę rozpoczynamy od analizy sprawy, określenia jej celu oraz oceny, czy badanie może dostarczyć wartościowych informacji.</p><p>Nie obiecujemy konkretnego wyniku. Pomagamy określić, czy badanie ma sens.</p>",
+          "button1": {
+            "title": "Skonsultuj sprawę",
+            "url": "/kontakt",
+            "target": ""
+          }
+        },
+        "background": "section-white"
+      }
+    },
+    {
+      "block": "proces",
+      "data": {
+        "g_proces": {
+          "header": "Jak przebiega badanie?"
+        },
+        "r_proces": [
+          {
+            "number": "01",
+            "title": "Konsultacja",
+            "txt": "<p>Poznajemy charakter sprawy, jej kontekst oraz cel planowanego badania.</p>"
+          },
+          {
+            "number": "02",
+            "title": "Analiza",
+            "txt": "<p>Określamy, jakie kwestie mogą zostać poddane badaniu i jakie informacje są potrzebne do jego właściwego przygotowania.</p>"
+          },
+          {
+            "number": "03",
+            "title": "Badanie",
+            "txt": "<p>Przeprowadzamy badanie w kontrolowanych warunkach, zgodnie z przyjętą metodyką.</p>"
+          },
+          {
+            "number": "04",
+            "title": "Analiza",
+            "txt": "<p>Zebrane dane są analizowane przez eksperta.</p>"
+          },
+          {
+            "number": "05",
+            "title": "Ekspertyza / dokumentacja",
+            "txt": "<p>W zależności od charakteru zlecenia przygotowywana jest odpowiednia dokumentacja dotycząca badania i jego wyników.</p>"
+          }
+        ],
+        "background": "section-dark"
+      }
+    },
+    {
+      "block": "values",
+      "data": {
+        "g_values": {
+          "image": {
+            "src": "resources/imports/assets/b2b-values.jpg",
+            "alt": "Dlaczego Centrum Badań Poligraficznych?"
+          },
+          "label": "Wartości",
+          "header": "Dlaczego Centrum Badań Poligraficznych?",
+          "text": "<p>Nasza działalność opiera się na kilku kluczowych filarach: profesjonalnych badaniach wariograficznych, wsparciu przedsiębiorstw i instytucji, obsłudze klientów indywidualnych, ekspertyzach i konsultacjach, bezpieczeństwie informacji oraz ciągłym rozwoju kompetencji i metod badawczych. Dzięki temu zapewniamy rzetelne, obiektywne i poufne usługi na najwyższym poziomie.</p>",
+          "r_values": [
+            {
+              "icon": {
+                "src": "resources/imports/assets/values-biegly.svg",
+                "alt": "Biegła sądowa"
+              },
+              "header": "Biegła sądowa",
+              "opis": "Kompetencje pozwalające realizować ekspertyzy na potrzeby postępowań."
+            },
+            {
+              "icon": {
+                "src": "resources/imports/assets/values-apa.svg",
+                "alt": "Metodyka APA"
+              },
+              "header": "Metodyka APA",
+              "opis": "Badania prowadzone są z uwzględnieniem standardów American Polygraph Association."
+            },
+            {
+              "icon": {
+                "src": "resources/imports/assets/values-poufnosc.svg",
+                "alt": "Pełna poufność"
+              },
+              "header": "Pełna poufność",
+              "opis": "Informacje dotyczące przedsiębiorstwa, postępowania i osób badanych traktujemy z najwyższą dyskrecją."
+            },
+            {
+              "icon": {
+                "src": "resources/imports/assets/values-podejscie.svg",
+                "alt": "Indywidualne podejście"
+              },
+              "header": "Indywidualne podejście",
+              "opis": "Każda sprawa jest analizowana osobno, zanim zaproponujemy konkretny zakres badania."
+            },
+            {
+              "icon": {
+                "src": "resources/imports/assets/values-aparatura.svg",
+                "alt": "Nowoczesna aparatura"
+              },
+              "header": "Nowoczesna aparatura",
+              "opis": "Profesjonalny sprzęt wykorzystywany przez certyfikowanych specjalistów."
+            },
+            {
+              "icon": {
+                "src": "resources/imports/assets/values-bezstronnosc.svg",
+                "alt": "Bezstronność"
+              },
+              "header": "Bezstronność",
+              "opis": "Nie zakładamy z góry, jaki powinien być wynik badania. Koncentrujemy się na określonym przedmiocie i przyjętej metodologii."
+            }
+          ]
+        },
+        "background": "none"
+      }
+    },
+    {
+      "block": "faq",
+      "data": {
+        "g_faq": {
+          "label": "FAQ",
+          "header": "Najczęściej zadawane pytania"
+        },
+        "r_faq": [
+          {
+            "title": "Czy badanie może zostać wykonane na potrzeby postępowania?"
+          },
+          {
+            "title": "Czy firma może zlecić badanie pracownika?"
+          },
+          {
+            "title": "Czy badanie może dotyczyć kradzieży lub wycieku informacji?"
+          },
+          {
+            "title": "Czy kancelaria prawna może zlecić badanie?"
+          }
+        ],
+        "background": "section-dark"
+      }
+    },
+    {
+      "block": "cta",
+      "data": {
+        "form": true,
+        "content": true,
+        "header": "Masz sprawę wymagającą <strong>specjalistycznej</strong> analizy?",
+        "txt": "<p>Opowiedz nam o sytuacji. Podczas pierwszej konsultacji określimy zakres problemu, odpowiemy na pytania i ocenimy, czy badanie poligraficzne może być właściwym narzędziem.</p>",
+        "background": "none"
+      }
+    }
+  ]
+}

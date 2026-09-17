@@ -12,16 +12,16 @@ class Action extends Block
 	public $description = 'action';
 	public $slug = 'action';
 	public $category = 'formatting';
-	public $icon = 'align-pull-left';
-	public $keywords = ['tresc', 'zdjecie'];
+	public $icon = 'megaphone';
+	public $keywords = ['cta', 'wpis', 'action'];
 	public $mode = 'edit';
-public $supports = [
-    'align' => false,
-    'mode' => true,
-    'jsx' => true,
-    'anchor' => true,
-    'customClassName' => true,
-];
+	public $supports = [
+		'align' => false,
+		'mode' => true,
+		'jsx' => true,
+		'anchor' => true,
+		'customClassName' => true,
+	];
 
 	public function fields()
 	{
@@ -29,7 +29,7 @@ public $supports = [
 
 		$action
 			->setLocation('block', '==', 'acf/action') // ważne!
-			/*--- GROUP ---*/
+			/*--- TAB #1 ---*/
 			->addTab('Elementy', ['placement' => 'top'])
 			->addGroup('g_action', ['label' => ''])
 			->addImage('image', [
@@ -39,7 +39,6 @@ public $supports = [
 			])
 			->addText('header', [
 				'label' => 'Nagłówek',
-				'instructions' => 'Słowo wyróżnione (np. Ciebie) owiń w &lt;strong&gt;.',
 			])
 			->addWysiwyg('text', [
 				'label' => 'Treść',
@@ -48,31 +47,18 @@ public $supports = [
 				'media_upload' => true,
 			])
 			->addLink('button1', [
-				'label' => 'Przycisk #1',
+				'label' => 'Przycisk',
 				'return_format' => 'array',
 			])
 			->endGroup()
 
 			/*--- USTAWIENIA BLOKU ---*/
-
 			->addTab('Ustawienia bloku', ['placement' => 'top'])
 			->addText('section_id', [
 				'label' => 'ID',
 			])
 			->addText('section_class', [
 				'label' => 'Dodatkowe klasy CSS',
-			])
-			->addTrueFalse('bgshape', [
-				'label' => 'Kształt w tle',
-				'ui' => 1,
-				'ui_on_text' => 'Tak',
-				'ui_off_text' => 'Nie',
-			])
-			->addTrueFalse('nolist', [
-				'label' => 'Brak punktatorów',
-				'ui' => 1,
-				'ui_on_text' => 'Tak',
-				'ui_off_text' => 'Nie',
 			])
 			->addTrueFalse('flip', [
 				'label' => 'Odwrotna kolejność',
@@ -104,12 +90,13 @@ public $supports = [
 					'none' => 'Brak (domyślne)',
 					'section-white' => 'Białe',
 					'section-light' => 'Jasne',
+					'section-gray' => 'Szare',
 					'section-brand' => 'Marki',
 					'section-gradient' => 'Gradient',
 					'section-dark' => 'Ciemne',
 				],
 				'default_value' => 'none',
-				'ui' => 0, // Ulepszony interfejs
+				'ui' => 0,
 				'allow_null' => 0,
 			]);
 
@@ -124,12 +111,10 @@ public $supports = [
 			'section_id' => get_field('section_id'),
 			'section_class' => get_field('section_class'),
 
-			'bgshape' => (bool) get_field('bgshape'),
 			'flip' => (bool) get_field('flip'),
 			'wide' => (bool) get_field('wide'),
 			'nomt' => (bool) get_field('nomt'),
 			'gap' => (bool) get_field('gap'),
-			'nolist' => (bool) get_field('nolist'),
 
 			'background' => get_field('background') ?: get_field('default_block_background', 'option') ?: 'none',
 		];
@@ -139,7 +124,6 @@ public $supports = [
 			'wide' => 'wide',
 			'nomt' => '!mt-0',
 			'gap' => 'wider-gap',
-			'nolist' => 'no-list',
 		]);
 
 		return $fields;

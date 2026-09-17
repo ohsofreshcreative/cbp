@@ -107,7 +107,7 @@ class Cards extends Block
                     'section-gradient' => 'Gradient',
                     'section-dark' => 'Ciemne',
                 ],
-                'default_value' => 'none',
+                'default_value' => 'section-dark',
                 'ui' => 0, // Ulepszony interfejs
                 'allow_null' => 0,
             ]);
@@ -129,7 +129,7 @@ class Cards extends Block
 			'nomt' => (bool) get_field('nomt'),
 			'gap' => (bool) get_field('gap'),
 
-			'background' => get_field('background') ?: 'none',
+			'background' => get_field('background') ?: get_field('default_block_background', 'option') ?: 'none',
 		];
 
 		$fields['sectionClass'] = SectionClasses::fromMap($fields, [

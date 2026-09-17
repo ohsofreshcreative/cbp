@@ -55,6 +55,29 @@ $withoutStatus = PageImportPayload::fromJson(json_encode([
 ], JSON_THROW_ON_ERROR));
 expect_true($withoutStatus->status === 'draft', 'brak statusu → draft');
 expect_true($withoutStatus->slug === 'bez-statusu', 'slug z title');
+expect_true($withoutStatus->postType === 'page', 'domyślny post_type page');
+expect_true($withoutStatus->terms === [], 'brak terms → pusta mapa');
+
+$offerPayload = PageImportPayload::fromJson(json_encode([
+	'title' => 'Ekspertyza test',
+	'slug' => 'ekspertyza-test',
+	'post_type' => 'offer',
+	'terms' => ['offer_category' => ['Instytucje Sądowe i Organy Ścigania']],
+	'blocks' => [['block' => 'hero', 'data' => ['background' => 'none']]],
+], JSON_THROW_ON_ERROR));
+expect_true($offerPayload->postType === 'offer', 'post_type offer');
+expect_true(($offerPayload->terms['offer_category'][0] ?? '') === 'Instytucje Sądowe i Organy Ścigania', 'terms.offer_category');
+
+expect_exception(
+	fn () => PageImportPayload::fromArray(['title' => 'X', 'post_type' => 'product', 'blocks' => []]),
+	'Nieobsługiwany post_type',
+	'zły post_type'
+);
+expect_exception(
+	fn () => PageImportPayload::fromArray(['title' => 'X', 'terms' => ['a', 'b'], 'blocks' => []]),
+	'terms',
+	'terms jako lista'
+);
 
 $content = AcfBlockSerializer::toPostContent($payload->blocks);
 expect_true(str_contains($content, '<!-- wp:acf/hero '), 'komentarz Gutenberga acf/hero');
@@ -77,6 +100,9 @@ expect_exception(fn () => PageImportPayload::fromJson('{'), 'Niepoprawny JSON', 
 expect_exception(fn () => PageImportPayload::fromArray(['blocks' => []]), 'title', 'brak title');
 expect_exception(fn () => PageImportPayload::fromArray(['title' => 'X', 'status' => 'live', 'blocks' => []]), 'Nieobsługiwany status', 'zły status');
 expect_exception(fn () => PageImportPayload::fromArray(['title' => 'X', 'blocks' => [['block' => 'doesnotexist', 'data' => []]]]), 'nie istnieje', 'nieznany blok');
+expect_true(is_readable(PageImportPayload::blockClassPath('hero')), 'Hero.php jest w app/Blocks na cursor-work');
+expect_true(is_readable(PageImportPayload::blockClassPath('banner')), 'Banner.php jest w app/Blocks');
+expect_true(is_readable(PageImportPayload::blockClassPath('action')), 'Action.php jest w app/Blocks');
 expect_exception(fn () => PageImportPayload::fromArray(['title' => 'X', 'blocks' => [['block' => 'hero-banner', 'data' => []]]]), 'niepoprawny', 'slug z myślnikiem');
 expect_exception(fn () => PageImportPayload::fromArray(['title' => 'X', 'blocks' => [['block' => 'hero', 'data' => ['a', 'b']]]]), 'obiektem', 'data jako lista');
 expect_exception(fn () => PageImportPayload::fromFile('/tmp/missing-osf-page.json'), 'Nie można odczytać', 'brak pliku');
@@ -158,6 +184,14 @@ if (!function_exists('acf_get_field_groups')) {
 			return [['key' => 'group_hero']];
 		}
 
+		if ($block === 'acf/wehelp') {
+			return [['key' => 'group_wehelp']];
+		}
+
+		if ($block === 'acf/solutions') {
+			return [['key' => 'group_solutions']];
+		}
+
 		return [];
 	}
 }
@@ -165,6 +199,44 @@ if (!function_exists('acf_get_field_groups')) {
 if (!function_exists('acf_get_fields')) {
 	function acf_get_fields($group): array
 	{
+		$key = is_array($group) ? (string) ($group['key'] ?? '') : (string) $group;
+
+		if ($key === 'group_wehelp') {
+			return [
+				[
+					'name' => 'g_wehelp',
+					'type' => 'group',
+					'key' => 'field_wehelp_g_wehelp',
+					'sub_fields' => [
+						['name' => 'header', 'type' => 'text', 'key' => 'field_wehelp_header'],
+						['name' => 'image', 'type' => 'image', 'key' => 'field_wehelp_image'],
+					],
+				],
+				[
+					'name' => 'r_wehelp',
+					'type' => 'repeater',
+					'key' => 'field_wehelp_r_wehelp',
+					'sub_fields' => [
+						['name' => 'header', 'type' => 'text', 'key' => 'field_wehelp_r_header'],
+						['name' => 'text', 'type' => 'wysiwyg', 'key' => 'field_wehelp_r_text'],
+					],
+				],
+			];
+		}
+
+		if ($key === 'group_solutions') {
+			return [
+				[
+					'name' => 'g_solutions',
+					'type' => 'group',
+					'key' => 'field_solutions_g_solutions',
+					'sub_fields' => [
+						['name' => 'header', 'type' => 'text', 'key' => 'field_solutions_header'],
+					],
+				],
+			];
+		}
+
 		return [
 			['name' => 'Elementy', 'type' => 'tab', 'key' => 'field_tab'],
 			[
@@ -244,6 +316,11 @@ $GLOBALS['osf_upload_count'] = 0;
 $GLOBALS['osf_alts'] = [];
 $GLOBALS['osf_next_attachment_id'] = 101;
 $GLOBALS['osf_inserted_content'] = '';
+$GLOBALS['osf_existing_page'] = null;
+
+if (!defined('OBJECT')) {
+	define('OBJECT', 'OBJECT');
+}
 
 if (!function_exists('wp_upload_bits')) {
 	function wp_upload_bits($name, $deprecated, $bits)
@@ -326,8 +403,44 @@ if (!function_exists('is_wp_error')) {
 if (!function_exists('wp_insert_post')) {
 	function wp_insert_post($postarr, $wp_error = false)
 	{
+		$GLOBALS['osf_inserted'] = $postarr;
 		$GLOBALS['osf_inserted_content'] = $postarr['post_content'] ?? '';
 		return 55;
+	}
+}
+
+if (!function_exists('wp_update_post')) {
+	function wp_update_post($postarr, $wp_error = false)
+	{
+		$GLOBALS['osf_updated'] = $postarr;
+		$GLOBALS['osf_inserted'] = $postarr;
+		$GLOBALS['osf_inserted_content'] = $postarr['post_content'] ?? '';
+		return (int) ($postarr['ID'] ?? 55);
+	}
+}
+
+if (!function_exists('get_page_by_path')) {
+	function get_page_by_path($page_path, $output = OBJECT, $post_type = 'page')
+	{
+		$existing = $GLOBALS['osf_existing_page'] ?? null;
+
+		if (is_object($existing) && isset($existing->ID)) {
+			return $existing;
+		}
+
+		return null;
+	}
+}
+
+if (!function_exists('wp_set_object_terms')) {
+	function wp_set_object_terms($object_id, $terms, $taxonomy, $append = false)
+	{
+		$GLOBALS['osf_terms'] = [
+			'id' => (int) $object_id,
+			'taxonomy' => $taxonomy,
+			'terms' => $terms,
+		];
+		return [1];
 	}
 }
 
@@ -374,11 +487,110 @@ expect_true(($encodedAssets['r_hero_0_image'] ?? null) === 101, 'r_hero[].image 
 
 $pageId = (new PageImporter())->import($payload);
 expect_true($pageId === 55, 'import strony z obrazem zwraca ID');
+expect_true(($GLOBALS['osf_inserted']['post_type'] ?? '') === 'page', 'import strony ustawia post_type page');
 expect_true(
 	(bool) preg_match('/"g_hero_image":\s*\d+/', (string) $GLOBALS['osf_inserted_content']),
 	'post_content zawiera ID obrazu, nie ścieżkę src'
 );
 expect_true(!str_contains((string) $GLOBALS['osf_inserted_content'], 'hero-test.jpg'), 'ścieżka src nie zostaje w bloku');
+
+$offerFile = dirname(__DIR__, 2) . '/resources/imports/offers/ekspertyza-poligraficzna-na-potrzeby-postepowania.json';
+$offerFromFile = PageImportPayload::fromFile($offerFile);
+expect_true($offerFromFile->postType === 'offer', 'JSON oferty: post_type offer');
+expect_true($offerFromFile->status === 'draft', 'JSON oferty: status draft');
+expect_true($offerFromFile->slug === 'ekspertyza-poligraficzna-na-potrzeby-postepowania', 'JSON oferty: slug z ramki');
+expect_true(($offerFromFile->terms['offer_category'][0] ?? '') === 'Instytucje Sądowe i Organy Ścigania', 'JSON oferty: kategoria CPT');
+expect_true($offerFromFile->blocks[0]['block'] === 'banner', 'JSON oferty: pierwszy blok banner');
+expect_true(!in_array('action', array_column($offerFromFile->blocks, 'block'), true), 'JSON oferty: bez bloku Action');
+
+$b2cFile = dirname(__DIR__, 2) . '/resources/imports/b2c.json';
+$b2cFromFile = PageImportPayload::fromFile($b2cFile);
+$b2cBlocks = array_column($b2cFromFile->blocks, 'block');
+expect_true($b2cFromFile->slug === 'b2c', 'JSON B2C: slug');
+expect_true($b2cBlocks === ['banner', 'problem', 'wehelp', 'offers', 'reach', 'proces', 'values', 'faq', 'cta'], 'JSON B2C: kolejność bloków z ramki Devs');
+expect_true(!in_array('solutions', $b2cBlocks, true), 'JSON B2C: Wehelp nie jest mapowany na solutions');
+expect_true(is_readable(PageImportPayload::blockClassPath('wehelp')), 'Wehelp.php jest w app/Blocks');
+expect_true(($b2cFromFile->blocks[2]['data']['g_wehelp']['image']['src'] ?? '') === 'resources/imports/assets/b2c-wehelp.jpg', 'JSON B2C: unikalne JPG Wehelp');
+
+$b2cMarkup = AcfBlockSerializer::toPostContent([$b2cFromFile->blocks[2]]);
+expect_true(str_contains($b2cMarkup, 'acf/wehelp'), 'serializacja B2C: Gutenberg acf/wehelp');
+expect_true(!str_contains($b2cMarkup, 'acf/solutions'), 'serializacja B2C: bez acf/solutions');
+
+$b2bFile = dirname(__DIR__, 2) . '/resources/imports/b2b.json';
+$b2bFromFile = PageImportPayload::fromFile($b2bFile);
+$b2bBlocks = array_column($b2bFromFile->blocks, 'block');
+expect_true(in_array('solutions', $b2bBlocks, true), 'JSON B2B: Solutions zostaje solutions');
+expect_true(!in_array('wehelp', $b2bBlocks, true), 'JSON B2B: bez Wehelp');
+
+$b2bSolutions = array_values(array_filter($b2bFromFile->blocks, fn ($item) => $item['block'] === 'solutions'));
+$b2bMarkup = AcfBlockSerializer::toPostContent($b2bSolutions);
+expect_true(str_contains($b2bMarkup, 'acf/solutions'), 'serializacja B2B: Gutenberg acf/solutions');
+expect_true(!str_contains($b2bMarkup, 'acf/wehelp'), 'serializacja B2B: bez acf/wehelp');
+
+expect_exception(
+	fn () => PageImportPayload::fromArray([
+		'title' => 'B2C',
+		'slug' => 'b2c',
+		'blocks' => [
+			['block' => 'banner', 'data' => []],
+			['block' => 'solutions', 'data' => ['g_solutions' => ['header' => 'X']]],
+		],
+	]),
+	'wehelp, nie solutions',
+	'B2C nie przyjmuje bloku solutions w miejscu Wehelp'
+);
+
+expect_exception(
+	fn () => PageImportPayload::fromArray([
+		'title' => 'B2B',
+		'slug' => 'b2b',
+		'blocks' => [
+			['block' => 'wehelp', 'data' => ['g_wehelp' => ['header' => 'X']]],
+		],
+	]),
+	'solutions, nie wehelp',
+	'B2B nie przyjmuje bloku wehelp w miejscu Solutions'
+);
+
+$GLOBALS['osf_existing_page'] = (object) ['ID' => 77];
+$GLOBALS['osf_updated'] = [];
+$updateImporter = new PageImporter();
+$updateId = $updateImporter->import($payload);
+expect_true($updateId === 77, 'ponowny import nadpisuje stronę o tym samym slugu');
+expect_true($updateImporter->updated === true, 'importer oznacza updated');
+expect_true((int) ($GLOBALS['osf_updated']['ID'] ?? 0) === 77, 'wp_update_post dostaje ID istniejącej strony');
+expect_true(str_contains((string) ($GLOBALS['osf_updated']['post_content'] ?? ''), 'acf/hero'), 'update zachowuje treść bloków');
+
+$wehelpPayload = PageImportPayload::fromArray([
+	'title' => 'B2C',
+	'slug' => 'b2c',
+	'blocks' => [
+		['block' => 'wehelp', 'data' => ['g_wehelp' => ['header' => 'W jakich sprawach pomagamy?']]],
+	],
+]);
+$GLOBALS['osf_existing_page'] = (object) ['ID' => 42];
+$GLOBALS['osf_updated'] = [];
+$wehelpImporter = new PageImporter();
+$wehelpId = $wehelpImporter->import($wehelpPayload);
+expect_true($wehelpId === 42, 'ponowny import B2C nadpisuje istniejącą stronę');
+expect_true(str_contains((string) ($GLOBALS['osf_updated']['post_content'] ?? ''), 'acf/wehelp'), 'update B2C zapisuje acf/wehelp');
+expect_true(!str_contains((string) ($GLOBALS['osf_updated']['post_content'] ?? ''), 'acf/solutions'), 'update B2C nie zostawia acf/solutions');
+$GLOBALS['osf_existing_page'] = null;
+
+$faqBlade = file_get_contents(dirname(__DIR__, 2) . '/resources/views/blocks/faq.blade.php');
+expect_true(is_string($faqBlade) && str_contains($faqBlade, '<details'), 'FAQ: natywny details');
+expect_true(is_string($faqBlade) && str_contains($faqBlade, '<summary'), 'FAQ: natywny summary');
+expect_true(is_string($faqBlade) && !str_contains($faqBlade, 'tab-check'), 'FAQ: bez ukrytego checkboxa');
+expect_true(is_string($faqBlade) && str_contains($faqBlade, '__content'), 'FAQ: panel odpowiedzi zawsze w markupu');
+
+$GLOBALS['osf_inserted'] = [];
+$GLOBALS['osf_terms'] = [];
+$offerId = (new PageImporter())->import($offerPayload);
+expect_true($offerId === 55, 'import CPT oferta zwraca ID');
+expect_true(($GLOBALS['osf_inserted']['post_type'] ?? '') === 'offer', 'import CPT ustawia post_type offer');
+expect_true(($GLOBALS['osf_inserted']['post_name'] ?? '') === 'ekspertyza-test', 'import CPT zachowuje slug');
+expect_true(($GLOBALS['osf_terms']['taxonomy'] ?? '') === 'offer_category', 'import CPT przypisuje taksonomię');
+expect_true(($GLOBALS['osf_terms']['terms'][0] ?? '') === 'Instytucje Sądowe i Organy Ścigania', 'import CPT zachowuje nazwę kategorii');
 
 echo "\n{$passed} passed, {$failed} failed\n";
 exit($failed === 0 ? 0 : 1);
