@@ -35,7 +35,8 @@ class PageImportCommand
 
 		try {
 			$payload = PageImportPayload::fromFile($this->resolvePath((string) $file));
-			$id = (new PageImporter())->import($payload);
+			$importer = new PageImporter();
+			$id = $importer->import($payload);
 		} catch (PageImportException $e) {
 			\WP_CLI::error($e->getMessage());
 			return;
@@ -56,15 +57,20 @@ class PageImportCommand
 			return;
 		}
 
+		$kind = $payload->postType === 'offer' ? 'wpis CPT oferta' : 'stronę';
+		$action = $importer->updated ? 'Zaktualizowano' : 'Utworzono';
+
 		\WP_CLI::success(sprintf(
-			'Utworzono %s o ID %d.',
-			$payload->postType === 'offer' ? 'wpis CPT oferta' : 'stronę',
+			'%s %s o ID %d.',
+			$action,
+			$kind,
 			$id
 		));
 		\WP_CLI::log(sprintf('ID: %d', $id));
 		\WP_CLI::log(sprintf('Tytuł: %s', $payload->title));
 		\WP_CLI::log(sprintf('Slug: %s', $payload->slug));
 		\WP_CLI::log(sprintf('Typ: %s', $payload->postType));
+		\WP_CLI::log(sprintf('Bloki: %s', implode(', ', array_column($payload->blocks, 'block'))));
 
 		if ($payload->postType === 'offer') {
 			\WP_CLI::log(sprintf('Status: %s (szkic — w Kokpicie: Oferta → Wszystkie oferty, filtr Szkice)', $payload->status));

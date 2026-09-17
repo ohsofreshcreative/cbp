@@ -184,6 +184,14 @@ if (!function_exists('acf_get_field_groups')) {
 			return [['key' => 'group_hero']];
 		}
 
+		if ($block === 'acf/wehelp') {
+			return [['key' => 'group_wehelp']];
+		}
+
+		if ($block === 'acf/solutions') {
+			return [['key' => 'group_solutions']];
+		}
+
 		return [];
 	}
 }
@@ -191,6 +199,44 @@ if (!function_exists('acf_get_field_groups')) {
 if (!function_exists('acf_get_fields')) {
 	function acf_get_fields($group): array
 	{
+		$key = is_array($group) ? (string) ($group['key'] ?? '') : (string) $group;
+
+		if ($key === 'group_wehelp') {
+			return [
+				[
+					'name' => 'g_wehelp',
+					'type' => 'group',
+					'key' => 'field_wehelp_g_wehelp',
+					'sub_fields' => [
+						['name' => 'header', 'type' => 'text', 'key' => 'field_wehelp_header'],
+						['name' => 'image', 'type' => 'image', 'key' => 'field_wehelp_image'],
+					],
+				],
+				[
+					'name' => 'r_wehelp',
+					'type' => 'repeater',
+					'key' => 'field_wehelp_r_wehelp',
+					'sub_fields' => [
+						['name' => 'header', 'type' => 'text', 'key' => 'field_wehelp_r_header'],
+						['name' => 'text', 'type' => 'wysiwyg', 'key' => 'field_wehelp_r_text'],
+					],
+				],
+			];
+		}
+
+		if ($key === 'group_solutions') {
+			return [
+				[
+					'name' => 'g_solutions',
+					'type' => 'group',
+					'key' => 'field_solutions_g_solutions',
+					'sub_fields' => [
+						['name' => 'header', 'type' => 'text', 'key' => 'field_solutions_header'],
+					],
+				],
+			];
+		}
+
 		return [
 			['name' => 'Elementy', 'type' => 'tab', 'key' => 'field_tab'],
 			[
@@ -270,6 +316,11 @@ $GLOBALS['osf_upload_count'] = 0;
 $GLOBALS['osf_alts'] = [];
 $GLOBALS['osf_next_attachment_id'] = 101;
 $GLOBALS['osf_inserted_content'] = '';
+$GLOBALS['osf_existing_page'] = null;
+
+if (!defined('OBJECT')) {
+	define('OBJECT', 'OBJECT');
+}
 
 if (!function_exists('wp_upload_bits')) {
 	function wp_upload_bits($name, $deprecated, $bits)
@@ -358,6 +409,29 @@ if (!function_exists('wp_insert_post')) {
 	}
 }
 
+if (!function_exists('wp_update_post')) {
+	function wp_update_post($postarr, $wp_error = false)
+	{
+		$GLOBALS['osf_updated'] = $postarr;
+		$GLOBALS['osf_inserted'] = $postarr;
+		$GLOBALS['osf_inserted_content'] = $postarr['post_content'] ?? '';
+		return (int) ($postarr['ID'] ?? 55);
+	}
+}
+
+if (!function_exists('get_page_by_path')) {
+	function get_page_by_path($page_path, $output = OBJECT, $post_type = 'page')
+	{
+		$existing = $GLOBALS['osf_existing_page'] ?? null;
+
+		if (is_object($existing) && isset($existing->ID)) {
+			return $existing;
+		}
+
+		return null;
+	}
+}
+
 if (!function_exists('wp_set_object_terms')) {
 	function wp_set_object_terms($object_id, $terms, $taxonomy, $append = false)
 	{
@@ -438,11 +512,70 @@ expect_true(!in_array('solutions', $b2cBlocks, true), 'JSON B2C: Wehelp nie jest
 expect_true(is_readable(PageImportPayload::blockClassPath('wehelp')), 'Wehelp.php jest w app/Blocks');
 expect_true(($b2cFromFile->blocks[2]['data']['g_wehelp']['image']['src'] ?? '') === 'resources/imports/assets/b2c-wehelp.jpg', 'JSON B2C: unikalne JPG Wehelp');
 
+$b2cMarkup = AcfBlockSerializer::toPostContent([$b2cFromFile->blocks[2]]);
+expect_true(str_contains($b2cMarkup, 'acf/wehelp'), 'serializacja B2C: Gutenberg acf/wehelp');
+expect_true(!str_contains($b2cMarkup, 'acf/solutions'), 'serializacja B2C: bez acf/solutions');
+
 $b2bFile = dirname(__DIR__, 2) . '/resources/imports/b2b.json';
 $b2bFromFile = PageImportPayload::fromFile($b2bFile);
 $b2bBlocks = array_column($b2bFromFile->blocks, 'block');
 expect_true(in_array('solutions', $b2bBlocks, true), 'JSON B2B: Solutions zostaje solutions');
 expect_true(!in_array('wehelp', $b2bBlocks, true), 'JSON B2B: bez Wehelp');
+
+$b2bSolutions = array_values(array_filter($b2bFromFile->blocks, fn ($item) => $item['block'] === 'solutions'));
+$b2bMarkup = AcfBlockSerializer::toPostContent($b2bSolutions);
+expect_true(str_contains($b2bMarkup, 'acf/solutions'), 'serializacja B2B: Gutenberg acf/solutions');
+expect_true(!str_contains($b2bMarkup, 'acf/wehelp'), 'serializacja B2B: bez acf/wehelp');
+
+expect_exception(
+	fn () => PageImportPayload::fromArray([
+		'title' => 'B2C',
+		'slug' => 'b2c',
+		'blocks' => [
+			['block' => 'banner', 'data' => []],
+			['block' => 'solutions', 'data' => ['g_solutions' => ['header' => 'X']]],
+		],
+	]),
+	'wehelp, nie solutions',
+	'B2C nie przyjmuje bloku solutions w miejscu Wehelp'
+);
+
+expect_exception(
+	fn () => PageImportPayload::fromArray([
+		'title' => 'B2B',
+		'slug' => 'b2b',
+		'blocks' => [
+			['block' => 'wehelp', 'data' => ['g_wehelp' => ['header' => 'X']]],
+		],
+	]),
+	'solutions, nie wehelp',
+	'B2B nie przyjmuje bloku wehelp w miejscu Solutions'
+);
+
+$GLOBALS['osf_existing_page'] = (object) ['ID' => 77];
+$GLOBALS['osf_updated'] = [];
+$updateImporter = new PageImporter();
+$updateId = $updateImporter->import($payload);
+expect_true($updateId === 77, 'ponowny import nadpisuje stronę o tym samym slugu');
+expect_true($updateImporter->updated === true, 'importer oznacza updated');
+expect_true((int) ($GLOBALS['osf_updated']['ID'] ?? 0) === 77, 'wp_update_post dostaje ID istniejącej strony');
+expect_true(str_contains((string) ($GLOBALS['osf_updated']['post_content'] ?? ''), 'acf/hero'), 'update zachowuje treść bloków');
+
+$wehelpPayload = PageImportPayload::fromArray([
+	'title' => 'B2C',
+	'slug' => 'b2c',
+	'blocks' => [
+		['block' => 'wehelp', 'data' => ['g_wehelp' => ['header' => 'W jakich sprawach pomagamy?']]],
+	],
+]);
+$GLOBALS['osf_existing_page'] = (object) ['ID' => 42];
+$GLOBALS['osf_updated'] = [];
+$wehelpImporter = new PageImporter();
+$wehelpId = $wehelpImporter->import($wehelpPayload);
+expect_true($wehelpId === 42, 'ponowny import B2C nadpisuje istniejącą stronę');
+expect_true(str_contains((string) ($GLOBALS['osf_updated']['post_content'] ?? ''), 'acf/wehelp'), 'update B2C zapisuje acf/wehelp');
+expect_true(!str_contains((string) ($GLOBALS['osf_updated']['post_content'] ?? ''), 'acf/solutions'), 'update B2C nie zostawia acf/solutions');
+$GLOBALS['osf_existing_page'] = null;
 
 $faqBlade = file_get_contents(dirname(__DIR__, 2) . '/resources/views/blocks/faq.blade.php');
 expect_true(is_string($faqBlade) && str_contains($faqBlade, '<details'), 'FAQ: natywny details');

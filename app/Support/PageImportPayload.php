@@ -133,6 +133,8 @@ class PageImportPayload
 			$blocks[] = self::normalizeBlock($item, (int) $index);
 		}
 
+		self::assertPageBlockMapping($slug, $blocks);
+
 		$postType = $data['post_type'] ?? 'page';
 
 		if (!is_string($postType) || $postType === '') {
@@ -231,6 +233,26 @@ class PageImportPayload
 		$studly = str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $slug)));
 
 		return dirname(__DIR__) . '/Blocks/' . $studly . '.php';
+	}
+
+	/**
+	 * @param list<array{block: string, data: array<string, mixed>}> $blocks
+	 */
+	public static function assertPageBlockMapping(string $pageSlug, array $blocks): void
+	{
+		$names = array_column($blocks, 'block');
+
+		if ($pageSlug === 'b2c' && in_array('solutions', $names, true)) {
+			throw new PageImportException(
+				'Strona B2C: ramka Wehelp z Figmy to blok wehelp, nie solutions. Popraw JSON (resources/imports/b2c.json).'
+			);
+		}
+
+		if ($pageSlug === 'b2b' && in_array('wehelp', $names, true)) {
+			throw new PageImportException(
+				'Strona B2B: ramka Solutions z Figmy to blok solutions, nie wehelp. Popraw JSON (resources/imports/b2b.json).'
+			);
+		}
 	}
 
 	public static function assertBlockFile(string $slug, string $label): void

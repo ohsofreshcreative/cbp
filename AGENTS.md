@@ -27,6 +27,7 @@ Faza 2 — treść (automatycznie po fazie 1, ten sam agent / ta sama sesja):
 - Blog / Blog-single: **nie** twórz `blog.json` / `blog-single.json` i **nie** dopisuj ich do `wp osf page import`. Dopracuj szablony Blade i partiale. Copy artykułu zapisz jako **wpis**: `resources/imports/posts/<slug>.json` + HTML + miniaturka JPG. Dolne CTA strony: `@include('partials.cta')`. Żółte CTA w środku artykułu to blok ACF `action` (`CTA - Wpis`) przez `embeds` + znacznik `<!-- osf:embed:action -->` w HTML — nie twardy HTML w treści.
 - Commit i push na `cursor-work`.
 - **Import WP-CLI zawsze zostaje u użytkownika** (lokalny WordPress / LocalWP). Agent w chmurze nie ma bazy WP — nie uruchamiaj `wp osf page import`, `wp osf offer import`, `wp osf post import`, `git pull` na maszynie użytkownika, `yarn build` ani `wp acorn acf:cache`.
+- `wp osf page import` **nadpisuje** stronę o tym samym slugu (nie drugi szkic). Stary B2C z blokiem `solutions` znika po imporcie `b2c.json` (Wehelp). B2C z `solutions` w JSON-ie importer odrzuca.
 - W podsumowaniu wypisz konkretne komendy: `git pull origin cursor-work`, `wp osf page import resources/imports/<slug>.json` dla każdej **strony**, `wp osf offer import resources/imports/offers/<slug>.json` dla każdego **wpisu CPT oferta** oraz `wp osf post import resources/imports/posts/<slug>.json` dla każdego **wpisu**.
 
 W podsumowaniu wymień zmienione pliki (w tym Blade listingu/wpisu), sprawdzenia i wymagane komendy użytkownika.
