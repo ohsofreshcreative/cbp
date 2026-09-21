@@ -184,8 +184,6 @@ wp acorn view:clear       # gdy Blade zwraca stary widok
 wp osf page import resources/imports/<slug>.json   # lokalnie u użytkownika: strona-szkic z blokami i treścią
 wp osf offer import resources/imports/offers/<slug>.json   # lokalnie: wpis CPT oferta (bloki ACF)
 wp osf post import resources/imports/posts/<slug>.json   # lokalnie: wpis-szkic (treść z Figmy, nie strona)
-php osf-import/tests/test-page-import.php          # testy importera (bez WP)
-php osf-import/tests/test-post-import.php
 ```
 
 Node >= 20.

@@ -13,7 +13,6 @@ osf-import/
   project.php        ← reguły TEGO motywu; w innym projekcie skasuj
   src/               ← importer PHP
   examples/          ← wzór JSON strony i wpisu
-  tests/             ← testy bez WordPressa
 ```
 
 ## Co musisz dopisać w nowym motywie (2 rzeczy)
@@ -55,7 +54,6 @@ Agent dostaje link Figmy → robi bloki (jeśli brak) + `resources/imports/<slug
 Lokalnie:
 
 ```bash
-php osf-import/tests/test-page-import.php
 wp osf page import resources/imports/<slug>.json
 wp osf post import resources/imports/posts/<slug>.json
 ```

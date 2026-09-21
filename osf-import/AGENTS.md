@@ -87,5 +87,3 @@ wp osf page import resources/imports/<slug>.json
 ```
 
 `acf:cache` gdy doszły nowe bloki. `yarn build` gdy zmienił się CSS/JS. Oferta / wpis — tylko gdy JSON leży w `resources/imports/offers/` albo `resources/imports/posts/`.
-
-Test kitu (bez WP): `php osf-import/tests/test-page-import.php`
