@@ -32,15 +32,21 @@ Jedno zadanie z linkiem Figmy = oba kroki. Nie czekaj na „teraz JSON”.
 Zakres linku:
 - ramka **podstrony** (Homepage, Contact, …) → tylko ta;
 - **Page / canvas** w Figmie (tablica z wieloma ramkami ~1920, np. `Devs`) → **wszystkie** bezpośrednie nazwane ramki podstron. Nie pytaj „którą”. Nie kończ po pierwszej. Każdą zrób fazą 1 i od razu fazą 2, potem następną.
-- typ z nazwy ramki: domyślnie Page; `Blog` / `Blog-single` → szablony Blade (listing / wpis), nie JSON strony; główna ramka `… (CPT)` → wpis tego CPT; sekcja `… (Options)` → istniejąca strona Options, bez drugiej kopii w JSON.
+- typ z nazwy ramki (nawias to znacznik, nie slug):
+  - domyślnie Page;
+  - `Blog` / `Blog-single` → szablony Blade (listing / wpis), nie JSON strony;
+  - **główna ramka** `Nazwa (CPT)` / `(CPT: offer)` → cała podstrona = wpis tego CPT (jeśli `post_type` jest w motywie), nie Page;
+  - **sekcja** `Nazwa (CPT)` → blok na Page, kafelki z query CPT, bez repeatera w JSON strony;
+  - **sekcja** `Nazwa (Options)` → blok na Page, treść z **istniejącej** strony Options w tym motywie (`app/Options`). Nie twórz drugiej Options. Kafelków z Options nie kopiuj do JSON strony.
+  - `(CPT)` / `(Options)` na warstwie, a w motywie nie ma takiego CPT / Options → treść zostaje w bloku; nie wymyślaj `post_type` ani nowej strony opcji.
 
 Faza 1 — bloki albo szablony:
 1. Figma MCP musi być włączone. Z URL `figma.com/design/:fileKey/…?node-id=12-34` weź `fileKey`; w `nodeId` zamień `-` na `:` (`12:34`). Link bez `node-id` jest niewystarczający — poproś o Page/canvas **albo** ramkę podstrony.
 2. Skill: `skill://figma/figma-design-to-code/SKILL.md`. Przy `get_design_context` zawsze `skillNames: "resource:figma-design-to-code"`.
 3. Canvas: `get_metadata` raz, żeby listę ramek (gdy timeout — dzieci z XML / nazwy warstw). Potem `get_metadata` i `get_design_context` na **każdej** ramce podstrony z osobna. Nie składaj serwisu ze screenshotu całego Page.
-4. Pomiń chrome: `menu`, `header`, `footer`. Rozpakuj opakowania (`Content`, `Frame 4xx`, `Banner & Problem`) i mapuj **nazwane sekcje**.
-5. `get_design_context` na **każdej** sekcji, którą składasz. Screenshot całej strony nie zastępuje kontekstu sekcji.
-6. Slug bloku = nazwa warstwy: lowercase, jedno słowo, bez myślników (`Why us` → `whyus`). Nie aliasuj po podobnym H2. Ten sam tytuł ≠ ten sam blok.
+4. Pomiń chrome: `menu`, `header`, `footer`. Opakowania **nie są** nazwami bloków: `Frame 211`, `Frame 4xx`, `Group`, `Content`, `Banner & Problem`, `__wrapper`. Wejdź do środka i bierz **nazwane dzieci-sekcje**. `Frame 211` → w środku `About` i `Numbers` = dwa bloki `about` + `numbers`, nie blok `frame211`. Jeśli opakowanie ma jedno nazwane dziecko, to to dziecko jest sekcją (`Content` → `Problem` = `problem`).
+5. `get_design_context` na **każdej** nazwane sekcji, którą składasz — nie na `Frame 211`. Screenshot całej strony nie zastępuje kontekstu sekcji.
+6. Slug bloku = nazwa **tej** warstwy sekcji, po ścięciu `(Options)` / `(CPT)` / `(CPT: slug)`. Lowercase, jedno słowo, bez myślników (`Why us` → `whyus`, `Reviews (Options)` → `reviews`). Nie aliasuj po podobnym H2. Ten sam tytuł ≠ ten sam blok. Nie bierz sluga z H1/H2 ani z numeru Frame.
 7. Najpierw `app/Blocks`. Reuse tylko przy tym samym slugu **i** podobnym układzie. Inny layout = zmień Blade/SCSS **tego** bloku albo nowy slug. Nie twórz `hero2`.
 8. Brakujący blok: PHP + Blade + SCSS według `osf-import/BLOCKS.md` i najbliższego istniejącego bloku **w tym motywie**. Nazwy pól ACF (`g_<slug>`, `r_<slug>`) z klasy, nie z głowy.
 9. Blog / listing / single: jeśli w motywie to szablony (`home.blade.php`, `single.blade.php`), nie składaj ich jako Page z importera.
