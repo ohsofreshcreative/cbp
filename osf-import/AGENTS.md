@@ -2,9 +2,9 @@
 
 Ten plik opisuje **tylko** workflow: link Figmy → bloki ACF → JSON → szkic w WP.
 
-Anatomia bloku (PHP, Blade, SCSS, tokeny, Tailwinda) bierzesz z **tego motywu**: istniejące `app/Blocks`, `resources/views/blocks` oraz `AGENTS.md` / `BLOCKS_SYSTEM_PROMPT.md` w korzeniu. Nie kopiuj konwencji z innego projektu.
+Anatomia bloku: `osf-import/BLOCKS.md` (szkielet wspólny) + **ten motyw** (`app/Blocks`, `variables.scss`, ewentualnie `BLOCKS_SYSTEM_PROMPT.md`). Nie kopiuj kolorów ani skali typu z innego projektu.
 
-Kod kitu: katalog `osf-import/` obok `app/`. Cursor czyta `AGENTS.md` z korzenia motywu — wklej ten tekst tam (albo na górę istniejącego pliku).
+Kod kitu: katalog `osf-import/` obok `app/`. W korzeniu motywu muszą być widoczne dla Cursora: `AGENTS.md` (ten workflow) i anatomia (`BLOCKS.md` wklejona / `BLOCKS_SYSTEM_PROMPT.md`).
 
 ## Podpięcie WP-CLI
 
@@ -37,7 +37,7 @@ Faza 1 — bloki albo szablony:
 5. `get_design_context` na **każdej** sekcji, którą składasz. Screenshot całej strony nie zastępuje kontekstu sekcji.
 6. Slug bloku = nazwa warstwy: lowercase, jedno słowo, bez myślników (`Why us` → `whyus`). Nie aliasuj po podobnym H2. Ten sam tytuł ≠ ten sam blok.
 7. Najpierw `app/Blocks`. Reuse tylko przy tym samym slugu **i** podobnym układzie. Inny layout = zmień Blade/SCSS **tego** bloku albo nowy slug. Nie twórz `hero2`.
-8. Brakujący blok: PHP + Blade + SCSS według **tego** motywu ( Sage / ACF Composer ). Nazwy pól ACF (`g_<slug>`, `r_<slug>`) bierz z klasy bloku, nie wymyślaj.
+8. Brakujący blok: PHP + Blade + SCSS według `osf-import/BLOCKS.md` i najbliższego istniejącego bloku **w tym motywie**. Nazwy pól ACF (`g_<slug>`, `r_<slug>`) z klasy, nie z głowy.
 9. Blog / listing / single: jeśli w motywie to szablony (`home.blade.php`, `single.blade.php`), nie składaj ich jako Page z importera.
 
 Faza 2 — treść:

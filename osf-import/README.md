@@ -7,7 +7,8 @@ Do innego motywu Sage kopiujesz folder `osf-import/` (obok `app/`). Nie zbierasz
 ```
 osf-import/
   README.md          ← ten plik
-  AGENTS.md          ← instrukcje dla agenta (link z Figmy)
+  AGENTS.md          ← workflow Figma → JSON
+  BLOCKS.md          ← anatomia bloku (uniwersalna; tokeny i kolory z motywu)
   bootstrap.php      ← jedyny plik do podpięcia
   project.php        ← reguły TEGO motywu; w innym projekcie skasuj
   src/               ← importer PHP
@@ -30,7 +31,9 @@ if (defined('WP_CLI') && WP_CLI) {
 
 Nie dokładaj `wp-cli.yml`, jeśli masz ten fragment. `wp-cli.yml` w motywie (`require: osf-import/bootstrap.php`) działa tylko, gdy `wp` odpalasz z katalogu motywu.
 
-2. **Agent (Cursor)** — skopiuj treść `osf-import/AGENTS.md` do `AGENTS.md` w korzeniu **tego** projektu (albo wklej na górę istniejącego). Cursor czyta `AGENTS.md` z roota, nie z podfolderu. Anatomii bloków nie bierz z CBP — z tego motywu.
+2. **Agent (Cursor)** — w korzeniu motywu:
+- `AGENTS.md` ← treść `osf-import/AGENTS.md`
+- anatomia: wklej `osf-import/BLOCKS.md` do `AGENTS.md` albo zapisz jako `BLOCKS_SYSTEM_PROMPT.md` (zastępuje stary prompt TSP/CBP). Hexów i `text-h*` w px nie kopiuj z poprzedniej firmy — agent ma czytać `variables.scss` tego motywu.
 
 W nowym motywie **usuń** `osf-import/project.php` (zakazy poprzedniej firmy).
 
