@@ -1,57 +1,91 @@
-# Figma → strona (kit `osf-import`)
+# Figma → strona (`osf-import`)
 
-Ten plik jest uniwersalny. Wklej go do `AGENTS.md` korzenia motywu albo trzymaj jako źródło prawdy kitu. Kod importera: katalog `osf-import/` obok `app/`.
+Ten plik opisuje **tylko** workflow: link Figmy → bloki ACF → JSON → szkic w WP.
 
-## Co robi agent po linku z Figmy
+Anatomia bloku (PHP, Blade, SCSS, tokeny, Tailwinda) bierzesz z **tego motywu**: istniejące `app/Blocks`, `resources/views/blocks` oraz `AGENTS.md` / `BLOCKS_SYSTEM_PROMPT.md` w korzeniu. Nie kopiuj konwencji z innego projektu.
 
-1. W Cursorze musi być Figma MCP. Z URL `figma.com/design/:fileKey/…?node-id=12-34` weź `fileKey` i zamień `-` na `:` w `nodeId` (`12:34`). Link bez `node-id` jest niewystarczający — poproś o ramkę podstrony.
-2. Wczytaj skill `skill://figma/figma-design-to-code/SKILL.md`. Przy `get_design_context` użyj `skillNames: "resource:figma-design-to-code"`.
-3. `get_metadata` na **ramce podstrony**, nie na całym pliku. Pomiń chrome (`menu`, `header`, `footer`).
-4. Każdą nazwaną sekcję zmapuj na blok ACF: slug = nazwa warstwy, jedno słowo, lowercase, bez myślników (`Why us` → `whyus`). Nie aliasuj po podobnym H2.
-5. Reuse istniejącego bloku w `app/Blocks` tylko przy tym samym slugu i podobnym układzie. Inny layout = zmień Blade/SCSS **tego** bloku albo nowy slug, nie `wehelp2` na siłę.
-6. Brakujący blok: klasa PHP + widok Blade + pusty SCSS, według anatomii motywu (Sage / ACF Composer).
-7. Potem JSON: `resources/imports/<slug>.json` + unikalne JPG w `resources/imports/assets/`. Nie uruchamiaj `wp osf`, `yarn build`, `acf:cache` — to użytkownik lokalnie.
-8. `wp osf page import` nadpisuje stronę o tym samym slugu (`wp_update_post`).
+Kod kitu: katalog `osf-import/` obok `app/`. Cursor czyta `AGENTS.md` z korzenia motywu — wklej ten tekst tam (albo na górę istniejącego pliku).
 
-## JSON strony
+## Podpięcie WP-CLI
+
+Wystarczy **jeden** sposób.
+
+Preferowany (LocalWP, `wp` z katalogu WordPressa): w `ThemeServiceProvider::boot()` po `parent::boot();`
+
+```php
+if (defined('WP_CLI') && WP_CLI) {
+	$cli = get_theme_file_path('osf-import/bootstrap.php');
+	if (is_readable($cli)) {
+		require_once $cli;
+	}
+}
+```
+
+Nie dokładaj `wp-cli.yml`, jeśli masz ten fragment. `wp-cli.yml` w motywie działa tylko, gdy odpalasz `wp` z katalogu motywu.
+
+W nowym motywie skasuj `osf-import/project.php` (to twarde zakazy poprzedniej firmy). Zostawiasz go tylko, gdy sam dodasz reguły typu „slug X nie może mieć bloku Y”.
+
+## Faza 1, potem od razu faza 2
+
+Jedno zadanie z linkiem Figmy = oba kroki. Nie czekaj na „teraz JSON”.
+
+Faza 1 — bloki albo szablony:
+1. Figma MCP musi być włączone. Z URL `figma.com/design/:fileKey/…?node-id=12-34` weź `fileKey`; w `nodeId` zamień `-` na `:` (`12:34`). Link bez `node-id` jest niewystarczający — poproś o ramkę **podstrony**.
+2. Skill: `skill://figma/figma-design-to-code/SKILL.md`. Przy `get_design_context` zawsze `skillNames: "resource:figma-design-to-code"`.
+3. `get_metadata` na ramce podstrony, nie na całym pliku / canvasie.
+4. Pomiń chrome: `menu`, `header`, `footer`. Rozpakuj opakowania (`Content`, `Frame 4xx`, `Banner & Problem`) i mapuj **nazwane sekcje**.
+5. `get_design_context` na **każdej** sekcji, którą składasz. Screenshot całej strony nie zastępuje kontekstu sekcji.
+6. Slug bloku = nazwa warstwy: lowercase, jedno słowo, bez myślników (`Why us` → `whyus`). Nie aliasuj po podobnym H2. Ten sam tytuł ≠ ten sam blok.
+7. Najpierw `app/Blocks`. Reuse tylko przy tym samym slugu **i** podobnym układzie. Inny layout = zmień Blade/SCSS **tego** bloku albo nowy slug. Nie twórz `hero2`.
+8. Brakujący blok: PHP + Blade + SCSS według **tego** motywu ( Sage / ACF Composer ). Nazwy pól ACF (`g_<slug>`, `r_<slug>`) bierz z klasy bloku, nie wymyślaj.
+9. Blog / listing / single: jeśli w motywie to szablony (`home.blade.php`, `single.blade.php`), nie składaj ich jako Page z importera.
+
+Faza 2 — treść:
+10. Pages: `resources/imports/<slug>.json` (`title`, `slug`, `status: draft`, `blocks`) + JPG w `resources/imports/assets/`. Wzór: `osf-import/examples/page.json`.
+11. Klucze w `data` muszą zgadzać się z polami ACF bloku. Tło: istniejące klasy motywu (`section-white`, `section-dark`, …), nie nowe nazwy.
+12. Zdjęcia: JPG, `download_assets` z `defaultFormat: "jpg"` na węźle **fill zdjęcia**, nie na całej ramce z menu. Ikony i logotypy: SVG. Każda podstrona ma własne pliki (`kontakt-hero.jpg`), nawet gdy Figma współdzieli fill.
+13. CPT / wpis: tylko gdy motyw już ma ten `post_type`. Oferta: `"post_type": "offer"` + `terms` + `wp osf offer import`. Blog-single: `osf-import/examples/post.json` + `resources/imports/posts/` + `wp osf post import`. Nie wymyślaj CPT.
+14. Agent **nie** uruchamia `wp osf`, `yarn build`, `wp acorn acf:cache`. To użytkownik po `git pull`.
+15. `wp osf page import` **nadpisuje** stronę o tym samym slugu. W podsumowaniu wypisz konkretne komendy i zmienione pliki.
+
+## JSON strony (przykład)
 
 ```json
 {
-  "title": "B2C",
-  "slug": "b2c",
+  "title": "Kontakt",
+  "slug": "kontakt",
   "status": "draft",
   "blocks": [
     {
-      "block": "hero",
+      "block": "banner",
       "data": {
-        "g_hero": {
+        "g_banner": {
           "header": "Nagłówek",
-          "text": "<p>Treść</p>",
-          "image": { "src": "resources/imports/assets/b2c-hero.jpg", "alt": "…" }
+          "text": "<p>Treść z Figmy.</p>",
+          "image": {
+            "src": "resources/imports/assets/kontakt-hero.jpg",
+            "alt": "Nagłówek"
+          }
         },
-        "background": "section-white"
+        "background": "none",
+        "nomt": true
       }
     }
   ]
 }
 ```
 
-Wzór: `osf-import/examples/page.json`. CPT: to samo + `"post_type": "offer"` i opcjonalnie `"terms"`. Wpis bloga: `osf-import/examples/post.json` + `wp osf post import`.
-
-Zdjęcia jako JPG (`download_assets`, `defaultFormat: "jpg"` na węźle fill, nie na całej ramce). Ikony SVG. Każda podstrona ma własne pliki obrazów.
+`block` i `g_banner` muszą istnieć w motywie. Jeśli pierwszy blok strony to `hero`, użyj `hero` / `g_hero`.
 
 ## Lokalnie (użytkownik)
 
 ```bash
-wp osf page import resources/imports/<slug>.json
-wp osf offer import resources/imports/offers/<slug>.json
-wp osf post import resources/imports/posts/<slug>.json
+git pull
 wp acorn acf:cache
 yarn build
+wp osf page import resources/imports/<slug>.json
 ```
 
-Testy kitu (bez WP): `php osf-import/tests/test-page-import.php`
+`acf:cache` gdy doszły nowe bloki. `yarn build` gdy zmienił się CSS/JS. Oferta / wpis — tylko gdy JSON leży w `resources/imports/offers/` albo `resources/imports/posts/`.
 
-## Instalacja kitu w motywie
-
-Zobacz `osf-import/README.md`. Kopiujesz **jeden** folder. `project.php` zostawiasz tylko gdy chcesz twardych zakazów typu „slug strony X nie może mieć bloku Y”.
+Test kitu (bez WP): `php osf-import/tests/test-page-import.php`
