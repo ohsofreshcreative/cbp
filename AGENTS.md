@@ -209,7 +209,7 @@ Nazwa bloku z Figmy
 
 Źródło nazwy (w tej kolejności):
 1. Nazwa podana w prompcie użytkownika, jeśli jest.
-2. Nazwa ramki/warstwy **sekcji** w Figmie — nazwane dziecko, nie opakowanie. `Frame 211` / `Frame 4xx` / `Group` / `Content` / `Banner & Problem` to nie slug. Wejdź do środka: `Frame 211` z dziećmi `About` i `Numbers` = bloki `about` i `numbers`. Jedno nazwane dziecko w opakowaniu (`Content` → `Problem`) = ta nazwa.
+2. Nazwa ramki/warstwy **sekcji** w Figmie — nazwane dziecko, nie opakowanie. Każdy `Frame` + numer (`Frame 211`, `Frame 476`, `Frame 4xx`, …), `Group`, `Content`, `Banner & Problem` to nie slug. Wejdź do środka. Przykład: `Frame 211` z `About` i `Numbers` = bloki `about` i `numbers`. Jedno nazwane dziecko w opakowaniu (`Content` → `Problem`) = ta nazwa.
 3. Pytaj tylko gdy po pominięciu chrome i kontenerów nie zostaje żadna sensowna nazwa.
 
 Normalizacja warstwy → slug:
@@ -222,7 +222,7 @@ Normalizacja warstwy → slug:
 - Nowe warstwy Devs bez aliasu (slug = nazwa warstwy): `Reach` → `reach`, `Explore` → `explore`, `Gains` → `gains`, `Tiles` → `tiles`.
 - Nawias `(Options)` na warstwie **nie** tworzy nowej strony opcji. Honoruj wyłącznie mapę w „Źródło danych”. `Values (Options)` → blok `values` + repeater w JSON strony (`OValues` nie istnieje). `Offer (Options)` → blok `offer` (query CPT/kategorii, bez kafelków w JSON).
 - `Blogs` jako **sekcja na stronie** (np. homepage) → blok `posts`. Cała ramka podstrony `Blog` / `Blog-single` to szablony WP, nie alias na blok i nie Page (patrz „Szablony WP, nie Pages”).
-- `Frame 211`, `Frame 460`, `Frame 4xx` i `fi_*` to nie nazwy bloków — rozpakuj i bierz nazwane dzieci (`About`, `Numbers`, …). Puste opakowanie pomiń. Żółte CTA we wpisie (`__cta`, „Masz więcej pytań dotyczących badania?”) → blok `action` (`CTA - Wpis`).
+- Każdy `Frame` + numer (`Frame 211`, `Frame 460`, `Frame 4xx`, …) i `fi_*` to nie nazwy bloków — rozpakuj i bierz nazwane dzieci (`About`, `Numbers`, …). Puste opakowanie pomiń. Żółte CTA we wpisie (`__cta`, „Masz więcej pytań dotyczących badania?”) → blok `action` (`CTA - Wpis`).
 - Nie używaj jako nazwy bloku: `Frame 123`, `Group`, `Rectangle`, `__wrapper`, warstw wewnętrznych ani copy z H1/H2.
 - Pomiń chrome strony: `menu`, `header`, `footer` i puste kontenery-opakowania.
 
@@ -399,7 +399,7 @@ Figma → kod (kolejność obowiązkowa)
 
 1. Wczytaj skill MCP `skill://figma/figma-design-to-code/SKILL.md`. Przy `get_design_context` zawsze `skillNames: "resource:figma-design-to-code"`, `clientLanguages: "php,html,css"`, `clientFrameworks: "wordpress,sage,blade,tailwind"`.
 2. `get_metadata` na ramce **podstrony** z tabeli (nie na Devs `73580:4973`, jeśli timeout). `get_variable_defs` też na ramce podstrony (na canvasie pada — „no selection”).
-3. Rozpakuj opakowania: `Frame 211`, `Frame 4xx`, `Group`, `Content` gdy ma jedno nazwane dziecko-sekcję (`Problem`), `Banner & Problem`. Sekcja = nazwane dziecko (`Hero`, `About`, `Numbers`, `Wehelp`, `Faq`…). `Frame 211` z `About` + `Numbers` = dwa bloki, nie jeden. Pomiń `menu` / `header` / `footer` / `hidden`.
+3. Rozpakuj opakowania: każdy `Frame` + numer, `Group`, `Content` (gdy ma jedno nazwane dziecko-sekcję), `Banner & Problem`. Sekcja = nazwane dziecko (`Hero`, `About`, `Numbers`, `Wehelp`, `Faq`…). Przykład: `Frame 211` z `About` + `Numbers` = dwa bloki, nie jeden. Pomiń `menu` / `header` / `footer` / `hidden`.
 4. Dla **każdej** sekcji, którą składasz: `get_design_context` na węźle **tej** sekcji (np. Wehelp `73580:9262`). Screenshot całej strony nie zastępuje kontekstu sekcji. Timeout → retry na `__wrapper` albo nazwanym dziecku, nie zgaduj ze screena.
 5. Kod MCP to **referencja** (React + Tailwind Figmy). Nie wklejaj. Złóż Blade + klasy motywu + minimum SCSS według tabeli „Tłumaczenie klas MCP”.
 6. Assety: zdjęcie = `download_assets` `defaultFormat: "jpg"` na węźle **fill** (ellipse / rectangle), nie na całej ramce z menu. Ikony, logotypy i EKG = SVG. Wymiary liścia i boxa z Figmy (`width`/`height` na `<img>` albo w SCSS) — nie `width: auto` na stałym kształcie.
