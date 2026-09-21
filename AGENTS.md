@@ -376,7 +376,7 @@ Working from screenshots or designs
 
 Ramka Figmy jest specyfikacją layoutu **1:1**, nie szkicem „do dopracowania później”. Złóż tę samą hierarchię, kolumny, kadrowanie, dekoracje i odstępy **tokenami motywu** — bez ściany klas z MCP i bez pustego grida.
 
-Źródło: plik CBP, `fileKey` `XgSjGFlGU7QLHjQnqt3M3F`, canvas **Devs** `73580:4973` (artboard 1920). Z URL `figma.com/design/:fileKey/…?node-id=73580-9237` bierz `fileKey` i zamień `-` na `:` w `nodeId` (`73580:9237`). Link bez `node-id` jest niewystarczający — poproś o ramkę. Inny `node-id` z promptu wygrywa nad tabelą poniżej.
+Źródło: plik CBP, `fileKey` `XgSjGFlGU7QLHjQnqt3M3F`, canvas **Devs** `73580:4973` (artboard 1920). Z URL `figma.com/design/:fileKey/…?node-id=73580-9237` bierz `fileKey` i zamień `-` na `:` w `nodeId` (`73580:9237`). Link do Devs (`73580-4973`) albo prośba o „całą stronę” = **wszystkie** ramki z tabeli poniżej, po kolei, faza 1+2 na każdą — nie pytaj o wybór podstrony. Link do jednej ramki = tylko ta. Inny `node-id` z promptu wygrywa nad tabelą.
 
 Z Figmy najpierw bloki ACF albo szablony Blade (faza 1), potem od razu JSON **dla Pages** oraz JSON **wpisu** dla `Blog-single` (faza 2). `Blog` / `Blog-single` → Blade listingu/wpisu, bez JSON-a strony. Komend `wp osf` / `yarn build` / `acf:cache` nie uruchamiaj. Slug = nazwa ramki sekcji (patrz „Nazwa bloku z Figmy”).
 

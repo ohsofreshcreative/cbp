@@ -29,10 +29,15 @@ W nowym motywie skasuj `osf-import/project.php` (to twarde zakazy poprzedniej fi
 
 Jedno zadanie z linkiem Figmy = oba kroki. Nie czekaj na „teraz JSON”.
 
+Zakres linku:
+- ramka **podstrony** (Homepage, Contact, …) → tylko ta;
+- **Page / canvas** w Figmie (tablica z wieloma ramkami ~1920, np. `Devs`) → **wszystkie** bezpośrednie nazwane ramki podstron. Nie pytaj „którą”. Nie kończ po pierwszej. Każdą zrób fazą 1 i od razu fazą 2, potem następną.
+- typ z nazwy ramki: domyślnie Page; `Blog` / `Blog-single` → szablony Blade (listing / wpis), nie JSON strony; główna ramka `… (CPT)` → wpis tego CPT; sekcja `… (Options)` → istniejąca strona Options, bez drugiej kopii w JSON.
+
 Faza 1 — bloki albo szablony:
-1. Figma MCP musi być włączone. Z URL `figma.com/design/:fileKey/…?node-id=12-34` weź `fileKey`; w `nodeId` zamień `-` na `:` (`12:34`). Link bez `node-id` jest niewystarczający — poproś o ramkę **podstrony**.
+1. Figma MCP musi być włączone. Z URL `figma.com/design/:fileKey/…?node-id=12-34` weź `fileKey`; w `nodeId` zamień `-` na `:` (`12:34`). Link bez `node-id` jest niewystarczający — poproś o Page/canvas **albo** ramkę podstrony.
 2. Skill: `skill://figma/figma-design-to-code/SKILL.md`. Przy `get_design_context` zawsze `skillNames: "resource:figma-design-to-code"`.
-3. `get_metadata` na ramce podstrony, nie na całym pliku / canvasie.
+3. Canvas: `get_metadata` raz, żeby listę ramek (gdy timeout — dzieci z XML / nazwy warstw). Potem `get_metadata` i `get_design_context` na **każdej** ramce podstrony z osobna. Nie składaj serwisu ze screenshotu całego Page.
 4. Pomiń chrome: `menu`, `header`, `footer`. Rozpakuj opakowania (`Content`, `Frame 4xx`, `Banner & Problem`) i mapuj **nazwane sekcje**.
 5. `get_design_context` na **każdej** sekcji, którą składasz. Screenshot całej strony nie zastępuje kontekstu sekcji.
 6. Slug bloku = nazwa warstwy: lowercase, jedno słowo, bez myślników (`Why us` → `whyus`). Nie aliasuj po podobnym H2. Ten sam tytuł ≠ ten sam blok.

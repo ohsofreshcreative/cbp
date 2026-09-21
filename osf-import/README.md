@@ -49,7 +49,7 @@ Bez MCP i `AGENTS.md` sam importer nie odczyta Figmy — złoży tylko JSON, kt�
 
 ## Użycie
 
-Agent dostaje link Figmy → robi bloki (jeśli brak) + `resources/imports/<slug>.json` + JPG w `resources/imports/assets/` (to treść motywu, nie część kitu).
+Agent dostaje link Figmy. Ramka podstrony = jedna strona WP. Page/canvas (np. `Devs`) = wszystkie ramki podstron, każda end-to-end. Bloki (jeśli brak) + `resources/imports/<slug>.json` + JPG w `resources/imports/assets/` (to treść motywu, nie część kitu).
 
 Lokalnie:
 
