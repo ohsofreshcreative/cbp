@@ -3,6 +3,8 @@ nAGENTS.md
 Wspólne instrukcje dla Codex, GitHub Copilot i Claude Code.
 Edytuj wyłącznie ten plik. CLAUDE.md jest dowiązaniem do AGENTS.md.
 
+Przenośny importer Figma → WP jest w **jednym** katalogu `osf-import/` (obok `app/`). Do innego motywu Sage kopiujesz ten folder — instrukcja: `osf-import/README.md`, uniwersalne reguły agenta: `osf-import/AGENTS.md`. `osf-import/project.php` to tylko reguły CBP (B2C ≠ Solutions); w innym projekcie ten plik usuń. Poniżej zostają zasady **tego** motywu.
+
 Jedna gałąź robocza: `cursor-work`.
 Nie twórz nowych branchy per podstrona, per blok, per import ani `cursor/<nazwa>-…`.
 Nie otwieraj osobnych PR-ów dla kolejnych podstron — commituj i pushuj na `cursor-work`.
@@ -138,6 +140,7 @@ Theme root: `wp-content/themes/bergermann` (Sage 11 + Acorn 5, PHP >= 8.2, names
 
 | Ścieżka | Zawartość |
 |---|---|
+| `osf-import/` | przenośny kit: Figma → JSON → `wp osf page/post import` (kopiuj cały folder do innego Sage) |
 | `app/Blocks/*.php` | 35 bloków ACF Composer (`Log1x\AcfComposer\Block`) |
 | `app/Options/*.php` | strony opcji ACF (`OCta`, `OReviews`, `OCertificates`, `OLogos`) |
 | `app/Fields/*.php` | grupy pól (`ThemeSettings`, `OfferFields`, `PostCategory`) |
@@ -181,6 +184,8 @@ wp acorn view:clear       # gdy Blade zwraca stary widok
 wp osf page import resources/imports/<slug>.json   # lokalnie u użytkownika: strona-szkic z blokami i treścią
 wp osf offer import resources/imports/offers/<slug>.json   # lokalnie: wpis CPT oferta (bloki ACF)
 wp osf post import resources/imports/posts/<slug>.json   # lokalnie: wpis-szkic (treść z Figmy, nie strona)
+php osf-import/tests/test-page-import.php          # testy importera (bez WP)
+php osf-import/tests/test-post-import.php
 ```
 
 Node >= 20.

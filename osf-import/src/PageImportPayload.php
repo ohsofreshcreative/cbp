@@ -232,7 +232,7 @@ class PageImportPayload
 	{
 		$studly = str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $slug)));
 
-		return dirname(__DIR__) . '/Blocks/' . $studly . '.php';
+		return OsfImportConfig::blocksPath() . '/' . $studly . '.php';
 	}
 
 	/**
@@ -242,16 +242,10 @@ class PageImportPayload
 	{
 		$names = array_column($blocks, 'block');
 
-		if ($pageSlug === 'b2c' && in_array('solutions', $names, true)) {
-			throw new PageImportException(
-				'Strona B2C: ramka Wehelp z Figmy to blok wehelp, nie solutions. Popraw JSON (resources/imports/b2c.json).'
-			);
-		}
-
-		if ($pageSlug === 'b2b' && in_array('wehelp', $names, true)) {
-			throw new PageImportException(
-				'Strona B2B: ramka Solutions z Figmy to blok solutions, nie wehelp. Popraw JSON (resources/imports/b2b.json).'
-			);
+		foreach (OsfImportConfig::forbiddenBlocks() as $rule) {
+			if ($pageSlug === $rule['page'] && in_array($rule['block'], $names, true)) {
+				throw new PageImportException($rule['message']);
+			}
 		}
 	}
 
@@ -266,7 +260,7 @@ class PageImportPayload
 
 			if ($phpCount < 5) {
 				$hint = sprintf(
-					' Katalog %s ma %d plików PHP — na cursor-work powinno ich być ~40 (Hero, Banner, Action, …). W katalogu motywu: git fetch origin && git checkout origin/cursor-work -- app/Blocks resources/views/blocks',
+					' Katalog %s ma %d plików PHP — importer szuka klas ACF Composer w app/Blocks motywu (Sage).',
 					$dir,
 					$phpCount
 				);

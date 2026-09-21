@@ -293,7 +293,7 @@ class PageImportAssets
 				$candidates[] = get_theme_file_path($src);
 			}
 
-			$themeRoot = dirname(__DIR__, 2);
+			$themeRoot = OsfImportConfig::themeRoot();
 			$candidates[] = $themeRoot . DIRECTORY_SEPARATOR . $src;
 
 			if ($this->sourceDir !== null) {

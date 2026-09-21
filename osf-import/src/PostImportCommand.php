@@ -3,26 +3,26 @@
 namespace App\Cli;
 
 use App\Support\PageImportException;
-use App\Support\PageImporter;
-use App\Support\PageImportPayload;
+use App\Support\PostImporter;
+use App\Support\PostImportPayload;
 
-class PageImportCommand
+class PostImportCommand
 {
 	/**
-	 * Importuje stronę Gutenberg z pliku JSON (bloki ACF).
+	 * Importuje wpis (post) z pliku JSON (treść z Figmy, nie strona Gutenberg).
 	 *
 	 * ## OPTIONS
 	 *
 	 * <file>
-	 * : Ścieżka do pliku JSON ze stroną.
+	 * : Ścieżka do pliku JSON ze wpisem.
 	 *
 	 * [--porcelain]
-	 * : Wypisz tylko ID utworzonej strony.
+	 * : Wypisz tylko ID utworzonego wpisu.
 	 *
 	 * ## EXAMPLES
 	 *
-	 *     wp osf page import resources/cli/hero-page.example.json
-	 *     wp osf offer import resources/imports/offers/ekspertyza-poligraficzna-na-potrzeby-postepowania.json
+	 *     wp osf post import osf-import/examples/post.json
+	 *     wp osf post import resources/imports/posts/czy-wariograf-wykrywa-klamstwo.json
 	 *
 	 * @when after_wp_load
 	 *
@@ -34,15 +34,14 @@ class PageImportCommand
 		$file = $args[0] ?? '';
 
 		try {
-			$payload = PageImportPayload::fromFile($this->resolvePath((string) $file));
-			$importer = new PageImporter();
-			$id = $importer->import($payload);
+			$payload = PostImportPayload::fromFile($this->resolvePath((string) $file));
+			$id = (new PostImporter())->import($payload);
 		} catch (PageImportException $e) {
 			\WP_CLI::error($e->getMessage());
 			return;
 		} catch (\Throwable $e) {
 			\WP_CLI::error(sprintf(
-				'Błąd importu: %s (%s:%d)',
+				'Błąd importu wpisu: %s (%s:%d)',
 				$e->getMessage(),
 				$e->getFile(),
 				$e->getLine()
@@ -57,25 +56,14 @@ class PageImportCommand
 			return;
 		}
 
-		$kind = $payload->postType === 'offer' ? 'wpis CPT oferta' : 'stronę';
-		$action = $importer->updated ? 'Zaktualizowano' : 'Utworzono';
-
-		\WP_CLI::success(sprintf(
-			'%s %s o ID %d.',
-			$action,
-			$kind,
-			$id
-		));
+		\WP_CLI::success(sprintf('Utworzono wpis o ID %d.', $id));
 		\WP_CLI::log(sprintf('ID: %d', $id));
 		\WP_CLI::log(sprintf('Tytuł: %s', $payload->title));
 		\WP_CLI::log(sprintf('Slug: %s', $payload->slug));
-		\WP_CLI::log(sprintf('Typ: %s', $payload->postType));
-		\WP_CLI::log(sprintf('Bloki: %s', implode(', ', array_column($payload->blocks, 'block'))));
+		\WP_CLI::log(sprintf('Status: %s (szkic — w Kokpicie: Wpisy → Wszystkie wpisy, filtr Szkice)', $payload->status));
 
-		if ($payload->postType === 'offer') {
-			\WP_CLI::log(sprintf('Status: %s (szkic — w Kokpicie: Oferta → Wszystkie oferty, filtr Szkice)', $payload->status));
-		} else {
-			\WP_CLI::log(sprintf('Status: %s (szkic — w Kokpicie: Strony → Wszystkie strony, filtr Szkice)', $payload->status));
+		if ($payload->author !== null) {
+			\WP_CLI::log(sprintf('Autor z JSON: %s (przypisany tylko gdy istnieje użytkownik o tej nazwie wyświetlanej)', $payload->author));
 		}
 
 		if (function_exists('get_edit_post_link')) {

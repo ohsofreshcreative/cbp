@@ -217,7 +217,7 @@ class PostImportPayload
 				$candidates[] = $cwd . DIRECTORY_SEPARATOR . $file;
 			}
 
-			$themeRoot = dirname(__DIR__, 2);
+			$themeRoot = OsfImportConfig::themeRoot();
 			$candidates[] = $themeRoot . DIRECTORY_SEPARATOR . $file;
 		}
 

@@ -1,2 +1,2 @@
 require:
-  - app/cli.php
+  - osf-import/bootstrap.php
