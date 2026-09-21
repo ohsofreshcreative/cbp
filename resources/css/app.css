@@ -183,13 +183,23 @@
 @import '../css/blocks/slider.scss';
 @import '../css/blocks/map.scss';
 @import '../css/blocks/catalogues.scss';
-@import '../css/blocks/action.scss';
 @import '../css/blocks/what.scss';
 @import '../css/blocks/offers.scss';
 @import '../css/blocks/faq.scss';
+@import '../css/blocks/problem.scss';
+@import '../css/blocks/solutions.scss';
+@import '../css/blocks/wehelp.scss';
+@import '../css/blocks/blog.scss';
+@import '../css/blocks/action.scss';
+@import '../css/blocks/reach.scss';
+@import '../css/blocks/explore.scss';
+@import '../css/blocks/gains.scss';
+@import '../css/blocks/tiles.scss';
+@import '../css/blocks/certificates.scss';
+@import '../css/blocks/myth.scss';
+@import '../css/blocks/cards.scss';
 /*-- NOT USED ---*/
 @import '../css/blocks/accordion.scss';
-@import '../css/blocks/cards.scss';
 @import '../css/blocks/category-posts.scss';
 @import '../css/blocks/contact.scss';
 @import '../css/blocks/image.scss';

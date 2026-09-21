@@ -1,0 +1,35 @@
+{
+  "title": "Contact",
+  "slug": "contact",
+  "status": "draft",
+  "blocks": [
+    {
+      "block": "contact",
+      "data": {
+        "g_contact_1": {
+          "header": "Masz sprawę wymagającą <strong>specjalistycznej</strong> analizy?",
+          "text": "<p>Opowiedz nam o sytuacji. Podczas pierwszej konsultacji określimy zakres problemu, odpowiemy na pytania i ocenimy, czy badanie poligraficzne może być właściwym narzędziem.</p>",
+          "phone": "+48 505 636 646",
+          "mail": "centrumbadanpoligraficznych@gmail.com",
+          "address": "ul. Mrówcza 243 lok 107, 04-697 Warszawa",
+          "benefits": [
+            {
+              "text": "Poufna konsultacja"
+            },
+            {
+              "text": "Indywidualna analiza każdej sprawy"
+            },
+            {
+              "text": "Bez zobowiązań"
+            }
+          ]
+        },
+        "g_contact_2": {
+          "shortcode": "[contact-form-7 id=\"f12c470\" title=\"Contact form 1\"]"
+        },
+        "background": "none",
+        "nomt": true
+      }
+    }
+  ]
+}

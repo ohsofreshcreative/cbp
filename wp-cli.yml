@@ -1,0 +1,2 @@
+require:
+  - osf-import/bootstrap.php

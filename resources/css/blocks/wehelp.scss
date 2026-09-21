@@ -1,0 +1,33 @@
+.b-wehelp {
+	overflow: hidden;
+
+	.__point + .__point {
+		border-top: 1px dashed var(--color-primary-dark);
+	}
+
+	.__point {
+		padding-top: 16px;
+	}
+
+	.__img {
+		width: 512px;
+		height: 512px;
+		max-width: 100%;
+		overflow: hidden;
+		border-radius: 50%;
+	}
+
+	.__img img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.__ekg {
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		width: 409px;
+		height: 324px;
+	}
+}

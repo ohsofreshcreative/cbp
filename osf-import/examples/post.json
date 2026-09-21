@@ -1,0 +1,12 @@
+{
+  "title": "Wpis testowy importu",
+  "slug": "wpis-testowy-importu",
+  "status": "draft",
+  "date": "2026-06-12",
+  "author": "Katarzyna Jóźwiak",
+  "categories": [
+    "Wiedza i metodologia"
+  ],
+  "excerpt": "Krótki excerpt testowy.",
+  "content": "<!-- wp:paragraph -->\n<p>Treść testowa wpisu.</p>\n<!-- /wp:paragraph -->\n\n<!-- wp:heading {\"level\":2} -->\n<h2>Nagłówek testowy</h2>\n<!-- /wp:heading -->"
+}

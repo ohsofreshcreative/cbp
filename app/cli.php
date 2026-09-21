@@ -1,13 +1,6 @@
 <?php
 
 /**
- * Rejestracja komend WP-CLI motywu.
+ * Kompatybilność wsteczna — prawdziwy bootstrap jest w osf-import/.
  */
-
-namespace App;
-
-if (!defined('WP_CLI') || !WP_CLI) {
-	return;
-}
-
-\WP_CLI::add_command('osf page', \App\Cli\PageImportCommand::class);
+require_once dirname(__DIR__) . '/osf-import/bootstrap.php';

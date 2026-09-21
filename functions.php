@@ -72,10 +72,11 @@ function allow_only_selected_blocks($allowed_block_types, $editor_context)
 			}
 		}
 
-		// Dodatkowo dopuszczamy akapit i nagłówek
+		// Dodatkowo dopuszczamy akapit, nagłówek, listę i HTML (embedy w treści wpisu)
 		$allowed_blocks[] = 'core/paragraph';
 		$allowed_blocks[] = 'core/heading';
 		$allowed_blocks[] = 'core/list';
+		$allowed_blocks[] = 'core/html';
 
 		return $allowed_blocks;
 	}
