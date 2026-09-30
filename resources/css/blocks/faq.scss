@@ -33,6 +33,12 @@
 	}
 
 	.__content {
+		height: 0;
+		overflow: hidden;
+		transition: height 0.35s ease;
+	}
+
+	.__content-inner {
 		padding: 0 40px 32px;
 	}
 

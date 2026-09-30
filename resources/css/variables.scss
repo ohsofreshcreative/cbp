@@ -420,8 +420,8 @@ body {
 	}
 }
 
-.section-dark {
-	background: var(--color-secondary);
+.section-gray {
+	background: var(--color-secondary-800);
 	padding: var(--smt) 0;
 
 	h1,
@@ -443,6 +443,72 @@ body {
 	ul,
 	ul li,
 	a,
+	.accordion-label {
+		color: #fff;
+	}
+
+	a:hover {
+		color: var(--color-primary-300);
+	}
+}
+
+.section-dark {
+	background: var(--color-secondary-800);
+	padding: var(--smt) 0;
+
+	h1,
+	.text-h1,
+	h2,
+	.text-h2,
+	h3,
+	.text-h3,
+	h4,
+	.text-h4,
+	h5,
+	.text-h5,
+	h6,
+	.text-h6,
+	p,
+	b,
+	strong,
+	i,
+	ul,
+	ul li,
+	a,
+	span,
+	.accordion-label {
+		color: #fff;
+	}
+
+	a:hover {
+		color: var(--color-primary-300);
+	}
+}
+
+.section-black {
+	background: var(--color-secondary-dark);
+	padding: var(--smt) 0;
+
+	h1,
+	.text-h1,
+	h2,
+	.text-h2,
+	h3,
+	.text-h3,
+	h4,
+	.text-h4,
+	h5,
+	.text-h5,
+	h6,
+	.text-h6,
+	p,
+	b,
+	strong,
+	i,
+	ul,
+	ul li,
+	a,
+	span,
 	.accordion-label {
 		color: #fff;
 	}
@@ -481,6 +547,26 @@ body {
 
 	.order2:nth-child(2) {
 		order: 1;
+	}
+}
+
+.-nmt {
+	position: relative;
+	margin-top: -24px !important;
+	z-index: 9;
+	border-top-left-radius: var(--radius) !important;
+	border-top-right-radius: var(--radius) !important;
+}
+
+/*--- !BREADCRUMBS ---*/
+
+.__breadcrumb {
+	margin-bottom: 48px;
+	font-size: 14px;
+	color: var(--color-primary-light);
+
+	a {
+		color: var(--color-primary);
 	}
 }
 
@@ -673,7 +759,7 @@ h6,
 .btn {
 	font-family: var(--btns-font);
 	font-size: var(--btns-fontsize);
-	font-weight: 400;
+	font-weight: 500;
 	color: #fff;
 	background: transparent;
 	border: 1px solid transparent;
@@ -691,7 +777,7 @@ h6,
 .btn-primary {
 	background-color: var(--color-primary);
 	border-color: var(--color-primary);
-	color: #fff;
+	color: var(--color-secondary);
 }
 
 .btn-primary:hover {
@@ -715,12 +801,12 @@ h6,
 .btn-white {
 	background-color: #FFF;
 	border-color: #FFF;
-	color: var(--color-primary);
+	color: var(--color-secondary);
 }
 
 .btn-white:hover {
-	background-color: var(--color-secondary-hover);
-	border-color: var(--color-secondary-hover);
+	background-color: var(--color-primary-hover);
+	border-color: var(--color-primary-hover);
 	color: #fff;
 }
 
@@ -940,9 +1026,9 @@ input[type='email'],
 select,
 textarea {
 	width: 100%;
-	background-color: #fff;
+	background-color: var(--color-secondary-900);
 	border: none;
-	border: 2px solid var(--color-primary);
+	border: 1px solid var(--color-primary);
 	padding: 12px 16px;
 	transition: all 0.2s ease-out;
 	border-radius: 4px;
@@ -960,7 +1046,7 @@ input[type='tel']:focus,
 input[type='email']:focus,
 textarea:focus {
 	width: 100%;
-	border: 2px dashed var(--color-primary);
+	border: 1px dashed var(--color-primary);
 	outline: none;
 	transition: all 0.2s ease-out;
 }
@@ -972,7 +1058,7 @@ textarea {
 input[type='submit'] {
 	font-size: 16px;
 	background: var(--color-primary);
-	color: #fff;
+	color: var(--color-secondary);
 	padding: var(--btns-padding);
 	display: inline-block;
 	transition: all 0.2s ease-out;
@@ -987,7 +1073,7 @@ input[type='submit'] {
 }
 
 input[type='submit']:hover {
-	color: #fff;
+	color: var(--color-secondary);
 	background: var(--color-primary-hover);
 	transition: all 0.2s ease-out;
 	border: 1px solid transparent;

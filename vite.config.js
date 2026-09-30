@@ -11,7 +11,7 @@ export default defineConfig(({ command, mode }) => {
   return {
     server: {
       host: 'cbp.local',
-      port: 5981,
+      port: 6010,
       strictPort: true,
       cors: true,
       proxy: {
@@ -23,7 +23,7 @@ export default defineConfig(({ command, mode }) => {
       hmr: {
         protocol: 'ws',
         host: 'cbp.local',
-        port: 5981,
+        port: 6010,
       },
     },
 

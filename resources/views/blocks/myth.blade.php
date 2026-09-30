@@ -25,15 +25,15 @@
                                 <h3 class="__label text-h6 text-white mt-0 mb-4">Mit</h3>
                                 @if (!empty($item['myth']))
                                     <div class="__quote flex items-start gap-2">
-                                        <svg class="__icon shrink-0 size-6 text-primary" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 5H10L7 12H10V21H2V12L4 5ZM16 5H22L19 12H22V21H14V12L16 5Z" /></svg>
+                                        <svg class="__icon shrink-0 size-6 text-primary relative -top-3!" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 5H10L7 12H10V21H2V12L4 5ZM16 5H22L19 12H22V21H14V12L16 5Z" /></svg>
                                         <p class="__text m-0 text-base md:text-xl leading-snug text-neutral-300 whitespace-pre-line wrap-anywhere">{{ $item['myth'] }}</p>
                                     </div>
                                 @endif
                             </div>
                             @if (!empty($item['explanation']))
                                 <div class="__explanation p-6 md:px-10 md:pt-6 md:pb-10">
-                                    <h4 class="__label text-h6 text-primary mt-0 mb-4">Wyjaśnienie</h4>
-                                    <p class="__text m-0 text-base md:text-xl leading-snug text-neutral-300 whitespace-pre-line wrap-anywhere">{{ $item['explanation'] }}</p>
+                                    <h4 class="__label text-h6 !text-primary mt-0 mb-4">Wyjaśnienie</h4>
+                                    <p class="__text m-0 leading-snug text-neutral-300 whitespace-pre-line wrap-anywhere">{{ $item['explanation'] }}</p>
                                 </div>
                             @endif
                         </article>

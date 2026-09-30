@@ -20,7 +20,7 @@
             "target": ""
           },
           "image": {
-            "src": "resources/imports/assets/about-hero.jpg",
+            "src": "osf-import/imports/assets/about-hero.jpg",
             "alt": "Wiedza, doświadczenie i rzetelność w służbie prawdy"
           },
           "shape": false
@@ -34,7 +34,7 @@
       "data": {
         "g_content": {
           "image": {
-            "src": "resources/imports/assets/about-problem.jpg",
+            "src": "osf-import/imports/assets/about-problem.jpg",
             "alt": "Centrum, w którym technologia spotyka się z doświadczeniem eksperta"
           },
           "header": "Centrum, w którym technologia spotyka się z doświadczeniem eksperta.",
@@ -50,7 +50,7 @@
           "label": "Poznaj ekspertkę",
           "header": "Doświadczenie i kwalifikacje",
           "image": {
-            "src": "resources/imports/assets/about-explore.jpg",
+            "src": "osf-import/imports/assets/about-explore.jpg",
             "alt": "mgr Katarzyna Jóźwiak"
           },
           "caption": "mgr Katarzyna Jóźwiak"
@@ -65,14 +65,14 @@
           },
           {
             "image": {
-              "src": "resources/imports/assets/about-explore-apa.jpg",
+              "src": "osf-import/imports/assets/about-explore-apa.jpg",
               "alt": "American Polygraph Association"
             },
             "header": "Członek stowarzyszenia American Polygraph Association"
           },
           {
             "image": {
-              "src": "resources/imports/assets/about-explore-psp.jpg",
+              "src": "osf-import/imports/assets/about-explore-psp.jpg",
               "alt": "Polskie Stowarzyszenie Poligraferów"
             },
             "header": "Członek Polskiego Stowarzyszenia Poligraferów"
@@ -97,7 +97,7 @@
         "r_cards": [
           {
             "image": {
-              "src": "resources/imports/assets/about-cards-bezstronnosc.svg",
+              "src": "osf-import/imports/assets/about-cards-bezstronnosc.svg",
               "alt": "Bezstronność"
             },
             "title": "Bezstronność",
@@ -105,7 +105,7 @@
           },
           {
             "image": {
-              "src": "resources/imports/assets/about-cards-poufnosc.svg",
+              "src": "osf-import/imports/assets/about-cards-poufnosc.svg",
               "alt": "Pełna poufność"
             },
             "title": "Pełna poufność",
@@ -113,7 +113,7 @@
           },
           {
             "image": {
-              "src": "resources/imports/assets/about-cards-podejscie.svg",
+              "src": "osf-import/imports/assets/about-cards-podejscie.svg",
               "alt": "Indywidualne podejście"
             },
             "title": "Indywidualne podejście",
@@ -121,7 +121,7 @@
           },
           {
             "image": {
-              "src": "resources/imports/assets/about-cards-standardy.svg",
+              "src": "osf-import/imports/assets/about-cards-standardy.svg",
               "alt": "Standardy"
             },
             "title": "Standardy",

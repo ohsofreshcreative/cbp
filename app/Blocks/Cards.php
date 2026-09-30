@@ -5,6 +5,7 @@ namespace App\Blocks;
 use Log1x\AcfComposer\Block;
 use StoutLogic\AcfBuilder\FieldsBuilder;
 use App\Support\SectionClasses;
+use App\Support\SectionBackgrounds;
 
 class Cards extends Block
 {
@@ -72,6 +73,12 @@ class Cards extends Block
 			->addText('section_class', [
 				'label' => 'Dodatkowe klasy CSS',
 			])
+			->addTrueFalse('bgshape', [
+				'label' => 'Kształt tła',
+				'ui' => 1,
+				'ui_on_text' => 'Tak',
+				'ui_off_text' => 'Nie',
+			])
 			->addTrueFalse('flip', [
 				'label' => 'Odwrotna kolejność',
 				'ui' => 1,
@@ -98,15 +105,7 @@ class Cards extends Block
 			])
 			->addSelect('background', [
                 'label' => 'Kolor tła',
-                'choices' => [
-                    'none' => 'Brak (domyślne)',
-                    'section-white' => 'Białe',
-                    'section-light' => 'Jasne',
-                    'section-gray' => 'Szare',
-                    'section-brand' => 'Marki',
-                    'section-gradient' => 'Gradient',
-                    'section-dark' => 'Ciemne',
-                ],
+                'choices' => SectionBackgrounds::choices(),
                 'default_value' => 'section-dark',
                 'ui' => 0, // Ulepszony interfejs
                 'allow_null' => 0,
@@ -124,6 +123,7 @@ class Cards extends Block
 			'section_id' => get_field('section_id'),
 			'section_class' => get_field('section_class'),
 
+			'bgshape' => (bool) get_field('bgshape'),
 			'flip' => (bool) get_field('flip'),
 			'wide' => (bool) get_field('wide'),
 			'nomt' => (bool) get_field('nomt'),

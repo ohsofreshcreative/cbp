@@ -9,10 +9,6 @@
 	$background => filled($background) && $background !== 'none',
 	])>
 
-	@if ($bgshape)
-	<img class="__bg-shape absolute inset-y-0 right-0 w-auto pointer-events-none" src="{{ get_template_directory_uri() }}/resources/images/bg-shape.svg" alt="">
-	@endif
-
 	<div class="__wrapper c-main relative">
 
 		@if (!empty($categories) && count($categories) > 1)

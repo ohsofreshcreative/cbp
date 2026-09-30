@@ -13,7 +13,7 @@
 /* PRIMARY (lewa kolumna – żółty) */
 .primary-sample {color:#FFD23F}
 --primary: 255 210 63;   /* #FFD23F */
---p-hover: 51 42 13;     /* #332A0D */
+--p-hover: 128 105 32;     /* #332A0D */
 
 --p-50: 255 246 217;    /* #FFF6D9 */
 --p-100: 255 240 191;   /* #FFF0BF */
@@ -65,7 +65,7 @@
 --t-dark: 50 26 48;   /* #321A30 */
 
   /* neutrals / fixed backgrounds */
-  --text-body: rgb(var(--p-800));
+  --text-body: rgb(var(--p-900));
   --gray: #2a3f50;
   --bg: #141210;
   --bg-light: rgb(var(--s-100));
@@ -136,7 +136,7 @@
   --color-secondary-lighter: var(--color-secondary-100);
 
   --color-muted: var(--color-secondary-500);
-  --gradient: linear-gradient(90deg, #2265CB 0%, #181D84 100%);
+  --gradient: linear-gradient(90deg, #0C0C0C 0%, #141414 100%);
   --gradient-light: linear-gradient(-90deg, #0E3A2D 0%, #0A533D 100%);
   --gradient-s: linear-gradient(-90deg, #DE855D 0%, #D37A51 100%);
 
@@ -193,18 +193,14 @@
 @import '../css/blocks/action.scss';
 @import '../css/blocks/reach.scss';
 @import '../css/blocks/explore.scss';
-@import '../css/blocks/gains.scss';
 @import '../css/blocks/tiles.scss';
 @import '../css/blocks/certificates.scss';
 @import '../css/blocks/myth.scss';
 @import '../css/blocks/cards.scss';
-/*-- NOT USED ---*/
 @import '../css/blocks/accordion.scss';
 @import '../css/blocks/category-posts.scss';
-@import '../css/blocks/contact.scss';
 @import '../css/blocks/image.scss';
 @import '../css/blocks/numbers.scss';
 @import '../css/blocks/overlap.scss';
 @import '../css/blocks/tabs.scss';
-
 @import '../css/blocks/offer.scss';

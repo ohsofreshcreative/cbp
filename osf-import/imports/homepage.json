@@ -8,7 +8,7 @@
       "data": {
         "g_hero": {
           "image": {
-            "src": "resources/imports/assets/homepage-hero.jpg",
+            "src": "osf-import/imports/assets/homepage-hero.jpg",
             "alt": "Pomagamy tam, gdzie liczy się prawda"
           },
           "header": "<p>Pomagamy tam, gdzie liczy się <strong>prawda.</strong></p>",
@@ -16,14 +16,14 @@
           "badges": [
             {
               "icon": {
-                "src": "resources/imports/assets/b2b-hero-badge-biegly.svg",
+                "src": "osf-import/imports/assets/b2b-hero-badge-biegly.svg",
                 "alt": "Biegła Sądowa"
               },
               "text": "Biegła Sądowa"
             },
             {
               "icon": {
-                "src": "resources/imports/assets/b2b-hero-badge-apa.svg",
+                "src": "osf-import/imports/assets/b2b-hero-badge-apa.svg",
                 "alt": "Członek American Polygraph Association"
               },
               "text": "Członek American Polygraph Association"
@@ -33,7 +33,7 @@
         "r_hero": [
           {
             "image": {
-              "src": "resources/imports/assets/homepage-hero-tile-b2b.jpg",
+              "src": "osf-import/imports/assets/homepage-hero-tile-b2b.jpg",
               "alt": "Dla firm i kancelarii"
             },
             "title": "Dla firm i kancelarii",
@@ -45,7 +45,7 @@
           },
           {
             "image": {
-              "src": "resources/imports/assets/homepage-hero-tile-b2c.jpg",
+              "src": "osf-import/imports/assets/homepage-hero-tile-b2c.jpg",
               "alt": "Dla klientów indywidualnych"
             },
             "title": "Dla klientów indywidualnych",
@@ -79,7 +79,7 @@
           "r_values": [
             {
               "icon": {
-                "src": "resources/imports/assets/values-biegly.svg",
+                "src": "osf-import/imports/assets/values-biegly.svg",
                 "alt": "Biegła sądowa"
               },
               "header": "Biegła sądowa",
@@ -87,7 +87,7 @@
             },
             {
               "icon": {
-                "src": "resources/imports/assets/values-apa.svg",
+                "src": "osf-import/imports/assets/values-apa.svg",
                 "alt": "Metodyka APA"
               },
               "header": "Metodyka APA",
@@ -95,7 +95,7 @@
             },
             {
               "icon": {
-                "src": "resources/imports/assets/values-poufnosc.svg",
+                "src": "osf-import/imports/assets/values-poufnosc.svg",
                 "alt": "Pełna poufność"
               },
               "header": "Pełna poufność",
@@ -103,7 +103,7 @@
             },
             {
               "icon": {
-                "src": "resources/imports/assets/values-podejscie.svg",
+                "src": "osf-import/imports/assets/values-podejscie.svg",
                 "alt": "Empatyczne podejście"
               },
               "header": "Empatyczne podejście",
@@ -111,7 +111,7 @@
             },
             {
               "icon": {
-                "src": "resources/imports/assets/values-aparatura.svg",
+                "src": "osf-import/imports/assets/values-aparatura.svg",
                 "alt": "Nowoczesna aparatura"
               },
               "header": "Nowoczesna aparatura",
@@ -119,7 +119,7 @@
             },
             {
               "icon": {
-                "src": "resources/imports/assets/values-bezstronnosc.svg",
+                "src": "osf-import/imports/assets/values-bezstronnosc.svg",
                 "alt": "Bezstronność"
               },
               "header": "Bezstronność",
@@ -171,7 +171,7 @@
       "data": {
         "g_about": {
           "image": {
-            "src": "resources/imports/assets/homepage-about.jpg",
+            "src": "osf-import/imports/assets/homepage-about.jpg",
             "alt": "mgr Katarzyna Jóźwiak"
           },
           "label": "O mnie",

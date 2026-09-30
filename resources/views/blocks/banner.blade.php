@@ -40,7 +40,7 @@
 				@if (!empty($g_banner['button1']))
 				<x-button
 					:href="$g_banner['button1']['url']"
-					variant="secondary"
+					variant="primary"
 					class=""
 					data-gsap-element="btn">
 					{{ $g_banner['button1']['title'] }}

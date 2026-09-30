@@ -1,2 +1,23 @@
 .b-problem {
+  .__txt,
+  .__txt p {
+    color: var(--color-secondary-400);
+  }
+
+  .__txt > p {
+    padding-bottom: var(--m-title);
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+
+    &:has(> strong:first-child + br) {
+      border-top: 1px dotted var(--color-primary);
+      padding-top: var(--m-title);
+
+      > strong:first-child {
+        color: var(--color-primary-900);
+      }
+    }
+  }
 }

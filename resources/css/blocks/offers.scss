@@ -1,17 +1,13 @@
 .b-offers {
-	.__card {
-		border: 1px dashed var(--color-primary);
-		text-decoration: none;
-		color: inherit;
-	}
+	.__col:nth-child(even) {
+		@media (min-width: 1024px) {
+			figure {
+				order: 2;
+			}
 
-	.__more {
-		font-size: 14px;
-	}
-
-	.__icon,
-	.__ekg {
-		width: 115px;
-		height: 92px;
+			.__content {
+				order: 1;
+			}
+		}
 	}
 }

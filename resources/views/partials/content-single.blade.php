@@ -35,8 +35,13 @@ if ($matches) {
 <section data-gsap-anim="section" class="b-blog-hero relative -menu-pt">
 	<div class="__wrapper c-main">
 		<div class="__breadcrumb" data-gsap-element="header">
-			@if (function_exists('yoast_breadcrumb'))
-			{!! yoast_breadcrumb('<p id="breadcrumbs">', '</p>') !!}
+			@if (function_exists('rank_math_the_breadcrumbs'))
+			@php
+				rank_math_the_breadcrumbs([
+					'wrap_before' => '<nav aria-label="Okruszki" class="rank-math-breadcrumb"><p id="breadcrumbs">',
+					'wrap_after' => '</p></nav>',
+				]);
+			@endphp
 			@else
 			<p>
 				<a href="{{ home_url('/') }}">Strona główna</a>
@@ -53,8 +58,8 @@ if ($matches) {
 
 		<h1 data-gsap-element="header" class="text-h2 text-white">{{ get_the_title() }}</h1>
 
-		<div class="__meta flex flex-wrap gap-6">
-			<p>Autor: <span>{{ get_the_author() }}</span></p>
+		<div data-gsap-element="meta" class="__meta flex flex-wrap gap-6 text-white">
+			<!-- <p>Autor: <span>{{ get_the_author() }}</span></p> -->
 			<p>Opublikowano: <span>{{ get_the_date() }}</span></p>
 		</div>
 	</div>
@@ -70,13 +75,13 @@ if ($matches) {
 
 		<div id="tresc" @class(['__layout grid grid-cols-1 gap-8', 'md:grid-cols-[1fr_2fr]' => $matches])>
 			@if ($matches)
-			<div class="__toc relative md:sticky h-max">
-				<p class="text-h5">Spis treści</p>
+			<div data-gsap-element="toc" class="__toc relative md:sticky h-max text-white">
+				<p class="text-h5 block pb-4">Spis treści</p>
 				{!! $toc !!}
 			</div>
 			@endif
 
-			<div class="__entry">
+			<div data-gsap-element="content" class="__content __entry text-white">
 				{!! $content !!}
 			</div>
 		</div>
@@ -95,7 +100,7 @@ $related_query = new WP_Query($related_args);
 @endphp
 
 @if ($related_query->have_posts())
-<section data-gsap-anim="section" class="b-blog b-blog-related relative section-white -smt">
+<section data-gsap-anim="section" class="b-blog b-blog-related relative section-black -smt">
 	<div class="__wrapper c-main">
 		<h2 data-gsap-element="header" class="text-h2 m-header">Podobne artykuły</h2>
 		<div class="__posts grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

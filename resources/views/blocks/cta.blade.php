@@ -18,9 +18,9 @@
                 <ul class="__benefits list-none p-0 mt-8 mb-0 space-y-4">
                     @foreach ($g_octa['benefits'] as $benefit)
                         @if (!empty($benefit['text']))
-                            <li class="__benefit flex items-start gap-3 text-neutral-300">
+                            <li class="__benefit flex items-start gap-3 text-white">
                                 <svg class="size-5 shrink-0 text-primary" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
-                                <span>{{ $benefit['text'] }}</span>
+                                <span class="text-white">{{ $benefit['text'] }}</span>
                             </li>
                         @endif
                     @endforeach
@@ -38,7 +38,7 @@
             </div>
         </div>
         @if ($form && !empty($g_octa['shortcode']))
-            <div class="__form order2 min-w-0 rounded-3xl border border-primary/70 bg-neutral-900 p-6 md:p-10 shadow-xl
+            <div class="__form order2 min-w-0 rounded-3xl border border-primary/70 bg-secondary-700 p-6 md:p-10 shadow-xl
                 [&_label]:block [&_label]:text-sm [&_label]:text-primary-200 [&_label]:leading-normal
                 [&_p]:mb-5 [&_p:last-child]:mb-0
                 [&_input:not([type=checkbox]):not([type=submit])]:w-full [&_input:not([type=checkbox]):not([type=submit])]:rounded-xl [&_input:not([type=checkbox]):not([type=submit])]:border-primary/20 [&_input:not([type=checkbox]):not([type=submit])]:bg-neutral-950 [&_input:not([type=checkbox]):not([type=submit])]:text-white [&_input:not([type=checkbox]):not([type=submit])]:px-4 [&_input:not([type=checkbox]):not([type=submit])]:py-4

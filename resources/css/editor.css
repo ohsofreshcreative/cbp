@@ -179,9 +179,34 @@
  * bez tego sąsiednie sekcje zlewają się na białej kanwie.
  */
 .editor-styles-wrapper .block-editor-block-list__block[data-type^="acf/"] {
+	position: relative;
 	border: 1px solid #e3e7ea !important;
-	border-radius: 6px !important;
+	border-radius: 16px !important;
 	padding: 14px !important;
+	overflow: hidden !important;
+}
+
+/**
+ * Znacznik "brak marginesu górnego" (pole `nomt`).
+ *
+ * `nomt` nie trafia do DOM jako osobny atrybut — włącza tylko klasę `!mt-0`
+ * na sekcji (SectionClasses::fromMap). Łapiemy to przez :has(), więc znacznik
+ * pojawia się automatycznie, bez zmian w blokach czy widokach.
+ */
+.editor-styles-wrapper .block-editor-block-list__block[data-type^="acf/"]:has([data-gsap-anim="section"].\!mt-0)::after {
+	content: "Brak marginesu górnego";
+	position: absolute;
+	inset: 8px 8px auto auto; /* jawnie wszystkie krawędzie — Gutenberg ma własne ::after z inset: 0 na .is-selected, samo top/right by się z tym zlało po zaznaczeniu bloku */
+	width: max-content;
+	height: fit-content;
+	padding: 4px 10px;
+	border-radius: 4px;
+	background: #fde68a;
+	color: #7c4a03;
+	font: 600 11px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+	letter-spacing: 0.02em;
+	z-index: 1;
+	pointer-events: none;
 }
 
 /*--- SZKIC: SPŁASZCZENIE DEKORACJI ---*/
@@ -233,3 +258,4 @@
 .editor-styles-wrapper {
 	background-color: #fff !important;
 }
+

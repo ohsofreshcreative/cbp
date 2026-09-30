@@ -5,10 +5,11 @@ namespace App\Blocks;
 use Log1x\AcfComposer\Block;
 use StoutLogic\AcfBuilder\FieldsBuilder;
 use App\Support\SectionClasses;
+use App\Support\SectionBackgrounds;
 
 class Content extends Block
 {
-	public $name = 'Tekst oraz zdjęcie';
+	public $name = 'Tekst oraz zdjęcie2';
 	public $description = 'content';
 	public $slug = 'content';
 	public $category = 'formatting';
@@ -37,6 +38,7 @@ public $supports = [
 				'return_format' => 'array',
 				'preview_size' => 'thumbnail',
 			])
+			->addText('title', ['label' => 'Tytuł'])
 			->addText('header', ['label' => 'Nagłówek'])
 			->addWysiwyg('text', [
 				'label' => 'Treść',
@@ -49,7 +51,7 @@ public $supports = [
 				'return_format' => 'array',
 			])
 			->addLink('button2', [
-				'label' => 'Przycisk #2',
+				'label' => 'Przycisk #22',
 				'return_format' => 'array',
 			])
 			->endGroup()
@@ -101,14 +103,7 @@ public $supports = [
 			])
 			->addSelect('background', [
 				'label' => 'Kolor tła',
-				'choices' => [
-					'none' => 'Brak (domyślne)',
-					'section-white' => 'Białe',
-					'section-light' => 'Jasne',
-					'section-brand' => 'Marki',
-					'section-gradient' => 'Gradient',
-					'section-dark' => 'Ciemne',
-				],
+				'choices' => SectionBackgrounds::choices(['section-gray']),
 				'default_value' => 'none',
 				'ui' => 0, // Ulepszony interfejs
 				'allow_null' => 0,

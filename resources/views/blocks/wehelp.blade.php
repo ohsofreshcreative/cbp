@@ -21,7 +21,7 @@
 				<div data-gsap-element="card" class="__point">
 					<div class="__txt">
 						@if (!empty($item['header']))
-						<p class="text-primary">{{ $item['header'] }}</p>
+						<p class="text-h6 !text-primary mb-2">{{ $item['header'] }}</p>
 						@endif
 						@if (!empty($item['text']))
 						{!! $item['text'] !!}

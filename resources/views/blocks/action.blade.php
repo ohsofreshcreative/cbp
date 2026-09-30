@@ -1,9 +1,8 @@
 <!--- action -->
 
 <section
-	data-gsap-anim="section"
 	@if(!empty($section_id)) id="{{ $section_id }}" @endif
-	@class([ 'b-action relative' ,
+	@class([ 'b-action relative !mt-10' ,
 	$sectionClass=> filled($sectionClass),
 	$section_class => filled($section_class),
 	$background => filled($background) && $background !== 'none',
@@ -21,7 +20,7 @@
 
 			<div class="__content relative z-2 w-full md:w-1/2">
 				@if (!empty($g_action['header']))
-				<p data-gsap-element="header" class="__header m-0">{{ $g_action['header'] }}</p>
+				<p data-gsap-element="header" class="__header text-h4 m-0">{{ $g_action['header'] }}</p>
 				@endif
 
 				@if (!empty($g_action['text']))

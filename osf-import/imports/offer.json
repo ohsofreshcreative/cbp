@@ -20,7 +20,7 @@
             "target": ""
           },
           "image": {
-            "src": "resources/imports/assets/offer-hero.jpg",
+            "src": "osf-import/imports/assets/offer-hero.jpg",
             "alt": "Profesjonalne badania i ekspertyzy, gdy liczy się prawda"
           },
           "shape": false

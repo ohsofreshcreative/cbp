@@ -4,6 +4,7 @@ namespace App\Blocks;
 
 use Log1x\AcfComposer\Block;
 use StoutLogic\AcfBuilder\FieldsBuilder;
+use App\Support\SectionBackgrounds;
 
 class Tabs extends Block
 {
@@ -102,15 +103,7 @@ class Tabs extends Block
 			])
 			->addSelect('background', [
 				'label' => 'Kolor tła',
-				'choices' => [
-					'none' => 'Brak (domyślne)',
-					'section-white' => 'Białe',
-					'section-light' => 'Jasne',
-					'section-gray' => 'Szare',
-					'section-brand' => 'Marki',
-					'section-gradient' => 'Gradient',
-					'section-dark' => 'Ciemne',
-				],
+				'choices' => SectionBackgrounds::choices(),
 				'default_value' => 'none',
 				'ui' => 0, // Ulepszony interfejs
 				'allow_null' => 0,

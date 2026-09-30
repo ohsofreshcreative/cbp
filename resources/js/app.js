@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (document.querySelector('.b-slider')) import('./blocks/slider');
   if (document.querySelector('.b-catalogues')) import('./blocks/catalogues');
   if (document.querySelector('.b-blog-single')) import('./blocks/blog');
+  if (document.querySelector('.b-faq')) import('./blocks/faq');
 });
 
 /*--- NOT USED ---*/

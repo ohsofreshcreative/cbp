@@ -15,7 +15,7 @@
             "target": ""
           },
           "image": {
-            "src": "resources/imports/assets/b2b-hero.jpg",
+            "src": "osf-import/imports/assets/b2b-hero.jpg",
             "alt": "Profesjonalne wsparcie w sprawach wymagających weryfikacji"
           },
           "shape": false
@@ -33,7 +33,7 @@
         "r_problem": [
           {
             "image": {
-              "src": "resources/imports/assets/b2b-problem-01.jpg",
+              "src": "osf-import/imports/assets/b2b-problem-01.jpg",
               "alt": "Przedsiębiorstwa i kancelarie"
             },
             "header": "Przedsiębiorstwa i kancelarie",
@@ -46,7 +46,7 @@
           },
           {
             "image": {
-              "src": "resources/imports/assets/b2b-problem-02.jpg",
+              "src": "osf-import/imports/assets/b2b-problem-02.jpg",
               "alt": "Sądy i organy ścigania"
             },
             "header": "Sądy i organy ścigania",
@@ -95,7 +95,7 @@
       "data": {
         "g_reach": {
           "image": {
-            "src": "resources/imports/assets/b2b-reach.jpg",
+            "src": "osf-import/imports/assets/b2b-reach.jpg",
             "alt": "Nie każda sprawa wymaga badania."
           },
           "header": "<p>Nie każda sprawa wymaga badania.</p>",
@@ -151,7 +151,7 @@
       "data": {
         "g_values": {
           "image": {
-            "src": "resources/imports/assets/b2b-values.jpg",
+            "src": "osf-import/imports/assets/b2b-values.jpg",
             "alt": "Dlaczego Centrum Badań Poligraficznych?"
           },
           "label": "Wartości",
@@ -160,7 +160,7 @@
           "r_values": [
             {
               "icon": {
-                "src": "resources/imports/assets/values-biegly.svg",
+                "src": "osf-import/imports/assets/values-biegly.svg",
                 "alt": "Biegła sądowa"
               },
               "header": "Biegła sądowa",
@@ -168,7 +168,7 @@
             },
             {
               "icon": {
-                "src": "resources/imports/assets/values-apa.svg",
+                "src": "osf-import/imports/assets/values-apa.svg",
                 "alt": "Metodyka APA"
               },
               "header": "Metodyka APA",
@@ -176,7 +176,7 @@
             },
             {
               "icon": {
-                "src": "resources/imports/assets/values-poufnosc.svg",
+                "src": "osf-import/imports/assets/values-poufnosc.svg",
                 "alt": "Pełna poufność"
               },
               "header": "Pełna poufność",
@@ -184,7 +184,7 @@
             },
             {
               "icon": {
-                "src": "resources/imports/assets/values-podejscie.svg",
+                "src": "osf-import/imports/assets/values-podejscie.svg",
                 "alt": "Indywidualne podejście"
               },
               "header": "Indywidualne podejście",
@@ -192,7 +192,7 @@
             },
             {
               "icon": {
-                "src": "resources/imports/assets/values-aparatura.svg",
+                "src": "osf-import/imports/assets/values-aparatura.svg",
                 "alt": "Nowoczesna aparatura"
               },
               "header": "Nowoczesna aparatura",
@@ -200,7 +200,7 @@
             },
             {
               "icon": {
-                "src": "resources/imports/assets/values-bezstronnosc.svg",
+                "src": "osf-import/imports/assets/values-bezstronnosc.svg",
                 "alt": "Bezstronność"
               },
               "header": "Bezstronność",

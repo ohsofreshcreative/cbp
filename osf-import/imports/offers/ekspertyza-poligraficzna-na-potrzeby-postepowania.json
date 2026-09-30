@@ -15,7 +15,7 @@
             "target": ""
           },
           "image": {
-            "src": "resources/imports/assets/offer-single-hero.jpg",
+            "src": "osf-import/imports/assets/offer-single-hero.jpg",
             "alt": "Ekspertyza poligraficzna na potrzeby postępowania"
           },
           "shape": false
@@ -33,7 +33,7 @@
         "r_problem": [
           {
             "image": {
-              "src": "resources/imports/assets/offer-single-problem-01.jpg",
+              "src": "osf-import/imports/assets/offer-single-problem-01.jpg",
               "alt": "Gdy w postępowaniu pojawiają się istotne rozbieżności"
             },
             "header": "Gdy w postępowaniu pojawiają się istotne rozbieżności",
@@ -46,7 +46,7 @@
           },
           {
             "image": {
-              "src": "resources/imports/assets/offer-single-problem-02.jpg",
+              "src": "osf-import/imports/assets/offer-single-problem-02.jpg",
               "alt": "Przykładowe sytuacje"
             },
             "header": "Przykładowe sytuacje",
@@ -61,7 +61,7 @@
       "data": {
         "g_content": {
           "image": {
-            "src": "resources/imports/assets/offer-single-solution.jpg",
+            "src": "osf-import/imports/assets/offer-single-solution.jpg",
             "alt": "Badanie poligraficzne jako element specjalistycznej analizy"
           },
           "header": "Badanie poligraficzne jako element specjalistycznej analizy",
@@ -113,7 +113,7 @@
           "header": "Co daje specjalistyczna ekspertyza?",
           "text": "<p>Badanie poligraficzne nie zastępuje innych dowodów ani czynności procesowych. Może natomiast dostarczyć dodatkowych informacji, które pomagają w szerszej analizie określonego zagadnienia.</p>",
           "image": {
-            "src": "resources/imports/assets/offer-single-gains.jpg",
+            "src": "osf-import/imports/assets/offer-single-gains.jpg",
             "alt": ""
           }
         },
@@ -149,7 +149,7 @@
           "label": "Kompetencje eksperta",
           "header": "Ekspertyza wymaga więcej niż odpowiedniej aparatury",
           "image": {
-            "src": "resources/imports/assets/offer-single-tiles.jpg",
+            "src": "osf-import/imports/assets/offer-single-tiles.jpg",
             "alt": "mgr Katarzyna Jóźwiak"
           },
           "caption": "mgr Katarzyna Jóźwiak"
@@ -159,7 +159,7 @@
             "header": "Biegła sądowa",
             "text": "<p>Opinia przygotowana zgodnie z wymaganiami wymiaru sprawiedliwości.</p>",
             "icon": {
-              "src": "resources/imports/assets/tiles-biegly.svg",
+              "src": "osf-import/imports/assets/tiles-biegly.svg",
               "alt": "Biegła sądowa"
             }
           },
@@ -167,7 +167,7 @@
             "header": "Standardy APA",
             "text": "<p>Badania prowadzone są z uwzględnieniem standardów American Polygraph Association.</p>",
             "icon": {
-              "src": "resources/imports/assets/tiles-apa.svg",
+              "src": "osf-import/imports/assets/tiles-apa.svg",
               "alt": "Standardy APA"
             }
           },
@@ -175,7 +175,7 @@
             "header": "Pełna poufność",
             "text": "<p>Informacje dotyczące sprawy oraz dane przekazane podczas współpracy są traktowane z zachowaniem najwyższych standardów poufności.</p>",
             "icon": {
-              "src": "resources/imports/assets/tiles-poufnosc.svg",
+              "src": "osf-import/imports/assets/tiles-poufnosc.svg",
               "alt": "Pełna poufność"
             }
           },
@@ -183,7 +183,7 @@
             "header": "Bezstronność",
             "text": "<p>Każde badanie koncentruje się na określonym przedmiocie i nie zakłada z góry konkretnego wyniku.</p>",
             "icon": {
-              "src": "resources/imports/assets/tiles-bezstronnosc.svg",
+              "src": "osf-import/imports/assets/tiles-bezstronnosc.svg",
               "alt": "Bezstronność"
             }
           }

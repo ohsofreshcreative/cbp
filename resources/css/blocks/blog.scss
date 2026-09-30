@@ -64,10 +64,6 @@
 .b-blog-hero {
 	padding-bottom: 64px;
 
-	.__breadcrumb {
-		margin-bottom: 48px;
-	}
-
 	.__meta span {
 		color: var(--color-primary);
 	}
@@ -76,9 +72,24 @@
 .b-blog-single {
 	.__toc {
 		top: 8rem;
+
+		.toc a {
+			color: #fff;
+		}
 	}
 
 	.__entry {
+		a {
+			color: #fff;
+			text-decoration: underline;
+		}
+
+		ul,
+		ol,
+		li {
+			color: #fff;
+		}
+
 		h2,
 		h2 span,
 		h3,

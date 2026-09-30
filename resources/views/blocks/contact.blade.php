@@ -35,8 +35,13 @@
 
 	<div class="__wrapper c-main relative z-10 pt-10">
 		<div class="__breadcrumb" data-gsap-element="header">
-			@if (function_exists('yoast_breadcrumb'))
-			{!! yoast_breadcrumb('<p id="breadcrumbs">', '</p>') !!}
+			@if (function_exists('rank_math_the_breadcrumbs'))
+			@php
+				rank_math_the_breadcrumbs([
+					'wrap_before' => '<nav aria-label="Okruszki" class="rank-math-breadcrumb"><p id="breadcrumbs">',
+					'wrap_after' => '</p></nav>',
+				]);
+			@endphp
 			@else
 			<p>
 				<a href="{{ home_url('/') }}">Homepage</a>
@@ -45,7 +50,7 @@
 			@endif
 		</div>
 
-		<div class="relative grid grid-cols-1 lg:grid-cols-2 items-center">
+		<div class="relative grid grid-cols-1 lg:grid-cols-2 items-center gap-10">
 			<div class="__content flex flex-col gap-8">
 				<div>
 					@if (!empty($g_contact_1['header']))
@@ -53,25 +58,25 @@
 					@endif
 
 					@if (!empty($g_contact_1['text']))
-					<div data-gsap-element="txt" class="__txt text-neutral-400">{!! wp_kses_post($g_contact_1['text']) !!}</div>
+					<div data-gsap-element="txt" class="__txt text-neutral-200">{!! wp_kses_post($g_contact_1['text']) !!}</div>
 					@endif
 				</div>
 
 				<div class="__links flex flex-col gap-4">
-					@if (!empty($g_contact_1['mail']))
-					<a data-gsap-element="txt" class="__link flex items-center gap-4 text-primary" href="mailto:{{ $g_contact_1['mail'] }}">
-						<img class="shrink-0" src="{{ $theme_uri }}/resources/images/contact-icon-mail.svg" alt="" width="28" height="28" />
-						<span>{{ $g_contact_1['mail'] }}</span>
-					</a>
-					@endif
 					@if (!empty($g_contact_1['phone']))
-					<a data-gsap-element="txt" class="__link flex items-center gap-4 text-primary" href="tel:{{ preg_replace('/[^0-9+]/', '', $g_contact_1['phone']) }}">
+					<a data-gsap-element="txt" class="__link flex items-center gap-4 !text-primary" href="tel:{{ preg_replace('/[^0-9+]/', '', $g_contact_1['phone']) }}">
 						<img class="shrink-0" src="{{ $theme_uri }}/resources/images/contact-icon-phone.svg" alt="" width="28" height="28" />
 						<span>{{ $g_contact_1['phone'] }}</span>
 					</a>
 					@endif
+					@if (!empty($g_contact_1['mail']))
+					<a data-gsap-element="txt" class="__link flex items-center gap-4 !text-primary" href="mailto:{{ $g_contact_1['mail'] }}">
+						<img class="shrink-0" src="{{ $theme_uri }}/resources/images/contact-icon-mail.svg" alt="" width="28" height="28" />
+						<span>{{ $g_contact_1['mail'] }}</span>
+					</a>
+					@endif
 					@if (!empty($g_contact_1['address']))
-					<p data-gsap-element="txt" class="__link flex items-center gap-4 text-primary m-0">
+					<p data-gsap-element="txt" class="__link flex items-center gap-4 !text-primary m-0">
 						<img class="shrink-0" src="{{ $theme_uri }}/resources/images/contact-icon-pin.svg" alt="" width="28" height="28" />
 						<span>{!! wp_kses($g_contact_1['address'], ['br' => []]) !!}</span>
 					</p>
@@ -84,7 +89,7 @@
 					@if (!empty($benefit['text']))
 					<li class="__benefit flex items-center gap-3" data-gsap-element="txt">
 						<img class="shrink-0" src="{{ $theme_uri }}/resources/images/contact-icon-check.svg" alt="" width="18" height="18" />
-						<span>{{ $benefit['text'] }}</span>
+						<span class="text-white">{{ $benefit['text'] }}</span>
 					</li>
 					@endif
 					@endforeach

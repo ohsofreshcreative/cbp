@@ -6,40 +6,24 @@ class PageImportPayload
 {
 	public const STATUSES = ['draft', 'publish', 'pending', 'private'];
 
-	public const POST_TYPES = ['page', 'offer'];
-
 	public string $title;
 
 	public string $slug;
 
 	public string $status;
 
-	public string $postType;
-
-	/** @var array<string, list<string>> */
-	public array $terms;
-
 	public ?string $sourceDir;
 
 	/** @var list<array{block: string, data: array<string, mixed>}> */
 	public array $blocks;
 
-	private function __construct(
-		string $title,
-		string $slug,
-		string $status,
-		array $blocks,
-		?string $sourceDir = null,
-		string $postType = 'page',
-		array $terms = []
-	) {
+	private function __construct(string $title, string $slug, string $status, array $blocks, ?string $sourceDir = null)
+	{
 		$this->title = $title;
 		$this->slug = $slug;
 		$this->status = $status;
 		$this->blocks = $blocks;
 		$this->sourceDir = $sourceDir;
-		$this->postType = $postType;
-		$this->terms = $terms;
 	}
 
 	public static function fromFile(string $path): self
@@ -133,55 +117,7 @@ class PageImportPayload
 			$blocks[] = self::normalizeBlock($item, (int) $index);
 		}
 
-		self::assertPageBlockMapping($slug, $blocks);
-
-		$postType = $data['post_type'] ?? 'page';
-
-		if (!is_string($postType) || $postType === '') {
-			throw new PageImportException('Pole "post_type" musi być stringiem.');
-		}
-
-		$postType = strtolower(trim($postType));
-
-		if (!in_array($postType, self::POST_TYPES, true)) {
-			throw new PageImportException(sprintf(
-				'Nieobsługiwany post_type "%s". Dozwolone: %s.',
-				$postType,
-				implode(', ', self::POST_TYPES)
-			));
-		}
-
-		$terms = [];
-
-		if (array_key_exists('terms', $data) && $data['terms'] !== null) {
-			if (!is_array($data['terms']) || self::isList($data['terms'])) {
-				throw new PageImportException('Pole "terms" musi być obiektem {taksonomia: [slug, ...]}.');
-			}
-
-			foreach ($data['terms'] as $taxonomy => $slugs) {
-				if (!is_string($taxonomy) || trim($taxonomy) === '') {
-					throw new PageImportException('Klucze w "terms" muszą być slugami taksonomii.');
-				}
-
-				if (!is_array($slugs) || !self::isList($slugs)) {
-					throw new PageImportException(sprintf('terms.%s musi być tablicą slugów.', $taxonomy));
-				}
-
-				$clean = [];
-
-				foreach ($slugs as $slugItem) {
-					if (!is_string($slugItem) || trim($slugItem) === '') {
-						throw new PageImportException(sprintf('terms.%s zawiera pusty slug.', $taxonomy));
-					}
-
-					$clean[] = trim($slugItem);
-				}
-
-				$terms[trim($taxonomy)] = $clean;
-			}
-		}
-
-		return new self($title, $slug, $status, $blocks, $sourceDir, $postType, $terms);
+		return new self($title, $slug, $status, $blocks, $sourceDir);
 	}
 
 	/**
@@ -209,7 +145,7 @@ class PageImportPayload
 			));
 		}
 
-		self::assertBlockFile($slug, $label);
+		self::assertKnownBlock($slug, $label);
 
 		$data = $item['data'] ?? [];
 
@@ -228,50 +164,17 @@ class PageImportPayload
 		];
 	}
 
-	public static function blockClassPath(string $slug): string
+	private static function assertKnownBlock(string $slug, string $label): void
 	{
 		$studly = str_replace(' ', '', ucwords(str_replace(['-', '_'], ' ', $slug)));
-
-		return OsfImportConfig::blocksPath() . '/' . $studly . '.php';
-	}
-
-	/**
-	 * @param list<array{block: string, data: array<string, mixed>}> $blocks
-	 */
-	public static function assertPageBlockMapping(string $pageSlug, array $blocks): void
-	{
-		$names = array_column($blocks, 'block');
-
-		foreach (OsfImportConfig::forbiddenBlocks() as $rule) {
-			if ($pageSlug === $rule['page'] && in_array($rule['block'], $names, true)) {
-				throw new PageImportException($rule['message']);
-			}
-		}
-	}
-
-	public static function assertBlockFile(string $slug, string $label): void
-	{
-		$file = self::blockClassPath($slug);
+		$file = dirname(__DIR__, 2) . '/app/Blocks/' . $studly . '.php';
 
 		if (!is_readable($file)) {
-			$dir = dirname($file);
-			$phpCount = is_dir($dir) ? count(glob($dir . '/*.php') ?: []) : 0;
-			$hint = '';
-
-			if ($phpCount < 5) {
-				$hint = sprintf(
-					' Katalog %s ma %d plików PHP — importer szuka klas ACF Composer w app/Blocks motywu (Sage).',
-					$dir,
-					$phpCount
-				);
-			}
-
 			throw new PageImportException(sprintf(
-				'%s.block "%s" nie istnieje w %s.%s',
+				'%s.block "%s" nie istnieje w app/Blocks. Oczekiwano pliku %s.',
 				$label,
 				$slug,
-				$file,
-				$hint
+				'app/Blocks/' . $studly . '.php'
 			));
 		}
 
@@ -282,7 +185,7 @@ class PageImportPayload
 				'%s.block "%s" nie zgadza się z $slug w %s.',
 				$label,
 				$slug,
-				'app/Blocks/' . basename($file)
+				'app/Blocks/' . $studly . '.php'
 			));
 		}
 	}

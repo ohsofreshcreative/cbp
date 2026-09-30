@@ -6,24 +6,31 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
-  const updateActiveLink = () => {
-    headings.forEach((heading) => {
-      const headingTop = heading.getBoundingClientRect().top;
-      const windowHeight = window.innerHeight;
-
-      if (headingTop < windowHeight - 300) {
-        tocLinks.forEach((link) => {
-          link.parentNode.classList.remove('active');
-        });
-
-        const activeLink = document.querySelector(`.b-blog-single .toc ul li a[href="#${heading.id}"]`);
-        if (activeLink) {
-          activeLink.parentNode.classList.add('active');
-        }
-      }
+  const setActive = (id) => {
+    tocLinks.forEach((link) => {
+      link.parentNode.classList.toggle('active', link.getAttribute('href') === `#${id}`);
     });
   };
 
-  updateActiveLink();
-  window.addEventListener('scroll', updateActiveLink);
+  let visibleIds = [];
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        if (!visibleIds.includes(entry.target.id)) visibleIds.push(entry.target.id);
+      } else {
+        visibleIds = visibleIds.filter((id) => id !== entry.target.id);
+      }
+    });
+
+    if (visibleIds.length) {
+      setActive(visibleIds[0]);
+    }
+  }, {
+    rootMargin: '0px 0px -70% 0px',
+    threshold: 0,
+  });
+
+  headings.forEach((heading) => observer.observe(heading));
+  setActive(headings[0].id);
 });

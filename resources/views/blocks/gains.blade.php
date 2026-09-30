@@ -3,19 +3,19 @@
 <section
 	data-gsap-anim="section"
 	@if(!empty($section_id)) id="{{ $section_id }}" @endif
-	@class([ 'b-gains relative -smt isolate overflow-hidden' ,
+	@class([ 'b-gains relative bg-[#fafafa]! -smt isolate' ,
 	$sectionClass=> filled($sectionClass),
 	$section_class => filled($section_class),
 	$background => filled($background) && $background !== 'none',
 	])>
 
 	@if (!empty($g_gains['image']['url']))
-	<img class="__deco absolute inset-y-0 left-0 pointer-events-none object-contain object-left" src="{{ $g_gains['image']['url'] }}" alt="" data-gsap-element="img">
+	<img class="__deco absolute left-0 pointer-events-none object-contain object-bottom-left bottom-0 opacity-50" src="{{ $g_gains['image']['url'] }}" alt="" data-gsap-element="img">
 	@endif
 
 	<div class="__wrapper c-main relative">
 		<div class="__col grid grid-cols-1 md:grid-cols-2 items-start gap-8">
-			<div class="__content">
+			<div class="__content relative md:sticky top-0 md:top-20 h-max">
 				@if (!empty($g_gains['header']))
 				<h2 data-gsap-element="header" class="m-header">{{ $g_gains['header'] }}</h2>
 				@endif
@@ -27,9 +27,9 @@
 			@if (!empty($r_gains))
 			<div class="__cards grid gap-8">
 				@foreach ($r_gains as $item)
-				<article data-gsap-element="card" class="__card overflow-hidden radius border border-secondary-200 p-8">
+				<article data-gsap-element="card" class="__card bg-white overflow-hidden radius border border-dashed border-primary p-8">
 					@if (!empty($item['header']))
-					<p class="__title">{{ $item['header'] }}</p>
+					<p class="__title text-h6">{{ $item['header'] }}</p>
 					@endif
 					@if (!empty($item['text']))
 					<div class="__txt">{!! $item['text'] !!}</div>

@@ -227,7 +227,7 @@ class AcfBlockSerializer
 	}
 
 	/**
-	 * Zapisany format meta ACF: spłaszczone nazwy, wskaźniki _name oraz klucze field_* (v3).
+	 * Zapisany format meta ACF: spłaszczone nazwy i wskaźniki _name na klucze pól.
 	 *
 	 * @param array<string, mixed> $data
 	 * @param list<array<string, mixed>> $fields
@@ -263,7 +263,6 @@ class AcfBlockSerializer
 				$out[$fullName] = '';
 				if ($key !== '') {
 					$out['_' . $fullName] = $key;
-					$out[$key] = '';
 				}
 				$out += self::encodeMeta($value, $subFields, $fullName);
 			} elseif ($type === 'repeater' && is_array($value) && $subFields !== []) {
@@ -271,7 +270,6 @@ class AcfBlockSerializer
 				$out[$fullName] = count($rows);
 				if ($key !== '') {
 					$out['_' . $fullName] = $key;
-					$out[$key] = count($rows);
 				}
 
 				foreach ($rows as $i => $row) {
@@ -286,7 +284,6 @@ class AcfBlockSerializer
 				$out[$fullName] = $normalized;
 				if ($key !== '') {
 					$out['_' . $fullName] = $key;
-					$out[$key] = $normalized;
 				}
 			}
 		}

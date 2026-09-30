@@ -9,9 +9,11 @@
 	$background => filled($background) && $background !== 'none',
 	])>
 
-	@if ($bgshape)
-		<img class="__bg-shape absolute inset-y-0 right-0 w-auto pointer-events-none" src="{{ get_template_directory_uri() }}/resources/images/bg-shape.svg" alt="">
-	@endif
+	<!-- <div class="__glow pointer-events-none absolute right-[-200px] top-[-100px] -z-10 size-[700px]" aria-hidden="true">
+		<div class="absolute -inset-[31.43%]">
+			<img class="block size-full max-w-none" src="{{ $theme_uri }}/resources/images/contact-glow-soft.svg" alt="" width="1140" height="1140" />
+		</div>
+	</div> -->
 
 	<div class="__wrapper c-main relative">
 
@@ -25,7 +27,13 @@
 			@endif
 
 			<div class="__content order2">
-				<h2 data-gsap-element="header" class="text-h4 m-header text-primary">{{ $g_content['header'] }}</h2>
+				@if (!empty($g_content['title']))
+				<p data-gsap-element="title" class="__label flex items-center gap-2 text-secondary-700!">
+					<x-icon.ekg class="w-8 h-7 shrink-0 text-primary-800" />
+					<span>{{ $g_content['title'] }}</span>
+				</p>
+				@endif
+				<h2 data-gsap-element="header" class="__header text-h4 m-header">{{ $g_content['header'] }}</h2>
 
 				<div data-gsap-element="txt" class="__txt">
 					{!! $g_content['text'] !!}

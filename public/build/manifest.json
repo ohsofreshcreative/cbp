@@ -36,7 +36,7 @@
     "src": "editor.deps.json"
   },
   "resources/css/app.css": {
-    "file": "assets/app-BakbHGDo.css",
+    "file": "assets/app-DXHUfbSg.css",
     "name": "app",
     "names": [
       "app.css"
@@ -58,7 +58,7 @@
     ]
   },
   "resources/css/editor.css": {
-    "file": "assets/editor-Dn_2EKRt.css",
+    "file": "assets/editor-EPEpFWeC.css",
     "name": "editor",
     "names": [
       "editor.css"
@@ -124,7 +124,7 @@
     "src": "resources/images/pointer.svg"
   },
   "resources/js/app.js": {
-    "file": "assets/app-BGl9nlFh.js",
+    "file": "assets/app-CraajT3T.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
@@ -134,11 +134,12 @@
       "resources/js/blocks/proces.js",
       "resources/js/blocks/slider.js",
       "resources/js/blocks/catalogues.js",
-      "resources/js/blocks/blog.js"
+      "resources/js/blocks/blog.js",
+      "resources/js/blocks/faq.js"
     ]
   },
   "resources/js/blocks/blog.js": {
-    "file": "assets/blog-BW4l3Ipd.js",
+    "file": "assets/blog-B-hgUHu9.js",
     "name": "blog",
     "src": "resources/js/blocks/blog.js",
     "isDynamicEntry": true
@@ -147,6 +148,12 @@
     "file": "assets/catalogues-BZO8FkbB.js",
     "name": "catalogues",
     "src": "resources/js/blocks/catalogues.js",
+    "isDynamicEntry": true
+  },
+  "resources/js/blocks/faq.js": {
+    "file": "assets/faq-C3__s1Qx.js",
+    "name": "faq",
+    "src": "resources/js/blocks/faq.js",
     "isDynamicEntry": true
   },
   "resources/js/blocks/proces.js": {
@@ -187,7 +194,7 @@
     "isDynamicEntry": true
   },
   "resources/js/editor.js": {
-    "file": "assets/editor-Dog8jmWw.js",
+    "file": "assets/editor-Dqo-zVGR.js",
     "name": "editor",
     "src": "resources/js/editor.js",
     "isEntry": true

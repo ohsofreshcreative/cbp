@@ -9,7 +9,7 @@
   ],
   "excerpt": "Wariograf często przedstawiany jest jako urządzenie, które potrafi jednoznacznie wskazać, czy ktoś mówi prawdę. Rzeczywistość jest bardziej złożona. Poligraf rejestruje określone reakcje fizjologiczne organizmu, a ich analiza wymaga odpowiednio przygotowanej procedury i wiedzy eksperta.",
   "featured_image": {
-    "src": "resources/imports/assets/post-wariograf.jpg",
+    "src": "osf-import/imports/assets/post-wariograf.jpg",
     "alt": "Badanie poligraficzne — czujniki na palcach dłoni"
   },
   "content_file": "czy-wariograf-wykrywa-klamstwo.html",
@@ -20,7 +20,7 @@
       "data": {
         "g_action": {
           "image": {
-            "src": "resources/imports/assets/action-cta.jpg",
+            "src": "osf-import/imports/assets/action-cta.jpg",
             "alt": "Konsultacja z ekspertem"
           },
           "header": "Masz więcej pytań dotyczących badania?",
