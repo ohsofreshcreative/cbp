@@ -26,21 +26,6 @@ add_filter('block_editor_settings_all', function ($settings) {
 
 /*--- ACF BLOCK EXPANDED EDITOR ---*/
 
-// Cache ACF Composer rejestruje bloki z JSON, pomijając acf/register_block_type_args.
-add_filter('block_type_metadata', function ($metadata) {
-	if (empty($metadata['acf']) || ! str_starts_with($metadata['name'] ?? '', 'acf/')) {
-		return $metadata;
-	}
-
-	$metadata['apiVersion'] = 3;
-	$metadata['acf']['blockVersion'] = 3;
-	$metadata['acf']['expandedEditorButtons'] = true;
-	$metadata['acf']['hideFieldsInSidebar'] = true;
-	$metadata['acf']['autoInlineEditing'] = false;
-
-	return $metadata;
-});
-
 add_filter('acf/register_block_type_args', function ($block) {
 	if (! str_starts_with($block['name'] ?? '', 'acf/')) {
 		return $block;
@@ -55,34 +40,30 @@ add_filter('acf/register_block_type_args', function ($block) {
 	return $block;
 });
 
-// Stare importy mieszały płaskie meta z field_*, które ACF rozpoznaje jako dane formularza.
-add_action('acf/verify_ajax', function () {
-	if (($_REQUEST['action'] ?? '') !== 'acf/ajax/fetch-block' || ! is_string($_REQUEST['block'] ?? null)) {
-		return;
+add_filter('render_block', function ($block_content, $block) {
+	if (! str_starts_with($block['blockName'] ?? '', 'acf/')) {
+		return $block_content;
 	}
 
-	$block = json_decode(wp_unslash($_REQUEST['block']), true);
-	if (! is_array($block) || ! is_array($block['data'] ?? null)) {
-		return;
+	static $showBlockLabels = null;
+	if ($showBlockLabels === null) {
+		$showBlockLabels = function_exists('get_field') && (bool) get_field('show_block_labels', 'option');
 	}
 
-	$changed = false;
-	foreach ($block['data'] as $name => $fieldKey) {
-		if (! is_string($name) || ! str_starts_with($name, '_') || ! is_string($fieldKey) || ! acf_is_field_key($fieldKey)) {
-			continue;
-		}
-
-		$fieldName = substr($name, 1);
-		if (array_key_exists($fieldName, $block['data']) && array_key_exists($fieldKey, $block['data']) && $block['data'][$fieldKey] === $block['data'][$fieldName]) {
-			unset($block['data'][$fieldKey]);
-			$changed = true;
-		}
+	if (! $showBlockLabels || is_admin() || ! current_user_can('manage_options') || ! class_exists('WP_HTML_Tag_Processor')) {
+		return $block_content;
 	}
 
-	if ($changed && is_string($json = wp_json_encode($block))) {
-		$_REQUEST['block'] = wp_slash($json);
+	$processor = new \WP_HTML_Tag_Processor($block_content);
+	if (! $processor->next_tag()) {
+		return $block_content;
 	}
-});
+
+	$processor->add_class('has-acf-block-label');
+	$processor->set_attribute('data-acf-block-label', $block['blockName']);
+
+	return $processor->get_updated_html();
+}, 10, 2);
 
 /**
  * Inject scripts into the block editor.

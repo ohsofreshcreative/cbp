@@ -32,6 +32,34 @@
     display: inline; /* Upewniamy się, że jest to element liniowy */
 }
 
+/* Listy w podglądach ACF */
+.editor-styles-wrapper .acf-preview ul,
+.editor-styles-wrapper .acf-preview ol {
+  margin-block: 0;
+  padding-left: 1.25rem;
+}
+
+.editor-styles-wrapper .acf-preview ul {
+  list-style-type: disc;
+}
+
+.editor-styles-wrapper .acf-preview ol {
+  list-style-type: decimal;
+}
+
+.editor-styles-wrapper .acf-preview :is(ul, ol) > li {
+  display: list-item;
+}
+
+.editor-styles-wrapper .acf-preview :is(ul, ol) > li + li {
+  margin-top: 0.5em;
+}
+
+.editor-styles-wrapper .acf-preview :is(ul, ol) > li::before {
+  content: none;
+  display: none;
+}
+
 .acf-editor-wrap iframe {
 	min-height: unset !important;
 }
@@ -179,34 +207,9 @@
  * bez tego sąsiednie sekcje zlewają się na białej kanwie.
  */
 .editor-styles-wrapper .block-editor-block-list__block[data-type^="acf/"] {
-	position: relative;
 	border: 1px solid #e3e7ea !important;
-	border-radius: 16px !important;
+	border-radius: 6px !important;
 	padding: 14px !important;
-	overflow: hidden !important;
-}
-
-/**
- * Znacznik "brak marginesu górnego" (pole `nomt`).
- *
- * `nomt` nie trafia do DOM jako osobny atrybut — włącza tylko klasę `!mt-0`
- * na sekcji (SectionClasses::fromMap). Łapiemy to przez :has(), więc znacznik
- * pojawia się automatycznie, bez zmian w blokach czy widokach.
- */
-.editor-styles-wrapper .block-editor-block-list__block[data-type^="acf/"]:has([data-gsap-anim="section"].\!mt-0)::after {
-	content: "Brak marginesu górnego";
-	position: absolute;
-	inset: 8px 8px auto auto; /* jawnie wszystkie krawędzie — Gutenberg ma własne ::after z inset: 0 na .is-selected, samo top/right by się z tym zlało po zaznaczeniu bloku */
-	width: max-content;
-	height: fit-content;
-	padding: 4px 10px;
-	border-radius: 4px;
-	background: #fde68a;
-	color: #7c4a03;
-	font: 600 11px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
-	letter-spacing: 0.02em;
-	z-index: 1;
-	pointer-events: none;
 }
 
 /*--- SZKIC: SPŁASZCZENIE DEKORACJI ---*/
@@ -259,3 +262,223 @@
 	background-color: #fff !important;
 }
 
+/* Na kanwie bez tła sekcji tekst i nagłówki powinny pozostać czytelne. */
+.editor-styles-wrapper {
+	color: var(--text-body);
+}
+
+.editor-styles-wrapper :where(
+	h1, h2, h3, h4, h5, h6,
+	.h7, .text-h1, .text-h2, .text-h3, .text-h4, .text-h5, .text-h6, .text-h7
+) {
+	color: var(--text-body);
+}
+
+.editor-styles-wrapper .acf-preview .acf-preview-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.editor-styles-wrapper .acf-preview .acf-preview-button {
+	display: inline-flex;
+	align-items: center;
+	padding: 4px 10px;
+	border-radius: var(--radius, 4px);
+	background-color: var(--color-primary);
+	color: #fff;
+	font-size: 12px;
+	line-height: 1.4;
+}
+
+.editor-styles-wrapper .acf-preview {
+	display: block;
+	position: static !important;
+	min-height: 0;
+	box-sizing: border-box;
+	width: 100%;
+	max-width: 100%;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	color: #252a31;
+}
+
+.editor-styles-wrapper .acf-preview__heading .acf-preview__title {
+	display: inline-flex;
+	margin: 0;
+	padding: 5px 10px;
+	border: 1px solid rgba(var(--p-500), 0.4);
+	border-radius: 5px;
+	background: #fff;
+	color: var(--color-primary-800);
+	font-size: 12px;
+	font-weight: 700;
+	line-height: 1.4;
+}
+
+.editor-styles-wrapper .acf-preview__heading {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.editor-styles-wrapper .acf-preview__meta {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 8px 12px;
+	margin-bottom: 8px;
+}
+
+.editor-styles-wrapper .acf-preview__slug {
+	padding: 4px 8px;
+	border-radius: 4px;
+	background: #eef1f4;
+	color: #596574;
+	font: 500 11px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.editor-styles-wrapper .acf-preview__settings {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-end;
+	gap: 6px;
+	max-width: 100%;
+	pointer-events: none;
+}
+
+.editor-styles-wrapper .acf-preview__setting {
+	display: inline-flex;
+	align-items: center;
+	max-width: 100%;
+	padding: 3px 8px;
+	border: 1px solid #e3e7ea;
+	border-radius: 4px;
+	background: #fff;
+	color: #596574;
+	font-size: 11px;
+	line-height: 1.4;
+}
+
+.editor-styles-wrapper .acf-preview__setting--background {
+	border-color: #343a40;
+	background: #343a40;
+	color: #fff;
+}
+
+.editor-styles-wrapper .acf-preview__setting--nomt {
+	border-color: #fcd34d;
+	background: #fde68a;
+	color: #7c4a03;
+}
+
+.editor-styles-wrapper .block-editor-block-list__block[data-type^="acf/"]:has(.acf-preview)::before {
+	display: none;
+}
+
+.editor-styles-wrapper .acf-preview__content {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	min-width: 0;
+	max-width: 100%;
+	padding: 14px;
+	border-radius: 6px;
+	background: #f7f8fa;
+}
+
+.editor-styles-wrapper .acf-preview__content > p {
+	margin: 0;
+}
+
+.editor-styles-wrapper .acf-preview__grid {
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr));
+	gap: 10px;
+	align-items: stretch;
+	min-width: 0;
+	max-width: 100%;
+}
+
+.editor-styles-wrapper .acf-preview__grid--steps {
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 130px), 1fr));
+}
+
+.editor-styles-wrapper .acf-preview__card {
+	box-sizing: border-box;
+	min-width: 0;
+	max-width: 100%;
+	padding: 12px;
+	border: 1px solid #e3e7ea;
+	border-radius: 6px;
+	background: #fff;
+	box-shadow: 0 1px 2px rgba(23, 28, 35, 0.05);
+}
+
+.editor-styles-wrapper .acf-preview__card > :is(p, h1, h2, h3, h4, h5, h6) {
+	margin: 0;
+}
+
+.editor-styles-wrapper .acf-preview__card > p:not(.text-h1, .text-h2, .text-h3, .text-h4, .text-h5, .text-h6, .text-h7) {
+	color: #525b66;
+	font-size: 12px;
+	line-height: 1.5;
+}
+
+.editor-styles-wrapper .acf-preview__media {
+	width: fit-content;
+	padding: 4px;
+	border: 1px solid #e3e7ea;
+	border-radius: 5px;
+	background: #fff;
+}
+
+.editor-styles-wrapper .acf-preview__media img {
+	display: block;
+	max-width: 100%;
+}
+
+.editor-styles-wrapper .acf-preview__logo-list {
+	gap: 12px;
+	padding: 12px;
+	border: 1px solid #e3e7ea;
+	border-radius: 6px;
+	background: #fff;
+	box-shadow: 0 1px 2px rgba(23, 28, 35, 0.05);
+}
+
+.editor-styles-wrapper .block-editor-block-list__block[data-type^="acf/"]:has(.acf-preview__settings) {
+	position: relative;
+}
+
+.editor-styles-wrapper .block-editor-block-list__block[data-type^="acf/"]:not(:has(.acf-preview)):has([data-gsap-anim="section"].\!mt-0)::after {
+	content: "Brak marginesu górnego";
+	position: absolute;
+	inset: 8px 8px auto auto;
+	width: max-content;
+	height: fit-content;
+	padding: 4px 10px;
+	border-radius: 4px;
+	background: #fde68a;
+	color: #7c4a03;
+	font: 600 11px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+	letter-spacing: 0.02em;
+	z-index: 1;
+	pointer-events: none;
+}
+
+/**
+ * Tytuły w uproszczonych podglądach ACF mają jeden wspólny poziom wizualny,
+ * niezależnie od semantycznego znacznika lub klasy skali nagłówków.
+ */
+.editor-styles-wrapper .acf-preview :is(
+	h1, h2, h3, h4, h5, h6,
+	.text-h1, .text-h2, .text-h3, .text-h4, .text-h5, .text-h6, .text-h7, .h7
+) {
+	margin-block: 0 !important;
+	font-size: 14px !important;
+	font-weight: 700 !important;
+	line-height: 1.3 !important;
+}
